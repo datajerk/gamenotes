@@ -1,4 +1,4 @@
-#Mother 2 Item Index
+# Mother 2 Item Index
 
 ```
 002 Cracked bat
