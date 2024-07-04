@@ -123,7 +123,7 @@ My poor notes on the menu structure:
 ```
 1. party setup
 2. goods setup
-    1. add goods, [item_index.md](item_index.md) for the numbers
+    1. add goods, see item_index.md in this repo for the numbers
 3. status condition
     1. healthy
     2. unconscious
