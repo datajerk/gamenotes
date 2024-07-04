@@ -89,9 +89,9 @@ In the end it'll probably only save you about two minutes.
 ```
 $ git clone https://github.com/jeffman/Mother2GbaTranslation
 $ cd Mother2GbaTranslation
-$ cp DIR_OF_BACKUP_ROMS/Mother 1+2 (Japan).gba bin/m12fresh.gba
+$ cp DIR_OF_BACKUP_ROMS/Mother\ 1+2\ \(Japan\).gba bin/m12fresh.gba
 $ docker run --rm -it -v ${PWD}:/home/m2gba/src lorenzooone/m2gba_translation:builder
-$ cp out/m12.gba DIR_OF_YOUR_ROMS/Mother 2 (En).gba
+$ cp out/m12.gba DIR_OF_YOUR_ROMS/Mother\ 2\ \(En\).gba
 $ docker rmi lorenzooone/m2gba_translation:builder
 ```
 
