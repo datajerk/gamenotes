@@ -120,6 +120,7 @@ The debug menu can be had if you use the ATM card when there's no ATM.
 
 My poor notes on the menu structure:
 
+```
 1. party setup
 2. goods setup
     1. add goods, [item_index.md](item_index.md) for the numbers
@@ -151,9 +152,10 @@ My poor notes on the menu structure:
 12. teleport
 13. put hint shops on map
 14. build info
+```
 
 I was faithful to the game until close to the very end where you have to grind and grind to get from around level 80 to 99 which IMHO is required to finish the game.
-So save yourself sometime and use the _give exp_ debug menu item.
+So save yourself some time and use the _give exp_ debug menu item.
 
 There's a minor bug in the translation: in the fourth town the English text "Cafe" is really the "Bar" (graphic).
 The English translation text is probably ripped from the SNES English version where the graphic was changed from "Bar" to "Cafe".
