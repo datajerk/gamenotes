@@ -125,20 +125,20 @@ My poor notes on the menu structure:
 2. goods setup
     1. add goods, [item_index.md](item_index.md) for the numbers
 3. status condition
-	1. healthy
-	2. unconscious
-	3. diamondized
-	4. numb
-	5. nauseous
-	6. poisoned
-	7. sunstroke
-	8. cold
-	9. mushroomized
-	10. possessed
-	11. homesick
-	12. reducecd hp
-	13. reduced pp
-	14. exit?
+    1. healthy
+    2. unconscious
+    3. diamondized
+    4. numb
+    5. nauseous
+    6. poisoned
+    7. sunstroke
+    8. cold
+    9. mushroomized
+    10. possessed
+    11. homesick
+    12. reducecd hp
+    13. reduced pp
+    14. exit?
 4. move
     1. onett (but was town 3)
 5. money setup
