@@ -44,7 +44,7 @@ Main Menu
 5.  Berry
 6.  Key Item
 7.  Apricorn
-8.  Max out Coins (current count: 30)
+8.  Max Coins (current count: 30)
 9.  [Over]write "newbag.sav" and continue shopping
 10. Abort! (all changes since last write lost)
 
