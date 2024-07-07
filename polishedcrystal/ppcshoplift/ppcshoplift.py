@@ -11,7 +11,7 @@ longest_item_by_type = {}
 tmhm = []
 key_items = []
 outputfilename = 'newbag.sav'
-version = "0.0.1"
+version = "0.0.2"
 
 # constants/item_data_constants.asm
 # too lazy to parse with code, hard coding for now
@@ -21,6 +21,7 @@ MAX_BALLS     = 25
 MAX_BERRIES   = 31
 
 # ram/wramx.asm for how memory is laid out
+COINS=0x237c
 
 
 # functions
@@ -249,18 +250,20 @@ except Exception as err:
 	raise
 
 print("\nPokémon Polished Crystal 3.0.0-beta Offline Store v" + version)
-print("(Tested ROM md5sum 64276e3acc3fda02e0dcc235c9c2748a)\n")
+print("(Tested ROM (polishedcrystal-3.0.0-beta-22d6f8e1.gbc) md5sum 64276e3acc3fda02e0dcc235c9c2748a)\n")
 print("USE AT YOUR OWN PERIL!!!\n")
 print("Let's go shopping!\n\n")
 
-main_menu = [
-	'Exit [and [over]write "' + outputfilename + '"]',
-	'Item', 'Med', 'Ball', 'TH/HM', 'Berry', 'Key Item', 'Apricorn',
-	'[Over]write "' + outputfilename + '" and continue shopping',
-	'Abort! (all changes since last write lost)'
-]
 sel = -1
 while sel != 0:
+	main_menu = [
+		'Exit [and [over]write "' + outputfilename + '"]',
+		'Item', 'Med', 'Ball', 'TH/HM', 'Berry', 'Key Item', 'Apricorn',
+		'Max Coins (current count: ' + str((sav[COINS] << 8) | sav[COINS+1]) + ')',
+		'[Over]write "' + outputfilename + '" and continue shopping',
+		'Abort! (all changes since last write lost)'
+	]
+
 	sel = menu('Main Menu',main_menu,0,1)
 
 	if sel == 1: array_menu(0x2394, MAX_ITEMS, 'ITEM')
@@ -270,8 +273,11 @@ while sel != 0:
 	if sel == 5: array_menu(0x24AC, MAX_BERRIES, 'BERRIES')
 	if sel == 6: bit_array_menu(0x2390,  4, main_menu[sel], key_items)
 	if sel == 7: apricorn_menu()
-	if sel == 8: writeout()
-	if sel == 9: sys.exit(0)
+	if sel == 8:
+		sav[COINS+0] = (50000 >> 8)
+		sav[COINS+1] = (50000 & 0xFF)
+	if sel == 9: writeout()
+	if sel == 10: sys.exit(0)
 
 writeout()
 sys.exit(0)

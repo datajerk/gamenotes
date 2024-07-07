@@ -27,7 +27,7 @@ Example session:
 $ python3 ppcshoplift.py savefile.sav
 
 Pokémon Polished Crystal 3.0.0-beta Offline Store v0.0.1
-(Tested ROM md5sum 64276e3acc3fda02e0dcc235c9c2748a)
+(Tested ROM (polishedcrystal-3.0.0-beta-22d6f8e1.gbc) md5sum 64276e3acc3fda02e0dcc235c9c2748a)
 
 USE AT YOUR OWN PERIL!!!
 
@@ -44,8 +44,9 @@ Main Menu
 5.  Berry
 6.  Key Item
 7.  Apricorn
-8.  [Over]write "newbag.sav" and continue shopping
-9.  Abort! (all changes since last write lost)
+8.  Max out Coins (current count: 30)
+9.  [Over]write "newbag.sav" and continue shopping
+10. Abort! (all changes since last write lost)
 
 Selection: 2
 ```
@@ -146,12 +147,13 @@ Main Menu
 5.  Berry
 6.  Key Item
 7.  Apricorn
-8.  [Over]write "newbag.sav" and continue shopping
-9.  Abort! (all changes since last write lost)
+8.  Max Coins (current count: 30)
+9.  [Over]write "newbag.sav" and continue shopping
+10. Abort! (all changes since last write lost)
 
 Selection:
 ```
 
-Options `0`, `1`, and, `9` should be self-explanatory.
+Options `0`, `8`, `9`, and, `10` should be self-explanatory.
 
 On exit (or write) `newbag.sav` will be created and your original input save file left unchanged.
