@@ -26,7 +26,7 @@ Example session:
 ```
 $ python3 ppcshoplift.py savefile.sav
 
-Pokémon Polished Crystal 3.0.0-beta Offline Store v0.0.1
+Pokémon Polished Crystal 3.0.0-beta Offline Store v0.0.2
 (Tested ROM (polishedcrystal-3.0.0-beta-22d6f8e1.gbc) md5sum 64276e3acc3fda02e0dcc235c9c2748a)
 
 USE AT YOUR OWN PERIL!!!
