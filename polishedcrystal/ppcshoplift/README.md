@@ -56,7 +56,7 @@ Selection: 2
 E.g. increase both `RARE CANDY` and `REVIVAL HERB` to 99:
 
 ```
-Med Menu (Select Med to increase to 99), 23 of 37 left
+Med Menu (Select Med to increase to 99), 23 of 37 array elements assigned
 
  0. Return             10. FRESH WATER:   5   20. MAX ETHER:     2   30. RAGECANDYBAR:  1
  1. ANTIDOTE:      3   11. FULL HEAL:    20   21. MAX POTION:   29   31. RARE CANDY:   79
@@ -71,7 +71,7 @@ Med Menu (Select Med to increase to 99), 23 of 37 left
 
 Selection: 31
 
-Med Menu (Select Med to increase to 99), 23 of 37 left
+Med Menu (Select Med to increase to 99), 23 of 37 array elements assigned
 
  0. Return             10. FRESH WATER:   5   20. MAX ETHER:     2   30. RAGECANDYBAR:  1
  1. ANTIDOTE:      3   11. FULL HEAL:    20   21. MAX POTION:   29   31. RARE CANDY:   99
@@ -86,7 +86,7 @@ Med Menu (Select Med to increase to 99), 23 of 37 left
 
 Selection: 32
 
-Med Menu (Select Med to increase to 99), 24 of 37 left
+Med Menu (Select Med to increase to 99), 24 of 37 array elements assigned
 
  0. Return             10. FRESH WATER:   5   20. MAX ETHER:     2   30. RAGECANDYBAR:  1
  1. ANTIDOTE:      3   11. FULL HEAL:    20   21. MAX POTION:   29   31. RARE CANDY:   99

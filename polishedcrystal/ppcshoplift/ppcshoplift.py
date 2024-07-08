@@ -11,7 +11,7 @@ longest_item_by_type = {}
 tmhm = []
 key_items = []
 outputfilename = 'newbag.sav'
-version = "0.0.2"
+version = "0.0.3"
 
 # constants/item_data_constants.asm
 # too lazy to parse with code, hard coding for now
@@ -150,7 +150,7 @@ def array_menu(array, max_items, item_type_filter):
 				format_string = '{:' + str(longest_item_by_type[item_type] + 1) + '} {:2}'
 				sub_menu.append(format_string.format(item + ':', count))
 
-		sub_sel = menu(main_menu[sel] + ' Menu (Select ' + main_menu[sel] + ' to increase to 99), ' + str(sav[array]) + ' of ' + str(max_items) + ' left',sub_menu,1,max_items - sav[array])
+		sub_sel = menu(main_menu[sel] + ' Menu (Select ' + main_menu[sel] + ' to increase to 99), ' + str(sav[array]) + ' of ' + str(max_items) + ' array elements assigned',sub_menu,1,max_items - sav[array])
 
 		if sub_sel == 0: break
 
