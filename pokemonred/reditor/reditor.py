@@ -6,8 +6,10 @@ import os
 
 # globals
 outputfilename = 'newbag.sav'
-version = "0.0.1"
+version = "0.0.3"
 item_count = {}
+item_names = {}
+eng_letter = {}
 longest_item = 0
 
 MAX_ITEMS = 20
@@ -96,61 +98,61 @@ items = {
 	81: 'Max Ether',
 	82: 'Elixer',
 	83: 'Max Elixer',
-	196: 'HM01',
-	197: 'HM02',
-	198: 'HM03',
-	199: 'HM04',
-	200: 'HM05',
-	201: 'TM01',
-	202: 'TM02',
-	203: 'TM03',
-	204: 'TM04',
-	205: 'TM05',
-	206: 'TM06',
-	207: 'TM07',
-	208: 'TM08',
-	209: 'TM09',
-	210: 'TM10',
-	211: 'TM11',
-	212: 'TM12',
-	213: 'TM13',
-	214: 'TM14',
-	215: 'TM15',
-	216: 'TM16',
-	217: 'TM17',
-	218: 'TM18',
-	219: 'TM19',
-	220: 'TM20',
-	221: 'TM21',
-	222: 'TM22',
-	223: 'TM23',
-	224: 'TM24',
-	225: 'TM25',
-	226: 'TM26',
-	227: 'TM27',
-	228: 'TM28',
-	229: 'TM29',
-	230: 'TM30',
-	231: 'TM31',
-	232: 'TM32',
-	233: 'TM33',
-	234: 'TM34',
-	235: 'TM35',
-	236: 'TM36',
-	237: 'TM37',
-	238: 'TM38',
-	239: 'TM39',
-	240: 'TM40',
-	241: 'TM41',
-	242: 'TM42',
-	243: 'TM43',
-	244: 'TM44',
-	245: 'TM45',
-	246: 'TM46',
-	247: 'TM47',
-	248: 'TM48',
-	249: 'TM49',
-	250: 'TM50',
+	196: 'HM01 Cut',
+	197: 'HM02 Fly',
+	198: 'HM03 Surf',
+	199: 'HM04 Strength',
+	200: 'HM05 Flash',
+	201: 'TM01 Mega Punch',
+	202: 'TM02 Razor Wind',
+	203: 'TM03 Swords Dance',
+	204: 'TM04 Whirlwind',
+	205: 'TM05 Mega Kick',
+	206: 'TM06 Toxic',
+	207: 'TM07 Horn Drill',
+	208: 'TM08 Body Slam',
+	209: 'TM09 Take Down',
+	210: 'TM10 Double-Edge',
+	211: 'TM11 BubbleBeam',
+	212: 'TM12 Water Gun',
+	213: 'TM13 Ice Beam',
+	214: 'TM14 Blizzard',
+	215: 'TM15 Hyper Beam',
+	216: 'TM16 Pay Day',
+	217: 'TM17 Submission',
+	218: 'TM18 Counter',
+	219: 'TM19 Seismic Toss',
+	220: 'TM20 Rage',
+	221: 'TM21 Mega Drain',
+	222: 'TM22 SolarBeam',
+	223: 'TM23 Dragon Rage',
+	224: 'TM24 Thunderbolt',
+	225: 'TM25 Thunder',
+	226: 'TM26 Earthquake',
+	227: 'TM27 Fissure',
+	228: 'TM28 Dig',
+	229: 'TM29 Psychic',
+	230: 'TM30 Teleport',
+	231: 'TM31 Mimic',
+	232: 'TM32 Double Team',
+	233: 'TM33 Reflect',
+	234: 'TM34 Bide',
+	235: 'TM35 Metronome',
+	236: 'TM36 Selfdestruct',
+	237: 'TM37 Egg Bomb',
+	238: 'TM38 Fire Blast',
+	239: 'TM39 Swift',
+	240: 'TM40 Skull Bash',
+	241: 'TM41 Softboiled',
+	242: 'TM42 Dream Eater',
+	243: 'TM43 Sky Attack',
+	244: 'TM44 Rest',
+	245: 'TM45 Thunder Wave',
+	246: 'TM46 Psywave',
+	247: 'TM47 Explosion',
+	248: 'TM48 Rock Slide',
+	249: 'TM49 Tri Attack',
+	250: 'TM50 Substitute',
 	251: 'TM51',
 	252: 'TM52',
 	253: 'TM53',
@@ -158,152 +160,89 @@ items = {
 	255: 'TM55',
 }
 
-item_names = {
-	'Master Ball': 1,
-	'Ultra Ball': 2,
-	'Great Ball': 3,
-	'Poké Ball': 4,
-	'Town Map': 5,
-	'Bicycle': 6,
-	'?????': 7,
-	'Safari Ball': 8,
-	'Pokédex': 9,
-	'Moon Stone': 10,
-	'Antidote': 11,
-	'Burn Heal': 12,
-	'Ice Heal': 13,
-	'Awakening': 14,
-	'Parlyz Heal': 15,
-	'Full Restore': 16,
-	'Max Potion': 17,
-	'Hyper Potion': 18,
-	'Super Potion': 19,
-	'Potion': 20,
-	'BoulderBadge': 21,
-	'CascadeBadge': 22,
-	'ThunderBadge': 23,
-	'RainbowBadge': 24,
-	'SoulBadge': 25,
-	'MarshBadge': 26,
-	'VolcanoBadge': 27,
-	'EarthBadge': 28,
-	'Escape Rope': 29,
-	'Repel': 30,
-	'Old Amber': 31,
-	'Fire Stone': 32,
-	'Thunderstone': 33,
-	'Water Stone': 34,
-	'HP Up': 35,
-	'Protein': 36,
-	'Iron': 37,
-	'Carbos': 38,
-	'Calcium': 39,
-	'Rare Candy': 40,
-	'Dome Fossil': 41,
-	'Helix Fossil': 42,
-	'Secret Key': 43,
-	'?????': 44,
-	'Bike Voucher': 45,
-	'X Accuracy': 46,
-	'Leaf Stone': 47,
-	'Card Key': 48,
-	'Nugget': 49,
-	'PP Up*': 50,
-	'Poké Doll': 51,
-	'Full Heal': 52,
-	'Revive': 53,
-	'Max Revive': 54,
-	'Guard Spec.': 55,
-	'Super Repel': 56,
-	'Max Repel': 57,
-	'Dire Hit': 58,
-	'Coin': 59,
-	'Fresh Water': 60,
-	'Soda Pop': 61,
-	'Lemonade': 62,
-	'S.S. Ticket': 63,
-	'Gold Teeth': 64,
-	'X Attack': 65,
-	'X Defend': 66,
-	'X Speed': 67,
-	'X Special': 68,
-	'Coin Case': 69,
-	'Oak\'s Parcel': 70,
-	'Itemfinder': 71,
-	'Silph Scope': 72,
-	'Poké Flute': 73,
-	'Lift Key': 74,
-	'Exp. All': 75,
-	'Old Rod': 76,
-	'Good Rod': 77,
-	'Super Rod': 78,
-	'PP Up': 79,
-	'Ether': 80,
-	'Max Ether': 81,
-	'Elixer': 82,
-	'Max Elixer': 83,
-	'HM01': 196,
-	'HM02': 197,
-	'HM03': 198,
-	'HM04': 199,
-	'HM05': 200,
-	'TM01': 201,
-	'TM02': 202,
-	'TM03': 203,
-	'TM04': 204,
-	'TM05': 205,
-	'TM06': 206,
-	'TM07': 207,
-	'TM08': 208,
-	'TM09': 209,
-	'TM10': 210,
-	'TM11': 211,
-	'TM12': 212,
-	'TM13': 213,
-	'TM14': 214,
-	'TM15': 215,
-	'TM16': 216,
-	'TM17': 217,
-	'TM18': 218,
-	'TM19': 219,
-	'TM20': 220,
-	'TM21': 221,
-	'TM22': 222,
-	'TM23': 223,
-	'TM24': 224,
-	'TM25': 225,
-	'TM26': 226,
-	'TM27': 227,
-	'TM28': 228,
-	'TM29': 229,
-	'TM30': 230,
-	'TM31': 231,
-	'TM32': 232,
-	'TM33': 233,
-	'TM34': 234,
-	'TM35': 235,
-	'TM36': 236,
-	'TM37': 237,
-	'TM38': 238,
-	'TM39': 239,
-	'TM40': 240,
-	'TM41': 241,
-	'TM42': 242,
-	'TM43': 243,
-	'TM44': 244,
-	'TM45': 245,
-	'TM46': 246,
-	'TM47': 247,
-	'TM48': 248,
-	'TM49': 249,
-	'TM50': 250,
-	'TM51': 251,
-	'TM52': 252,
-	'TM53': 253,
-	'TM54': 254,
-	'TM55': 255,
+eng_index = {
+	0x7F: ' ',
+	0x80: 'A',
+	0x81: 'B',
+	0x82: 'C',
+	0x83: 'D',
+	0x84: 'E',
+	0x85: 'F',
+	0x86: 'G',
+	0x87: 'H',
+	0x88: 'I',
+	0x89: 'J',
+	0x8A: 'K',
+	0x8B: 'L',
+	0x8C: 'M',
+	0x8D: 'N',
+	0x8E: 'O',
+	0x8F: 'P',
+	0x90: 'Q',
+	0x91: 'R',
+	0x92: 'S',
+	0x93: 'T',
+	0x94: 'U',
+	0x95: 'V',
+	0x96: 'W',
+	0x97: 'X',
+	0x98: 'Y',
+	0x99: 'Z',
+	0x9A: '(',
+	0x9B: ')',
+	0x9C: ':',
+	0x9D: ';',
+	0x9E: '[',
+	0x9F: ']',
+	0xA0: 'a',
+	0xA1: 'b',
+	0xA2: 'c',
+	0xA3: 'd',
+	0xA4: 'e',
+	0xA5: 'f',
+	0xA6: 'g',
+	0xA7: 'h',
+	0xA8: 'i',
+	0xA9: 'j',
+	0xAA: 'k',
+	0xAB: 'l',
+	0xAC: 'm',
+	0xAD: 'n',
+	0xAE: 'o',
+	0xAF: 'p',
+	0xB0: 'q',
+	0xB1: 'r',
+	0xB2: 's',
+	0xB3: 't',
+	0xB4: 'u',
+	0xB5: 'v',
+	0xB6: 'w',
+	0xB7: 'x',
+	0xB8: 'y',
+	0xB9: 'z',
+	0xBA: 'é',
+	0xE1: '%',
+	0xE2: '$',
+	0xE3: '-',
+	0xE6: '?',
+	0xE7: '!',
+	0xEF: '^',
+	0xF1: '*',
+	0xF2: '.',
+	0xF3: '/',
+	0xF4: ',',
+	0xF5: '+',
+	0xF6: '0',
+	0xF7: '1',
+	0xF8: '2',
+	0xF9: '3',
+	0xFA: '4',
+	0xFB: '5',
+	0xFC: '6',
+	0xFD: '7',
+	0xFE: '8',
+	0xFF: '9',
 }
-
 
 # functions
 
@@ -313,10 +252,18 @@ def init_dicts_arrays():
 	for key in dict(items):
 		item_count[key] = 0
 		if len(items[key]) > longest_item: longest_item = len(items[key])
+		item_names[items[key]] = key
+
+	for i in range(256):
+		if not i in eng_index:
+			eng_index[i]='@'
+			continue
+		eng_letter[eng_index[i]] = i
+
 	return
 
 
-def menu(title, menu_items, orientation, left):
+def menu(title, menu_items, orientation, left, count):
 	print(title)
 	print()
 	if orientation == 0:
@@ -345,8 +292,8 @@ def menu(title, menu_items, orientation, left):
 			if sel >= len(menu_items):
 				print("\nOut of range. Try again...\n")
 				continue
-			if left == 0 and sel != 0:
-				print("\nBag full of this type of item, 'return' is your only option. Try again...\n")
+			if left == 0 and sel != 0 and count[sel] == 0:
+				print("\nBag full, 'return' is your only option. Try again...\n")
 				continue
 			break
 		except ValueError:
@@ -359,6 +306,7 @@ def menu(title, menu_items, orientation, left):
 
 def array_menu(array, max_items, item_type_filter):
 	sub_sel = -1
+	count = [0]
 	while (sub_sel != 0):
 		sub_menu = ['Return']
 		for i in range(sav[array]):
@@ -368,8 +316,9 @@ def array_menu(array, max_items, item_type_filter):
 		for item_index in dict(items):
 			format_string = '{:' + str(longest_item + 1) + '} {:2}'
 			sub_menu.append(format_string.format(items[item_index] + ':', item_count[item_index]))
+			count.append(item_count[item_index])
 
-		sub_sel = menu(main_menu[sel] + ' Menu (Select ' + main_menu[sel] + ' to increase to 99), ' + str(sav[array]) + ' of ' + str(max_items) + ' array elements assigned',sub_menu,1,max_items - sav[array])
+		sub_sel = menu(main_menu[sel] + ' Menu (Select ' + main_menu[sel] + ' to increase to 99), ' + str(sav[array]) + ' of ' + str(max_items) + ' array elements assigned',sub_menu,1,max_items - sav[array],count)
 
 		if sub_sel == 0: break
 
@@ -387,6 +336,33 @@ def array_menu(array, max_items, item_type_filter):
 			sav[array] += 1
 
 		sav[array + i*2 + 2] = 99
+
+	return
+
+def array_sort(array, max_items, item_type_filter):
+	names = {}
+
+	print('\nCurrent Order:\n')
+	for i in range(sav[array]):
+		index = sav[array + i*2 + 1]
+		count = sav[array + i*2 + 2]
+		name = items[index]
+		names[name] = (index,count)
+		print('{0:03d} {1:02d} {2}'.format(index,count,name))
+	print()
+
+	for i, key in enumerate(dict(sorted(names.items()))):
+		sav[array + i*2 + 1] = names[key][0]
+		sav[array + i*2 + 2] = names[key][1]
+
+	print('New Order:\n')
+	for i in range(sav[array]):
+		index = sav[array + i*2 + 1]
+		count = sav[array + i*2 + 2]
+		name = items[index]
+		names[name] = (index,count)
+		print('{0:03d} {1:02d} {2}'.format(index,count,name))
+	print('\n')
 
 	return
 
@@ -432,20 +408,28 @@ print("\nPokémon Red Offline Store v" + version)
 print("\nUSE AT YOUR OWN PERIL!!!\n")
 print("Let's go shopping!\n\n")
 
+print("Rival: ",end='')
+for i in range(7):
+	if sav[0x25F6+i] == 0x50: break
+	print(eng_index[sav[0x25F6+i]],end='')
+print('\n\n')
+
 sel = -1
 while sel != 0:
 	main_menu = [
 		'Exit [and [over]write "' + outputfilename + '"]',
 		'Item', 
+		'Sort Items', 
 		'[Over]write "' + outputfilename + '" and continue shopping',
 		'Abort! (all changes since last write lost)'
 	]
 
-	sel = menu('Main Menu',main_menu,0,1)
+	sel = menu('Main Menu',main_menu,0,1,[])
 
 	if sel == 1: array_menu(0x25C9, MAX_ITEMS, 'ITEM')
-	if sel == 2: writeout()
-	if sel == 3: sys.exit(0)
+	if sel == 2: array_sort(0x25C9, MAX_ITEMS, 'ITEM')
+	if sel == 3: writeout()
+	if sel == 4: sys.exit(0)
 
 writeout()
 sys.exit(0)
