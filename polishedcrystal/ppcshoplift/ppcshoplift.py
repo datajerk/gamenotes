@@ -11,7 +11,7 @@ longest_item_by_type = {}
 tmhm = []
 key_items = []
 outputfilename = 'newbag.sav'
-version = "0.0.3"
+version = "0.0.4"
 
 # constants/item_data_constants.asm
 # too lazy to parse with code, hard coding for now
@@ -21,7 +21,9 @@ MAX_BALLS     = 25
 MAX_BERRIES   = 31
 
 # ram/wramx.asm for how memory is laid out
-COINS=0x237c
+COINS=0x237c   # 2 bytes big-endian
+MONEY=0x2375   # 3 bytes big-endian
+MMONEY=MONEY+3 # 3 bytes big-endian
 
 
 # functions
@@ -252,7 +254,14 @@ except Exception as err:
 print("\nPokémon Polished Crystal 3.0.0-beta Offline Store v" + version)
 print("(Tested ROM (polishedcrystal-3.0.0-beta-22d6f8e1.gbc) md5sum 64276e3acc3fda02e0dcc235c9c2748a)\n")
 print("USE AT YOUR OWN PERIL!!!\n")
-print("Let's go shopping!\n\n")
+print("Let's go shopping!\n")
+print("Money:     " + str((sav[MONEY] << 16) | (sav[MONEY+1] << 8) | sav[MONEY+2]))
+print("Mom Money: " + str((sav[MMONEY] << 16) | (sav[MMONEY+1] << 8) | sav[MMONEY+2]))
+print("\n")
+
+#sav[MONEY]   = 9999999 >> 16
+#sav[MONEY+1] = (9999999 >> 8) & 0xFF
+#sav[MONEY+2] = 9999999 & 0xFF
 
 sel = -1
 while sel != 0:
