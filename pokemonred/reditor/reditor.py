@@ -7,12 +7,12 @@ import os
 # globals
 outputfilename = 'newbag.sav'
 version = "0.0.3"
-item_count = {}
 item_names = {}
 eng_letter = {}
 longest_item = 0
 
 MAX_ITEMS = 20
+MAX_BOX_ITEMS = 50
 
 items = {
 	1: 'Master Ball',
@@ -250,7 +250,6 @@ def init_dicts_arrays():
 	global longest_item
 
 	for key in dict(items):
-		item_count[key] = 0
 		if len(items[key]) > longest_item: longest_item = len(items[key])
 		item_names[items[key]] = key
 
@@ -307,6 +306,8 @@ def menu(title, menu_items, orientation, left, count):
 def array_menu(array, max_items, item_type_filter):
 	sub_sel = -1
 	count = [0]
+	item_count = {}
+	for key in dict(items): item_count[key] = 0
 	while (sub_sel != 0):
 		sub_menu = ['Return']
 		for i in range(sav[array]):
@@ -322,6 +323,20 @@ def array_menu(array, max_items, item_type_filter):
 
 		if sub_sel == 0: break
 
+		while True:
+			try:
+				q = int(input('Quantity (1-99): '))
+				if q > 99 or q < 1:
+					print("\nOut of range. Try again...\n")
+					continue
+				break
+			except ValueError:
+				print("\nNot a number. Try again...\n")
+			except Exception as err:
+				print(f"Unexpected {err=}, {type(err)=}")
+				raise
+		print()
+
 		item = sub_menu[sub_sel].split(':')[0]
 		target_index = item_names[item]
 
@@ -335,7 +350,7 @@ def array_menu(array, max_items, item_type_filter):
 			sav[array + i*2 + 3] = 0xff
 			sav[array] += 1
 
-		sav[array + i*2 + 2] = 99
+		sav[array + i*2 + 2] = q
 
 	return
 
@@ -418,8 +433,10 @@ sel = -1
 while sel != 0:
 	main_menu = [
 		'Exit [and [over]write "' + outputfilename + '"]',
-		'Item', 
+		'Items', 
 		'Sort Items', 
+		'Box Items', 
+		'Sort Box Items', 
 		'[Over]write "' + outputfilename + '" and continue shopping',
 		'Abort! (all changes since last write lost)'
 	]
@@ -428,8 +445,10 @@ while sel != 0:
 
 	if sel == 1: array_menu(0x25C9, MAX_ITEMS, 'ITEM')
 	if sel == 2: array_sort(0x25C9, MAX_ITEMS, 'ITEM')
-	if sel == 3: writeout()
-	if sel == 4: sys.exit(0)
+	if sel == 3: array_menu(0x27E6, MAX_BOX_ITEMS, 'ITEM')
+	if sel == 4: array_sort(0x27E6, MAX_BOX_ITEMS, 'ITEM')
+	if sel == 5: writeout()
+	if sel == 6: sys.exit(0)
 
 writeout()
 sys.exit(0)
