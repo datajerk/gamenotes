@@ -2,6 +2,7 @@
 
 import sys
 import os
+import re
 
 
 # globals
@@ -376,6 +377,51 @@ def array_sort(array, max_items, item_type_filter):
 
 	return
 
+def text_edit(address, length, label):
+	letters = list(eng_index.values())
+	letters = [l for l in letters if l != '@']
+	allowed = ''.join(letters)
+	letters = [l.replace('[', '\[') for l in letters]
+	letters = [l.replace(']', '\]') for l in letters]
+	letters = [l.replace('-', '\-') for l in letters]
+
+	print('\nAllowed letters: \n\n' + allowed)
+	print('\nUse: + for gender femail, ^ for gender mail, % for PK, $ for MN, * for "times" symbol ("x")')
+	print("\nMax length: " + str(length))
+	print('\nCurrent ' + label + ': ',end='')
+
+	text = ''
+	for i in range(7):
+		if sav[address+i] == 0x50: break
+		text += eng_index[sav[address+i]]
+
+	print(text)
+	print()
+
+	while True:
+		try:
+			new = input('New ' + label + ': ')
+			if len(new) == 0:
+				print("\nNo Change\n\n")
+				return
+			if len(new) > length:
+				print("\nToo long, max length: " + str(length) + "\n")
+				continue
+			if not re.match("^[" + "".join(letters) + "]{1,7}$", new):
+				print("\nInvalid character(s)\n")
+				continue
+			break
+		except Exception as err:
+			print(f"Unexpected {err=}, {type(err)=}")
+			raise
+
+	for i in range(len(new)): sav[address+i] = eng_letter[new[i]]
+	sav[address+i+1] = 0x50
+	
+	print('\n')
+
+	return
+
 def writeout():
 	chksum = 0
 	for i in range(0x2598,0x3522+1): chksum += sav[i]
@@ -418,20 +464,26 @@ print("\nPokémon Red Offline Store v" + version)
 print("\nUSE AT YOUR OWN PERIL!!!\n")
 print("Let's go shopping!\n\n")
 
-print("Rival: ",end='')
-for i in range(7):
-	if sav[0x25F6+i] == 0x50: break
-	print(eng_index[sav[0x25F6+i]],end='')
-print('\n\n')
-
 sel = -1
 while sel != 0:
+	rival = ''
+	for i in range(7):
+		if sav[0x25F6+i] == 0x50: break
+		rival += eng_index[sav[0x25F6+i]]
+
+	myname = ''
+	for i in range(7):
+		if sav[0x2598+i] == 0x50: break
+		myname += eng_index[sav[0x2598+i]]
+
 	main_menu = [
 		'Exit [and [over]write "' + outputfilename + '"]',
 		'Items', 
 		'Sort Items', 
 		'Box Items', 
 		'Sort Box Items', 
+		'Edit Rival Name: ' + rival,
+		'Edit Protagonist Name: ' + myname,
 		'[Over]write "' + outputfilename + '" and continue shopping',
 		'Abort! (all changes since last write lost)'
 	]
@@ -442,8 +494,10 @@ while sel != 0:
 	if sel == 2: array_sort(0x25C9, MAX_ITEMS, 'ITEM')
 	if sel == 3: array_menu(0x27E6, MAX_BOX_ITEMS, 'ITEM')
 	if sel == 4: array_sort(0x27E6, MAX_BOX_ITEMS, 'ITEM')
-	if sel == 5: writeout()
-	if sel == 6: sys.exit(0)
+	if sel == 5: text_edit(0x25F6, 7, 'Rival')
+	if sel == 6: text_edit(0x2598, 7, 'Protagonist')
+	if sel == 7: writeout()
+	if sel == 8: sys.exit(0)
 
 writeout()
 sys.exit(0)
