@@ -8,7 +8,7 @@ import binascii
 
 # globals
 outputfilename = 'newbag.sav'
-version = "0.0.7"
+version = "0.0.8"
 item_names = {}
 eng_letter = {}
 longest_item = 0
@@ -510,6 +510,8 @@ except Exception as err:
 print("\nPokémon Red Offline Store v" + version)
 print("\nUSE AT YOUR OWN PERIL!!!\n")
 print("Let's go shopping!\n\n")
+
+print("Play time: {0:02d}:{1:02d}:{2:02d}\n".format(sav[0x2CED],sav[0x2CEF],sav[0x2CF0]))
 
 sel = -1
 while sel != 0:
