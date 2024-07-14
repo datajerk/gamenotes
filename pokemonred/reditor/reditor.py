@@ -381,9 +381,9 @@ def text_edit(address, length, label):
 	letters = list(eng_index.values())
 	letters = [l for l in letters if l != '@']
 	allowed = ''.join(letters)
-	letters = [l.replace('[', '\[') for l in letters]
-	letters = [l.replace(']', '\]') for l in letters]
-	letters = [l.replace('-', '\-') for l in letters]
+	letters = [l.replace('[', '\\[') for l in letters]
+	letters = [l.replace(']', '\\]') for l in letters]
+	letters = [l.replace('-', '\\-') for l in letters]
 
 	print('\nAllowed letters: \n\n' + allowed)
 	print('\nUse: + for gender femail, ^ for gender mail, % for PK, $ for MN, * for "times" symbol ("x")')
