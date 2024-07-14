@@ -7,7 +7,7 @@ import re
 
 # globals
 outputfilename = 'newbag.sav'
-version = "0.0.5"
+version = "0.0.6"
 item_names = {}
 eng_letter = {}
 longest_item = 0
