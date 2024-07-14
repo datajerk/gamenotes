@@ -6,7 +6,7 @@ import os
 
 # globals
 outputfilename = 'newbag.sav'
-version = "0.0.3"
+version = "0.0.4"
 item_names = {}
 eng_letter = {}
 longest_item = 0
@@ -153,11 +153,6 @@ items = {
 	248: 'TM48 Rock Slide',
 	249: 'TM49 Tri Attack',
 	250: 'TM50 Substitute',
-	251: 'TM51',
-	252: 'TM52',
-	253: 'TM53',
-	254: 'TM54',
-	255: 'TM55',
 }
 
 eng_index = {
@@ -221,17 +216,17 @@ eng_index = {
 	0xB8: 'y',
 	0xB9: 'z',
 	0xBA: 'é',
-	0xE1: '%',
-	0xE2: '$',
+	0xE1: '%', # PK
+	0xE2: '$', # MN
 	0xE3: '-',
 	0xE6: '?',
 	0xE7: '!',
-	0xEF: '^',
-	0xF1: '*',
+	0xEF: '^', # male symbol
+	0xF1: '*', # x (times symbol)
 	0xF2: '.',
 	0xF3: '/',
 	0xF4: ',',
-	0xF5: '+',
+	0xF5: '+', # female symbol
 	0xF6: '0',
 	0xF7: '1',
 	0xF8: '2',
@@ -292,7 +287,7 @@ def menu(title, menu_items, orientation, left, count):
 				print("\nOut of range. Try again...\n")
 				continue
 			if left == 0 and sel != 0 and count[sel] == 0:
-				print("\nBag full, 'return' is your only option. Try again...\n")
+				print("\nOut of new item space, try again...\n")
 				continue
 			break
 		except ValueError:
