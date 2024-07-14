@@ -8,7 +8,7 @@ import binascii
 
 # globals
 outputfilename = 'newbag.sav'
-version = "0.0.8"
+version = "0.0.9"
 item_names = {}
 eng_letter = {}
 longest_item = 0
@@ -535,6 +535,7 @@ while sel != 0:
 		'Edit Protagonist Name: ' + protagonist,
 		'Edit Rival Name: ' + rival,
 		'Edit Money: ' + binascii.hexlify(sav[0x25F3:0x25F3+3]).decode(),
+		'Edit Coins: ' + binascii.hexlify(sav[0x2850:0x2850+2]).decode(),
 		'[Over]write "' + outputfilename + '" and continue shopping',
 		'Abort! (all changes since last write lost)'
 	]
@@ -549,8 +550,9 @@ while sel != 0:
 	if sel == 6: text_edit(0x2598, 7, 'Protagonist')
 	if sel == 7: text_edit(0x25F6, 7, 'Rival')
 	if sel == 8: num_edit(0x25F3, 3, 'Money', 'bcd')
-	if sel == 9: writeout()
-	if sel == 10: sys.exit(0)
+	if sel == 9: num_edit(0x2850, 2, 'Coins', 'bcd')
+	if sel == 10: writeout()
+	if sel == 11: sys.exit(0)
 
 writeout()
 sys.exit(0)
