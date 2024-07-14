@@ -422,6 +422,49 @@ def text_edit(address, length, label):
 
 	return
 
+def num_edit(address, length, label, endian):
+	if endian == 'big':
+		mx = 0x100 ** length - 1
+		value = 0
+		for i in range(address,address+length): value = ((value << 8) | sav[i])
+	if endian == 'lit':
+		mx = 0x100 ** length - 1
+		value = 0
+		for i in range(address+length-1,address-1,-1): value = ((value << 8) | sav[i])
+	if endian == 'bcd':
+		mx = int("99" * length)
+		# TODO if ever, e.g. money is BCD
+
+	print('\nCurrent ' + label + ': ',end='')
+	print(str(value))
+	print()
+
+	while True:
+		try:
+			new = int(input('New ' + label + ' range(0-' + str(mx) + '): '))
+			if new > mx or new < 0:
+				print("\nOut of range. Try again...\n")
+				continue
+			break
+		except ValueError:
+			print("\nNot a number. Try again...\n")
+		except Exception as err:
+			print(f"Unexpected {err=}, {type(err)=}")
+			raise
+
+	if endian == 'big':
+		for i in range(address+length-1,address-1,-1):
+			sav[i] = new & 0xFF
+			new = (new >> 8)
+	if endian == 'lit':
+		for i in range(address,address+length):
+			sav[i] = new & 0xFF
+			new = (new >> 8)
+
+	print('\n')
+
+	return
+
 def writeout():
 	chksum = 0
 	for i in range(0x2598,0x3522+1): chksum += sav[i]
@@ -482,8 +525,9 @@ while sel != 0:
 		'Sort Items', 
 		'Box Items', 
 		'Sort Box Items', 
-		'Edit Rival Name: ' + rival,
+		'Edit ID: ' + str((sav[0x2605] << 8) | sav[0x2606]),
 		'Edit Protagonist Name: ' + protagonist,
+		'Edit Rival Name: ' + rival,
 		'[Over]write "' + outputfilename + '" and continue shopping',
 		'Abort! (all changes since last write lost)'
 	]
@@ -494,10 +538,11 @@ while sel != 0:
 	if sel == 2: array_sort(0x25C9, MAX_ITEMS, 'ITEM')
 	if sel == 3: array_menu(0x27E6, MAX_BOX_ITEMS, 'ITEM')
 	if sel == 4: array_sort(0x27E6, MAX_BOX_ITEMS, 'ITEM')
-	if sel == 5: text_edit(0x25F6, 7, 'Rival')
+	if sel == 5: num_edit(0x2605, 2, 'ID', 'big')
 	if sel == 6: text_edit(0x2598, 7, 'Protagonist')
-	if sel == 7: writeout()
-	if sel == 8: sys.exit(0)
+	if sel == 7: text_edit(0x25F6, 7, 'Rival')
+	if sel == 8: writeout()
+	if sel == 9: sys.exit(0)
 
 writeout()
 sys.exit(0)
