@@ -3,11 +3,12 @@
 import sys
 import os
 import re
+import binascii
 
 
 # globals
 outputfilename = 'newbag.sav'
-version = "0.0.6"
+version = "0.0.7"
 item_names = {}
 eng_letter = {}
 longest_item = 0
@@ -433,7 +434,7 @@ def num_edit(address, length, label, endian):
 		for i in range(address+length-1,address-1,-1): value = ((value << 8) | sav[i])
 	if endian == 'bcd':
 		mx = int("99" * length)
-		# TODO if ever, e.g. money is BCD
+		value = int(binascii.hexlify(sav[address:address+length]).decode())
 
 	print('\nCurrent ' + label + ': ',end='')
 	print(str(value))
@@ -452,6 +453,9 @@ def num_edit(address, length, label, endian):
 			print(f"Unexpected {err=}, {type(err)=}")
 			raise
 
+	if endian == 'bcd':
+		new = int('0x' + str(new),16)
+		endian = 'big'
 	if endian == 'big':
 		for i in range(address+length-1,address-1,-1):
 			sav[i] = new & 0xFF
@@ -528,6 +532,7 @@ while sel != 0:
 		'Edit ID: ' + str((sav[0x2605] << 8) | sav[0x2606]),
 		'Edit Protagonist Name: ' + protagonist,
 		'Edit Rival Name: ' + rival,
+		'Edit Money: ' + binascii.hexlify(sav[0x25F3:0x25F3+3]).decode(),
 		'[Over]write "' + outputfilename + '" and continue shopping',
 		'Abort! (all changes since last write lost)'
 	]
@@ -541,8 +546,9 @@ while sel != 0:
 	if sel == 5: num_edit(0x2605, 2, 'ID', 'big')
 	if sel == 6: text_edit(0x2598, 7, 'Protagonist')
 	if sel == 7: text_edit(0x25F6, 7, 'Rival')
-	if sel == 8: writeout()
-	if sel == 9: sys.exit(0)
+	if sel == 8: num_edit(0x25F3, 3, 'Money', 'bcd')
+	if sel == 9: writeout()
+	if sel == 10: sys.exit(0)
 
 writeout()
 sys.exit(0)
