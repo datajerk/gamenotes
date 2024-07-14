@@ -7,7 +7,7 @@ import re
 
 # globals
 outputfilename = 'newbag.sav'
-version = "0.0.4"
+version = "0.0.5"
 item_names = {}
 eng_letter = {}
 longest_item = 0
@@ -471,10 +471,10 @@ while sel != 0:
 		if sav[0x25F6+i] == 0x50: break
 		rival += eng_index[sav[0x25F6+i]]
 
-	myname = ''
+	protagonist = ''
 	for i in range(7):
 		if sav[0x2598+i] == 0x50: break
-		myname += eng_index[sav[0x2598+i]]
+		protagonist += eng_index[sav[0x2598+i]]
 
 	main_menu = [
 		'Exit [and [over]write "' + outputfilename + '"]',
@@ -483,7 +483,7 @@ while sel != 0:
 		'Box Items', 
 		'Sort Box Items', 
 		'Edit Rival Name: ' + rival,
-		'Edit Protagonist Name: ' + myname,
+		'Edit Protagonist Name: ' + protagonist,
 		'[Over]write "' + outputfilename + '" and continue shopping',
 		'Abort! (all changes since last write lost)'
 	]
