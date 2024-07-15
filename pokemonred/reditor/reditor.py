@@ -8,7 +8,7 @@ import binascii
 
 # globals
 outputfilename = 'newbag.sav'
-version = "0.0.9"
+version = "0.0.10"
 item_names = {}
 eng_letter = {}
 longest_item = 0
@@ -241,6 +241,354 @@ eng_index = {
 	0xFF: '9',
 }
 
+sid_index = {
+	0:(-1,"'M (glitch)"),
+	1:(112,"Rhydon"),
+	2:(115,"Kangaskhan"),
+	3:(32,"Nidoran♂"),
+	4:(35,"Clefairy"),
+	5:(21,"Spearow"),
+	6:(100,"Voltorb"),
+	7:(34,"Nidoking"),
+	8:(80,"Slowbro"),
+	9:(2,"Ivysaur"),
+	10:(103,"Exeggutor"),
+	11:(108,"Lickitung"),
+	12:(102,"Exeggcute"),
+	13:(88,"Grimer"),
+	14:(94,"Gengar"),
+	15:(29,"Nidoran♀"),
+	16:(31,"Nidoqueen"),
+	17:(104,"Cubone"),
+	18:(111,"Rhyhorn"),
+	19:(131,"Lapras"),
+	20:(59,"Arcanine"),
+	21:(151,"Mew"),
+	22:(130,"Gyarados"),
+	23:(90,"Shellder"),
+	24:(72,"Tentacool"),
+	25:(92,"Gastly"),
+	26:(123,"Scyther"),
+	27:(120,"Staryu"),
+	28:(9,"Blastoise"),
+	29:(127,"Pinsir"),
+	30:(114,"Tangela"),
+	31:(-1,"Missing No. (Gyaoon)"),
+	32:(-1,"Missing No. (Nidoran♂-like Pokémon)"),
+	33:(58,"Growlithe"),
+	34:(95,"Onix"),
+	35:(22,"Fearow"),
+	36:(16,"Pidgey"),
+	37:(79,"Slowpoke"),
+	38:(64,"Kadabra"),
+	39:(75,"Graveler"),
+	40:(113,"Chansey"),
+	41:(67,"Machoke"),
+	42:(122,"Mr. Mime"),
+	43:(106,"Hitmonlee"),
+	44:(107,"Hitmonchan"),
+	45:(24,"Arbok"),
+	46:(47,"Parasect"),
+	47:(54,"Psyduck"),
+	48:(96,"Drowzee"),
+	49:(76,"Golem"),
+	50:(-1,"Missing No. (Balloonda)"),
+	51:(126,"Magmar"),
+	52:(-1,"Missing No. (Buu)"),
+	53:(125,"Electabuzz"),
+	54:(82,"Magneton"),
+	55:(109,"Koffing"),
+	56:(-1,"Missing No. (Deer)"),
+	57:(56,"Mankey"),
+	58:(86,"Seel"),
+	59:(50,"Diglett"),
+	60:(128,"Tauros"),
+	61:(-1,"Missing No. (Elephant Pokémon)"),
+	62:(-1,"Missing No. (Crocky)"),
+	63:(-1,"Missing No. (Squid Pokémon 1)"),
+	64:(83,"Farfetch'd"),
+	65:(48,"Venonat"),
+	66:(149,"Dragonite"),
+	67:(-1,"Missing No. (Cactus)"),
+	68:(-1,"Missing No. (Jaggu)"),
+	69:(-1,"Missing No. (Zubat pre-evo)"),
+	70:(84,"Doduo"),
+	71:(60,"Poliwag"),
+	72:(124,"Jynx"),
+	73:(146,"Moltres"),
+	74:(144,"Articuno"),
+	75:(145,"Zapdos"),
+	76:(132,"Ditto"),
+	77:(52,"Meowth"),
+	78:(98,"Krabby"),
+	79:(-1,"Missing No. (Fish Pokémon 1)"),
+	80:(-1,"Missing No. (Fish Pokémon 2)"),
+	81:(-1,"Missing No. (Vulpix pre-evo)"),
+	82:(37,"Vulpix"),
+	83:(38,"Ninetales"),
+	84:(25,"Pikachu"),
+	85:(26,"Raichu"),
+	86:(-1,"Missing No. (Frog-like Pokémon 1)"),
+	87:(-1,"Missing No. (Frog-like Pokémon 2)"),
+	88:(147,"Dratini"),
+	89:(148,"Dragonair"),
+	90:(140,"Kabuto"),
+	91:(141,"Kabutops"),
+	92:(116,"Horsea"),
+	93:(117,"Seadra"),
+	94:(-1,"Missing No. (Lizard Pokémon 2)"),
+	95:(-1,"Missing No. (Lizard Pokémon 3)"),
+	96:(27,"Sandshrew"),
+	97:(28,"Sandslash"),
+	98:(138,"Omanyte"),
+	99:(139,"Omastar"),
+	100:(39,"Jigglypuff"),
+	101:(40,"Wigglytuff"),
+	102:(133,"Eevee"),
+	103:(136,"Flareon"),
+	104:(135,"Jolteon"),
+	105:(134,"Vaporeon"),
+	106:(66,"Machop"),
+	107:(41,"Zubat"),
+	108:(23,"Ekans"),
+	109:(46,"Paras"),
+	110:(61,"Poliwhirl"),
+	111:(62,"Poliwrath"),
+	112:(13,"Weedle"),
+	113:(14,"Kakuna"),
+	114:(15,"Beedrill"),
+	115:(-1,"Missing No. [Unknown]"),
+	116:(85,"Dodrio"),
+	117:(57,"Primeape"),
+	118:(51,"Dugtrio"),
+	119:(49,"Venomoth"),
+	120:(87,"Dewgong"),
+	121:(-1,"Missing No. [Unknown]"),
+	122:(-1,"Missing No. (Squid Pokémon 2)"),
+	123:(10,"Caterpie"),
+	124:(11,"Metapod"),
+	125:(12,"Butterfree"),
+	126:(68,"Machamp"),
+	127:(-1,"Missing No. (Golduck mid-evo)"),
+	128:(55,"Golduck"),
+	129:(97,"Hypno"),
+	130:(42,"Golbat"),
+	131:(150,"Mewtwo"),
+	132:(143,"Snorlax"),
+	133:(129,"Magikarp"),
+	134:(-1,"Missing No. (Meowth pre-evo)"),
+	135:(-1,"Missing No. [Unknown]"),
+	136:(89,"Muk"),
+	137:(-1,"Missing No. (Gyaoon pre-evo)"),
+	138:(99,"Kingler"),
+	139:(91,"Cloyster"),
+	140:(-1,"Missing No. (Magneton-like Pokémon)"),
+	141:(101,"Electrode"),
+	142:(36,"Clefable"),
+	143:(110,"Weezing"),
+	144:(53,"Persian"),
+	145:(105,"Marowak"),
+	146:(-1,"Missing No. (Marowak evo)"),
+	147:(93,"Haunter"),
+	148:(63,"Abra"),
+	149:(65,"Alakazam"),
+	150:(17,"Pidgeotto"),
+	151:(18,"Pidgeot"),
+	152:(121,"Starmie"),
+	153:(1,"Bulbasaur"),
+	154:(3,"Venusaur"),
+	155:(73,"Tentacruel"),
+	156:(-1,"Missing No. (Goldeen pre-evo)"),
+	157:(118,"Goldeen"),
+	158:(119,"Seaking"),
+	159:(-1,"Missing No. (Kotora)"),
+	160:(-1,"Missing No. (Raitora)"),
+	161:(-1,"Missing No. (Raitora evo)"),
+	162:(-1,"Missing No. (Ponyta pre-evo)"),
+	163:(77,"Ponyta"),
+	164:(78,"Rapidash"),
+	165:(19,"Rattata"),
+	166:(20,"Raticate"),
+	167:(33,"Nidorino"),
+	168:(30,"Nidorina"),
+	169:(74,"Geodude"),
+	170:(137,"Porygon"),
+	171:(142,"Aerodactyl"),
+	172:(-1,"Missing No. (Blastoise-like Pokémon)"),
+	173:(81,"Magnemite"),
+	174:(-1,"Missing No. (Lizard Pokémon 1)"),
+	175:(-1,"Missing No. (Gorochu)"),
+	176:(4,"Charmander"),
+	177:(7,"Squirtle"),
+	178:(5,"Charmeleon"),
+	179:(8,"Wartortle"),
+	180:(6,"Charizard"),
+	181:(-1,"Missing No. (Original Wartortle evo)"),
+	182:(-1,"Missing No. (Kabutops Fossil)"),
+	183:(-1,"Missing No. (Aerodactyl Fossil)"),
+	184:(-1,"Missing No. (Pokémon Tower Ghost)"),
+	185:(43,"Oddish"),
+	186:(44,"Gloom"),
+	187:(45,"Vileplume"),
+	188:(69,"Bellsprout"),
+	189:(70,"Weepinbell"),
+	190:(71,"Victreebel"),
+}
+
+sid_national = {
+	1:(153,"Bulbasaur"),
+	2:(9,"Ivysaur"),
+	3:(154,"Venusaur"),
+	4:(176,"Charmander"),
+	5:(178,"Charmeleon"),
+	6:(180,"Charizard"),
+	7:(177,"Squirtle"),
+	8:(179,"Wartortle"),
+	9:(28,"Blastoise"),
+	10:(123,"Caterpie"),
+	11:(124,"Metapod"),
+	12:(125,"Butterfree"),
+	13:(112,"Weedle"),
+	14:(113,"Kakuna"),
+	15:(114,"Beedrill"),
+	16:(36,"Pidgey"),
+	17:(150,"Pidgeotto"),
+	18:(151,"Pidgeot"),
+	19:(165,"Rattata"),
+	20:(166,"Raticate"),
+	21:(5,"Spearow"),
+	22:(35,"Fearow"),
+	23:(108,"Ekans"),
+	24:(45,"Arbok"),
+	25:(84,"Pikachu"),
+	26:(85,"Raichu"),
+	27:(96,"Sandshrew"),
+	28:(97,"Sandslash"),
+	29:(15,"Nidoran♀"),
+	30:(168,"Nidorina"),
+	31:(16,"Nidoqueen"),
+	32:(3,"Nidoran♂"),
+	33:(167,"Nidorino"),
+	34:(7,"Nidoking"),
+	35:(4,"Clefairy"),
+	36:(142,"Clefable"),
+	37:(82,"Vulpix"),
+	38:(83,"Ninetales"),
+	39:(100,"Jigglypuff"),
+	40:(101,"Wigglytuff"),
+	41:(107,"Zubat"),
+	42:(130,"Golbat"),
+	43:(185,"Oddish"),
+	44:(186,"Gloom"),
+	45:(187,"Vileplume"),
+	46:(109,"Paras"),
+	47:(46,"Parasect"),
+	48:(65,"Venonat"),
+	49:(119,"Venomoth"),
+	50:(59,"Diglett"),
+	51:(118,"Dugtrio"),
+	52:(77,"Meowth"),
+	53:(144,"Persian"),
+	54:(47,"Psyduck"),
+	55:(128,"Golduck"),
+	56:(57,"Mankey"),
+	57:(117,"Primeape"),
+	58:(33,"Growlithe"),
+	59:(20,"Arcanine"),
+	60:(71,"Poliwag"),
+	61:(110,"Poliwhirl"),
+	62:(111,"Poliwrath"),
+	63:(148,"Abra"),
+	64:(38,"Kadabra"),
+	65:(149,"Alakazam"),
+	66:(106,"Machop"),
+	67:(41,"Machoke"),
+	68:(126,"Machamp"),
+	69:(188,"Bellsprout"),
+	70:(189,"Weepinbell"),
+	71:(190,"Victreebel"),
+	72:(24,"Tentacool"),
+	73:(155,"Tentacruel"),
+	74:(169,"Geodude"),
+	75:(39,"Graveler"),
+	76:(49,"Golem"),
+	77:(163,"Ponyta"),
+	78:(164,"Rapidash"),
+	79:(37,"Slowpoke"),
+	80:(8,"Slowbro"),
+	81:(173,"Magnemite"),
+	82:(54,"Magneton"),
+	83:(64,"Farfetch'd"),
+	84:(70,"Doduo"),
+	85:(116,"Dodrio"),
+	86:(58,"Seel"),
+	87:(120,"Dewgong"),
+	88:(13,"Grimer"),
+	89:(136,"Muk"),
+	90:(23,"Shellder"),
+	91:(139,"Cloyster"),
+	92:(25,"Gastly"),
+	93:(147,"Haunter"),
+	94:(14,"Gengar"),
+	95:(34,"Onix"),
+	96:(48,"Drowzee"),
+	97:(129,"Hypno"),
+	98:(78,"Krabby"),
+	99:(138,"Kingler"),
+	100:(6,"Voltorb"),
+	101:(141,"Electrode"),
+	102:(12,"Exeggcute"),
+	103:(10,"Exeggutor"),
+	104:(17,"Cubone"),
+	105:(145,"Marowak"),
+	106:(43,"Hitmonlee"),
+	107:(44,"Hitmonchan"),
+	108:(11,"Lickitung"),
+	109:(55,"Koffing"),
+	110:(143,"Weezing"),
+	111:(18,"Rhyhorn"),
+	112:(1,"Rhydon"),
+	113:(40,"Chansey"),
+	114:(30,"Tangela"),
+	115:(2,"Kangaskhan"),
+	116:(92,"Horsea"),
+	117:(93,"Seadra"),
+	118:(157,"Goldeen"),
+	119:(158,"Seaking"),
+	120:(27,"Staryu"),
+	121:(152,"Starmie"),
+	122:(42,"Mr. Mime"),
+	123:(26,"Scyther"),
+	124:(72,"Jynx"),
+	125:(53,"Electabuzz"),
+	126:(51,"Magmar"),
+	127:(29,"Pinsir"),
+	128:(60,"Tauros"),
+	129:(133,"Magikarp"),
+	130:(22,"Gyarados"),
+	131:(19,"Lapras"),
+	132:(76,"Ditto"),
+	133:(102,"Eevee"),
+	134:(105,"Vaporeon"),
+	135:(104,"Jolteon"),
+	136:(103,"Flareon"),
+	137:(170,"Porygon"),
+	138:(98,"Omanyte"),
+	139:(99,"Omastar"),
+	140:(90,"Kabuto"),
+	141:(91,"Kabutops"),
+	142:(171,"Aerodactyl"),
+	143:(132,"Snorlax"),
+	144:(74,"Articuno"),
+	145:(75,"Zapdos"),
+	146:(73,"Moltres"),
+	147:(88,"Dratini"),
+	148:(89,"Dragonair"),
+	149:(66,"Dragonite"),
+	150:(131,"Mewtwo"),
+	151:(21,"Mew"),
+}
+
 # functions
 
 def init_dicts_arrays():
@@ -469,6 +817,62 @@ def num_edit(address, length, label, endian):
 
 	return
 
+def dump_boxes():
+	def dump_box(address):
+		count = sav[address]
+
+		for i, j in enumerate(range(count)):
+			sid = sav[address + 1 + j]
+			level = sav[address + 0x16 + j * 0x21 + 0x03]
+			if sid == 0xFF: break
+			print("{0:02d}. {2:03d} L{4:02d} {3}".format(i+1,sid,sid_index[sid][0],sid_index[sid][1],level))
+		print()
+
+	print()
+
+	for box in range(0,12):
+		base = 0x4000
+		address = base + box * 0x462
+		if box > 5:
+			base = 0x6000
+			address = base + (box - 6) * 0x462
+
+		if box == (sav[0x284C] & 0x7F): address = 0x30C0
+
+		count = sav[address]
+		if count == 0: continue
+
+		print("Pokémon Box " + str(box + 1),end='')
+		if box == (sav[0x284C] & 0x7F): print(" [Current]",end='')
+		print()
+		print()
+
+		dump_box(address)
+
+
+	print()
+
+	return
+
+def pokedex():
+	owned = int.from_bytes(sav[0x25A3:0x25A3+0x13], byteorder='little')
+	seen  = int.from_bytes(sav[0x25B6:0x25B6+0x13], byteorder='little')
+
+	print()
+
+	for nid in dict(sid_national):
+		o = s = "-"
+		if owned & 1: o = "O"
+		if seen & 1: s = "S"
+		owned >>= 1
+		seen >>= 1
+		print("{0:03d}. {1} {2} {3}".format(nid,s,o,sid_national[nid][1]))
+
+	print()
+	print()
+
+	return
+
 def writeout():
 	chksum = 0
 	for i in range(0x2598,0x3522+1): chksum += sav[i]
@@ -536,6 +940,8 @@ while sel != 0:
 		'Edit Rival Name: ' + rival,
 		'Edit Money: ' + binascii.hexlify(sav[0x25F3:0x25F3+3]).decode(),
 		'Edit Coins: ' + binascii.hexlify(sav[0x2850:0x2850+2]).decode(),
+		"Bill's PC",
+		'Pokédex',
 		'[Over]write "' + outputfilename + '" and continue shopping',
 		'Abort! (all changes since last write lost)'
 	]
@@ -551,8 +957,10 @@ while sel != 0:
 	if sel == 7: text_edit(0x25F6, 7, 'Rival')
 	if sel == 8: num_edit(0x25F3, 3, 'Money', 'bcd')
 	if sel == 9: num_edit(0x2850, 2, 'Coins', 'bcd')
-	if sel == 10: writeout()
-	if sel == 11: sys.exit(0)
+	if sel == 10: dump_boxes()
+	if sel == 11: pokedex()
+	if sel == 12: writeout()
+	if sel == 13: sys.exit(0)
 
 writeout()
 sys.exit(0)
