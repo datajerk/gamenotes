@@ -526,7 +526,7 @@ while sel != 0:
 		protagonist += eng_index[sav[0x2598+i]]
 
 	main_menu = [
-		'Exit [and [over]write "' + outputfilename + '"]',
+		'Exit (and [over]write "' + outputfilename + '")',
 		'Items', 
 		'Sort Items', 
 		'Box Items', 
