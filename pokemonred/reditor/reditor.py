@@ -435,7 +435,7 @@ sid_index = {
 	190:(71,"Victreebel"),
 }
 
-sid_national = {
+nid_index = {
 	1:(153,"Bulbasaur"),
 	2:(9,"Ivysaur"),
 	3:(154,"Venusaur"),
@@ -855,18 +855,19 @@ def dump_boxes():
 	return
 
 def pokedex():
-	owned = int.from_bytes(sav[0x25A3:0x25A3+0x13], byteorder='little')
-	seen  = int.from_bytes(sav[0x25B6:0x25B6+0x13], byteorder='little')
+	own  = int.from_bytes(sav[0x25A3:0x25A3+0x13], byteorder='little')
+	seen = int.from_bytes(sav[0x25B6:0x25B6+0x13], byteorder='little')
 
 	print()
+	print("Seen: {0:d} Own: {1:d}\n".format(seen.bit_count(),own.bit_count()))
 
-	for nid in dict(sid_national):
+	for nid in dict(nid_index):
 		o = s = "-"
-		if owned & 1: o = "O"
+		if own & 1: o = "O"
 		if seen & 1: s = "S"
-		owned >>= 1
+		own >>= 1
 		seen >>= 1
-		print("{0:03d}. {1} {2} {3}".format(nid,s,o,sid_national[nid][1]))
+		print("{0:03d}. {1} {2} {3}".format(nid,s,o,nid_index[nid][1]))
 
 	print()
 	print()
