@@ -825,7 +825,7 @@ def dump_boxes():
 			sid = sav[address + 1 + j]
 			level = sav[address + 0x16 + j * 0x21 + 0x03]
 			if sid == 0xFF: break
-			print("{0:02d}. {2:03d} L{4:02d} {3}".format(i+1,sid,sid_index[sid][0],sid_index[sid][1],level))
+			print("{0:02d}. {2:03d} L{4:03d} {3}".format(i+1,sid,sid_index[sid][0],sid_index[sid][1],level))
 		print()
 
 	print()
@@ -848,7 +848,6 @@ def dump_boxes():
 		print()
 
 		dump_box(address)
-
 
 	print()
 
@@ -883,8 +882,44 @@ def party():
 		sid = sav[address + 1 + i]
 		level = sav[address + 0x8 + i * 0x2C + 0x21]
 		if sid == 0xFF: break
-		print("{0:02d}. {2:03d} L{4:02d} {3}".format(i+1,sid,sid_index[sid][0],sid_index[sid][1],level))
+		print("{0:02d}. {2:03d} L{4:03d} {3}".format(i+1,sid,sid_index[sid][0],sid_index[sid][1],level))
 	print()
+	print()
+
+	return
+
+def edit_grass():
+	mx = 100
+
+	print('Current Grass:\n')
+	for i in range(0x2B34, 0x2B34 + 0xB + 0x9,2):
+		print("L{0:03d} {1}".format(sav[i],sid_index[sav[i+1]][1]))
+	print()
+
+	nid_list = ['Return']
+	for nid in dict(nid_index):
+		nid_list.append(nid_index[nid][1])
+
+	sel = menu('Edit Grass (next Pokémon in Grass)',nid_list,1,1,[])
+	if sel == 0: return
+
+	while True:
+		try:
+			level = int(input('Level (1-' + str(mx) + '): '))
+			if level > mx or level < 1:
+				print("\nOut of range. Try again...\n")
+				continue
+			break
+		except ValueError:
+			print("\nNot a number. Try again...\n")
+		except Exception as err:
+			print(f"Unexpected {err=}, {type(err)=}")
+			raise
+
+	for i in range(0x2B34, 0x2B34 + 0xB + 0x9,2):
+		sav[i] = level
+		sav[i+1] = nid_index[sel][0]
+
 	print()
 
 	return
@@ -956,6 +991,7 @@ while sel != 0:
 		'Edit Rival Name: ' + rival,
 		'Edit Money: ' + binascii.hexlify(sav[0x25F3:0x25F3+3]).decode(),
 		'Edit Coins: ' + binascii.hexlify(sav[0x2850:0x2850+2]).decode(),
+		'Edit Grass (Save while in Grass first)',
 		"Bill's PC",
 		'Pokédex',
 		'Party',
@@ -974,11 +1010,12 @@ while sel != 0:
 	if sel == 7: text_edit(0x25F6, 7, 'Rival')
 	if sel == 8: num_edit(0x25F3, 3, 'Money', 'bcd')
 	if sel == 9: num_edit(0x2850, 2, 'Coins', 'bcd')
-	if sel == 10: dump_boxes()
-	if sel == 11: pokedex()
-	if sel == 12: party()
-	if sel == 13: writeout()
-	if sel == 14: sys.exit(0)
+	if sel == 10: edit_grass()
+	if sel == 11: dump_boxes()
+	if sel == 12: pokedex()
+	if sel == 13: party()
+	if sel == 14: writeout()
+	if sel == 15: sys.exit(0)
 
 writeout()
 sys.exit(0)
