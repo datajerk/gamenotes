@@ -8,7 +8,7 @@ import binascii
 
 # globals
 outputfilename = 'newbag.sav'
-version = "0.0.10"
+version = "0.0.11"
 item_names = {}
 eng_letter = {}
 longest_item = 0
@@ -992,9 +992,9 @@ while sel != 0:
 		'Edit Money: ' + binascii.hexlify(sav[0x25F3:0x25F3+3]).decode(),
 		'Edit Coins: ' + binascii.hexlify(sav[0x2850:0x2850+2]).decode(),
 		'Edit Grass (Save while in Grass first)',
-		"Bill's PC",
-		'Pokédex',
-		'Party',
+		"Bill's PC (read only)",
+		'Pokédex (read only)',
+		'Party (read only)',
 		'[Over]write "' + outputfilename + '" and continue shopping',
 		'Abort! (all changes since last write lost)'
 	]
