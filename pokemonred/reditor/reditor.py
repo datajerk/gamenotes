@@ -874,6 +874,21 @@ def pokedex():
 
 	return
 
+def party():
+	address = 0x2F2C
+	count = sav[address]
+
+	print()
+	for i in range(count):
+		sid = sav[address + 1 + i]
+		level = sav[address + 0x8 + i * 0x2C + 0x21]
+		if sid == 0xFF: break
+		print("{0:02d}. {2:03d} L{4:02d} {3}".format(i+1,sid,sid_index[sid][0],sid_index[sid][1],level))
+	print()
+	print()
+
+	return
+
 def writeout():
 	chksum = 0
 	for i in range(0x2598,0x3522+1): chksum += sav[i]
@@ -943,6 +958,7 @@ while sel != 0:
 		'Edit Coins: ' + binascii.hexlify(sav[0x2850:0x2850+2]).decode(),
 		"Bill's PC",
 		'Pokédex',
+		'Party',
 		'[Over]write "' + outputfilename + '" and continue shopping',
 		'Abort! (all changes since last write lost)'
 	]
@@ -960,8 +976,9 @@ while sel != 0:
 	if sel == 9: num_edit(0x2850, 2, 'Coins', 'bcd')
 	if sel == 10: dump_boxes()
 	if sel == 11: pokedex()
-	if sel == 12: writeout()
-	if sel == 13: sys.exit(0)
+	if sel == 12: party()
+	if sel == 13: writeout()
+	if sel == 14: sys.exit(0)
 
 writeout()
 sys.exit(0)
