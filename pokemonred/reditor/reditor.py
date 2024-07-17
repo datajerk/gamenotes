@@ -4,11 +4,11 @@ import sys
 import os
 import re
 import binascii
-
+import collections
 
 # globals
 outputfilename = 'newbag.sav'
-version = "0.12.0"
+version = "0.13.0"
 item_names = {}
 eng_letter = {}
 longest_item = 0
@@ -856,6 +856,9 @@ def dump_boxes():
 def pokedex():
 	own  = int.from_bytes(sav[0x25A3:0x25A3+0x13], byteorder='little')
 	seen = int.from_bytes(sav[0x25B6:0x25B6+0x13], byteorder='little')
+	by_name = {}
+	nid_list = []
+	name_list = []
 
 	print()
 	print("Seen: {0:d} Own: {1:d}\n".format(seen.bit_count(),own.bit_count()))
@@ -866,7 +869,15 @@ def pokedex():
 		if seen & 1: s = "S"
 		own >>= 1
 		seen >>= 1
-		print("{0:03d}. {1} {2} {3}".format(nid,s,o,nid_index[nid][1]))
+		str="{0:03d}. {1} {2} {3}".format(nid,s,o,nid_index[nid][1])
+		by_name[nid_index[nid][1]] = str
+		nid_list.append(str)
+
+	name_list = list(collections.OrderedDict(sorted(by_name.items())).values())
+
+	maxlen = len(max(nid_list, key=len))
+	for i,j in zip(nid_list, name_list):
+		print("%s\t%s" % (i.ljust(maxlen, " "), j))
 
 	print()
 	print()
