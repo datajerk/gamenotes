@@ -8,7 +8,7 @@ import binascii
 
 # globals
 outputfilename = 'newbag.sav'
-version = "0.0.11"
+version = "0.12.0"
 item_names = {}
 eng_letter = {}
 longest_item = 0
@@ -840,7 +840,7 @@ def dump_boxes():
 		if box == (sav[0x284C] & 0x7F): address = 0x30C0
 
 		count = sav[address]
-		if count == 0: continue
+		if count == 0 and box != (sav[0x284C] & 0x7F): continue
 
 		print("Pokémon Box " + str(box + 1),end='')
 		if box == (sav[0x284C] & 0x7F): print(" [Current]",end='')
