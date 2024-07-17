@@ -8,7 +8,7 @@ import collections
 
 # globals
 outputfilename = 'newbag.sav'
-version = "0.13.0"
+version = "0.14.0"
 item_names = {}
 eng_letter = {}
 longest_item = 0
@@ -853,6 +853,41 @@ def dump_boxes():
 
 	return
 
+def box_by_name():
+	by_name = []
+
+	print()
+
+	for box in range(0,12):
+		base = 0x4000
+		address = base + box * 0x462
+		if box > 5:
+			base = 0x6000
+			address = base + (box - 6) * 0x462
+
+		if box == (sav[0x284C] & 0x7F): address = 0x30C0
+
+		count = sav[address]
+		if count == 0: continue
+
+		current = " "
+		if box == (sav[0x284C] & 0x7F): current = "C"
+
+		for i, j in enumerate(range(count)):
+			sid = sav[address + 1 + j]
+			level = sav[address + 0x16 + j * 0x21 + 0x03]
+			if sid == 0xFF: break
+			by_name.append("{5:02d} {6} {0:02d}. {2:03d} L{4:03d} {3}".format(i+1,sid,sid_index[sid][0],sid_index[sid][1],level,box+1,current))
+
+	by_name.sort(key = lambda x: x[17:])
+	for i in by_name:
+		print(i)
+
+	print()
+	print()
+
+	return
+
 def pokedex():
 	own  = int.from_bytes(sav[0x25A3:0x25A3+0x13], byteorder='little')
 	seen = int.from_bytes(sav[0x25B6:0x25B6+0x13], byteorder='little')
@@ -1003,7 +1038,8 @@ while sel != 0:
 		'Edit Money: ' + binascii.hexlify(sav[0x25F3:0x25F3+3]).decode(),
 		'Edit Coins: ' + binascii.hexlify(sav[0x2850:0x2850+2]).decode(),
 		'Edit Grass (Save while in Grass first)',
-		"Bill's PC (read only)",
+		"Bill's PC [by box] (read only)",
+		"Bill's PC [by name] (read only)",
 		'Pokédex (read only)',
 		'Party (read only)',
 		'[Over]write "' + outputfilename + '" and continue shopping',
@@ -1023,10 +1059,11 @@ while sel != 0:
 	if sel == 9: num_edit(0x2850, 2, 'Coins', 'bcd')
 	if sel == 10: edit_grass()
 	if sel == 11: dump_boxes()
-	if sel == 12: pokedex()
-	if sel == 13: party()
-	if sel == 14: writeout()
-	if sel == 15: sys.exit(0)
+	if sel == 12: box_by_name()
+	if sel == 13: pokedex()
+	if sel == 14: party()
+	if sel == 15: writeout()
+	if sel == 16: sys.exit(0)
 
 writeout()
 sys.exit(0)
