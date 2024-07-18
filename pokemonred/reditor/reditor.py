@@ -8,10 +8,11 @@ import collections
 
 # globals
 outputfilename = 'newbag.sav'
-version = "0.14.0"
+version = "0.15.0"
 item_names = {}
 eng_letter = {}
 longest_item = 0
+pokeball = '◓'
 
 MAX_ITEMS = 20
 MAX_BOX_ITEMS = 50
@@ -899,8 +900,8 @@ def pokedex():
 	print("Seen: {0:d} Own: {1:d}\n".format(seen.bit_count(),own.bit_count()))
 
 	for nid in dict(nid_index):
-		o = s = "-"
-		if own & 1: o = "O"
+		o = s = " "
+		if own & 1: o = pokeball
 		if seen & 1: s = "S"
 		own >>= 1
 		seen >>= 1
@@ -934,19 +935,47 @@ def party():
 
 	return
 
-def edit_grass():
+def edit_wild(address,wild_type):
 	mx = 100
+	probs = [25, 15, 15, 10, 10, 10, 5, 5, 4, 1]
+	longest = len(max(list(zip(*list(nid_index.values())))[1], key = len))
+	rates = {}
+	levels = {}
+	nid = {}
+	own  = int.from_bytes(sav[0x25A3:0x25A3+0x13], byteorder='little')
 
-	print('Current Grass:\n')
-	for i in range(0x2B34, 0x2B34 + 0xB + 0x9,2):
-		print("L{0:03d} {1}".format(sav[i],sid_index[sav[i+1]][1]))
+	print('Current ' + wild_type + ' Table:\n')
+	for p, i in enumerate(range(address, address + 0xB + 0x9,2)):
+		if sid_index[sav[i+1]][1] in rates.keys():
+			rates[sid_index[sav[i+1]][1]] += probs[p]
+		else:
+			rates[sid_index[sav[i+1]][1]] = probs[p]
+		if sid_index[sav[i+1]][1] in levels.keys():
+			levels[sid_index[sav[i+1]][1]] += ", "
+			levels[sid_index[sav[i+1]][1]] += str(sav[i])
+		else:
+			levels[sid_index[sav[i+1]][1]] = str(sav[i])
+		nid[sid_index[sav[i+1]][1]] = sid_index[sav[i+1]][0]
+		format_string = "L{0:03d} {1:" + str(longest) + "s}  {2:2d}%"
+		print(format_string.format(sav[i],sid_index[sav[i+1]][1],probs[p]))
+	print()
+
+	longest_levels = len(max(list(levels.values()), key=len))
+	print('Current ' + wild_type + ' Rate:\n')
+	for i in dict(sorted(rates.items(), key=lambda item: item[1],reverse=True)):
+		format_string  = "{3} {4:03d}. {0:" + str(longest) + "s}  "
+		format_string += "{1:" + str(longest_levels) + "s}   "
+		format_string += "{2:2d}%"
+		ball = ' '
+		if own & (1 << (nid[i] - 1)): ball = pokeball
+		print(format_string.format(i, levels[i], rates[i], ball, nid[i]))
 	print()
 
 	nid_list = ['Return']
 	for nid in dict(nid_index):
 		nid_list.append(nid_index[nid][1])
 
-	sel = menu('Edit Grass (next Pokémon in Grass)',nid_list,1,1,[])
+	sel = menu('Select next ' + wild_type + ' Pokémon:',nid_list,1,1,[])
 	if sel == 0: return
 
 	while True:
@@ -962,7 +991,7 @@ def edit_grass():
 			print(f"Unexpected {err=}, {type(err)=}")
 			raise
 
-	for i in range(0x2B34, 0x2B34 + 0xB + 0x9,2):
+	for i in range(address, address + 0xB + 0x9,2):
 		sav[i] = level
 		sav[i+1] = nid_index[sel][0]
 
@@ -1037,7 +1066,8 @@ while sel != 0:
 		'Edit Rival Name: ' + rival,
 		'Edit Money: ' + binascii.hexlify(sav[0x25F3:0x25F3+3]).decode(),
 		'Edit Coins: ' + binascii.hexlify(sav[0x2850:0x2850+2]).decode(),
-		'Edit Grass (Save while in Grass first)',
+		'Edit Wild Pokémon Table',
+		'Edit Surf Pokémon Table',
 		"Bill's PC [by box] (read only)",
 		"Bill's PC [by name] (read only)",
 		'Pokédex (read only)',
@@ -1057,13 +1087,14 @@ while sel != 0:
 	if sel == 7: text_edit(0x25F6, 7, 'Rival')
 	if sel == 8: num_edit(0x25F3, 3, 'Money', 'bcd')
 	if sel == 9: num_edit(0x2850, 2, 'Coins', 'bcd')
-	if sel == 10: edit_grass()
-	if sel == 11: dump_boxes()
-	if sel == 12: box_by_name()
-	if sel == 13: pokedex()
-	if sel == 14: party()
-	if sel == 15: writeout()
-	if sel == 16: sys.exit(0)
+	if sel == 10: edit_wild(0x2B34,'Wild')
+	if sel == 11: edit_wild(0x2B51,'Surf')
+	if sel == 12: dump_boxes()
+	if sel == 13: box_by_name()
+	if sel == 14: pokedex()
+	if sel == 15: party()
+	if sel == 16: writeout()
+	if sel == 17: sys.exit(0)
 
 writeout()
 sys.exit(0)
