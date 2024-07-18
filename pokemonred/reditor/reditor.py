@@ -8,7 +8,7 @@ import collections
 
 # globals
 outputfilename = 'newbag.sav'
-version = "0.15.0"
+version = "0.16.0"
 item_names = {}
 eng_letter = {}
 longest_item = 0
@@ -735,13 +735,13 @@ def text_edit(address, length, label):
 	letters = [l.replace(']', '\\]') for l in letters]
 	letters = [l.replace('-', '\\-') for l in letters]
 
-	print('\nAllowed letters: \n\n' + allowed)
+	print('Allowed letters: \n\n' + allowed)
 	print('\nUse: + for gender femail, ^ for gender mail, % for PK, $ for MN, * for "times" symbol ("x")')
 	print("\nMax length: " + str(length))
 	print('\nCurrent ' + label + ': ',end='')
 
 	text = ''
-	for i in range(7):
+	for i in range(length):
 		if sav[address+i] == 0x50: break
 		text += eng_index[sav[address+i]]
 
@@ -757,7 +757,7 @@ def text_edit(address, length, label):
 			if len(new) > length:
 				print("\nToo long, max length: " + str(length) + "\n")
 				continue
-			if not re.match("^[" + "".join(letters) + "]{1,7}$", new):
+			if not re.match("^[" + "".join(letters) + "]{1," + str(length) + "}$", new):
 				print("\nInvalid character(s)\n")
 				continue
 			break
@@ -768,7 +768,7 @@ def text_edit(address, length, label):
 	for i in range(len(new)): sav[address+i] = eng_letter[new[i]]
 	sav[address+i+1] = 0x50
 	
-	print('\n')
+	print()
 
 	return
 
@@ -924,14 +924,22 @@ def party():
 	address = 0x2F2C
 	count = sav[address]
 
-	print()
-	for i in range(count):
-		sid = sav[address + 1 + i]
-		level = sav[address + 0x8 + i * 0x2C + 0x21]
-		if sid == 0xFF: break
-		print("{0:02d}. {2:03d} L{4:03d} {3}".format(i+1,sid,sid_index[sid][0],sid_index[sid][1],level))
-	print()
-	print()
+	while True:
+		party_list = ['Return']
+
+		for i in range(count):
+			sid = sav[address + 1 + i]
+			level = sav[address + 0x8 + i * 0x2C + 0x21]
+			if sid == 0xFF: break
+			name = ''
+			for j in range(0xB):
+				if sav[address + 0x152 + i * 0xB + j] == 0x50: break
+				name += eng_index[sav[address + 0x152 + i * 0xB + j]]
+			party_list.append("{2:03d} L{4:03d} {3:11s} {5}".format(i+1,sid,sid_index[sid][0],sid_index[sid][1],level,name))
+
+		sel = menu('Select Pokémon to Rename:',party_list,0,1,[])
+		if sel == 0: return
+		text_edit(address + 0x152 + (sel-1) * 0xB, 0xB, 'Name')
 
 	return
 
@@ -1055,47 +1063,102 @@ while sel != 0:
 		if sav[0x2598+i] == 0x50: break
 		protagonist += eng_index[sav[0x2598+i]]
 
-	main_menu = [
-		'Exit (and [over]write "' + outputfilename + '")',
-		'Items', 
-		'Sort Items', 
-		'Box Items', 
-		'Sort Box Items', 
-		'Edit ID: ' + str((sav[0x2605] << 8) | sav[0x2606]),
-		'Edit Protagonist Name: ' + protagonist,
-		'Edit Rival Name: ' + rival,
-		'Edit Money: ' + binascii.hexlify(sav[0x25F3:0x25F3+3]).decode(),
-		'Edit Coins: ' + binascii.hexlify(sav[0x2850:0x2850+2]).decode(),
-		'Edit Wild Pokémon Table',
-		'Edit Surf Pokémon Table',
-		"Bill's PC [by box] (read only)",
-		"Bill's PC [by name] (read only)",
-		'Pokédex (read only)',
-		'Party (read only)',
-		'[Over]write "' + outputfilename + '" and continue shopping',
-		'Abort! (all changes since last write lost)'
+	menu_array = [
+		(
+			'Exit (and [over]write "' + outputfilename + '")',
+			writeout,
+			[]
+		),
+		(
+			'Items', 
+			array_menu,
+			[0x25C9, MAX_ITEMS, 'ITEM']
+		),
+		(
+			'Sort Items', 
+			array_sort,
+			[0x25C9, MAX_ITEMS, 'ITEM']
+		),
+		(
+			'Box Items', 
+			array_menu,
+			[0x27E6, MAX_BOX_ITEMS, 'ITEM']
+		),
+		(
+			'Sort Box Items', 
+			array_sort,
+			[0x27E6, MAX_BOX_ITEMS, 'ITEM']
+		),
+		(
+			'Edit ID: ' + str((sav[0x2605] << 8) | sav[0x2606]),
+			num_edit,
+			[0x2605, 2, 'ID', 'big']
+		),
+		(
+			'Edit Protagonist Name: ' + protagonist,
+			text_edit,
+			[0x2598, 7, 'Protagonist']
+		),
+		(
+			'Edit Rival Name: ' + rival,
+			text_edit,
+			[0x25F6, 7, 'Rival']
+		),
+		(
+			'Edit Money: ' + binascii.hexlify(sav[0x25F3:0x25F3+3]).decode(),
+			num_edit,
+			[0x25F3, 3, 'Money', 'bcd']
+		),
+		(
+			'Edit Coins: ' + binascii.hexlify(sav[0x2850:0x2850+2]).decode(),
+			num_edit,
+			[0x2850, 2, 'Coins', 'bcd']
+		),
+		(
+			'Edit Wild Pokémon Table',
+			edit_wild,
+			[0x2B34, 'Wild']
+		),
+		(
+			'Edit Surf Pokémon Table',
+			edit_wild,
+			[0x2B51, 'Surf']
+		),
+		(
+			'Edit Party Names',
+			party,
+			[]
+		),
+		(
+			"Bill's PC [by box] (read only)",
+			dump_boxes,
+			[]
+		),
+		(
+			"Bill's PC [by name] (read only)",
+			box_by_name,
+			[]
+		),
+		(
+			'Pokédex (read only)',
+			pokedex,
+			[]
+		),
+		(
+			'[Over]write "' + outputfilename + '" and continue shopping',
+			writeout,
+			[]
+		),
+		(
+			'Abort! (all changes since last write lost)',
+			sys.exit,
+			[0]
+		),
 	]
 
+	main_menu = [x[0] for x in menu_array]
 	sel = menu('Main Menu',main_menu,0,1,[])
+	menu_array[sel][1](*menu_array[sel][2])
 
-	if sel == 1: array_menu(0x25C9, MAX_ITEMS, 'ITEM')
-	if sel == 2: array_sort(0x25C9, MAX_ITEMS, 'ITEM')
-	if sel == 3: array_menu(0x27E6, MAX_BOX_ITEMS, 'ITEM')
-	if sel == 4: array_sort(0x27E6, MAX_BOX_ITEMS, 'ITEM')
-	if sel == 5: num_edit(0x2605, 2, 'ID', 'big')
-	if sel == 6: text_edit(0x2598, 7, 'Protagonist')
-	if sel == 7: text_edit(0x25F6, 7, 'Rival')
-	if sel == 8: num_edit(0x25F3, 3, 'Money', 'bcd')
-	if sel == 9: num_edit(0x2850, 2, 'Coins', 'bcd')
-	if sel == 10: edit_wild(0x2B34,'Wild')
-	if sel == 11: edit_wild(0x2B51,'Surf')
-	if sel == 12: dump_boxes()
-	if sel == 13: box_by_name()
-	if sel == 14: pokedex()
-	if sel == 15: party()
-	if sel == 16: writeout()
-	if sel == 17: sys.exit(0)
-
-writeout()
 sys.exit(0)
 
