@@ -8,7 +8,7 @@ import collections
 
 # globals
 outputfilename = 'newbag.sav'
-version = "0.16.0"
+version = "0.17.0"
 item_names = {}
 eng_letter = {}
 longest_item = 0
@@ -854,6 +854,56 @@ def dump_boxes():
 
 	return
 
+def mew():
+	for box in range(0,12):
+		base = 0x4000
+		address = base + box * 0x462
+		if box > 5:
+			base = 0x6000
+			address = base + (box - 6) * 0x462
+		#if box == (sav[0x284C] & 0x7F): continue
+		if box == (sav[0x284C] & 0x7F): address = 0x30C0
+		count = sav[address]
+		if count < 20: break
+
+	if box == 11 and count == 20:
+		print('All Boxes Full!')
+		return
+
+	sav[address] = count + 1
+	# data pulled from public sav file
+	sid = 21
+	data = [21, 0, 25, 5, 0, 24, 24, 45, 1, 0, 0, 0, 0, 199, 0, 0, 135, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 161, 197, 35, 0, 0, 0]
+	# protagonist ID
+	data[0xC] = sav[0x2605]
+	data[0xD] = sav[0x2606]
+	# trainer = [152, 142, 146, 135, 136, 145, 128, 80, 80, 80, 80]
+	# rename to protagonist name
+	trainer = [0x50] * 0xB
+	for i in range(0xB):
+		if sav[0x2598+i] == 0x50: break
+		trainer[i] = sav[0x2598+i]
+	name = [140, 132, 150, 80, 80, 80, 80, 80, 80, 80, 80]
+
+	sid = sav[address + 1 + count] = 21
+	for i, j in enumerate(data):
+		sav[address + 0x16 + count * 0x21 + i] = j
+	for i, j in enumerate(trainer):
+		sav[address + 0x2AA + count * 0xB + i] = j
+	for i, j in enumerate(name):
+		sav[address + 0x386 + count * 0xB + i] = j
+
+	own  = int.from_bytes(sav[0x25A3:0x25A3+0x13], byteorder='little')
+	own |= (1 << (151 - 1))
+	for i, j in enumerate(own.to_bytes(0x13, 'little')): sav[0x25A3+i] = j
+	seen = int.from_bytes(sav[0x25B6:0x25B6+0x13], byteorder='little')
+	seen |= (1 << (151 - 1))
+	for i, j in enumerate(seen.to_bytes(0x13, 'little')): sav[0x25B6+i] = j
+
+	print('Mew added to Pokédex and Box {}, Row {}\n'.format(box+1,count+1))
+
+	return
+
 def box_by_name():
 	by_name = []
 
@@ -1127,6 +1177,11 @@ while sel != 0:
 		(
 			'Edit Party Names',
 			party,
+			[]
+		),
+		(
+			"Add Mew",
+			mew,
 			[]
 		),
 		(
