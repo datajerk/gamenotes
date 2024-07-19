@@ -873,7 +873,8 @@ def mew():
 	sav[address] = count + 1
 	# data pulled from public sav file
 	sid = 21
-	data = [21, 0, 25, 5, 0, 24, 24, 45, 1, 0, 0, 0, 0, 199, 0, 0, 135, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 161, 197, 35, 0, 0, 0]
+	#data = [21, 0, 25, 5, 0, 24, 24, 45, 1, 0, 0, 0, 0, 199, 0, 0, 135, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 161, 197, 35, 0, 0, 0]
+	data = [21, 0, 31, 7, 0, 24, 24, 45, 1, 0, 0, 0, 0, 199, 0, 0, 236, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 161, 197, 35, 0, 0, 0]
 	# protagonist ID
 	data[0xC] = sav[0x2605]
 	data[0xD] = sav[0x2606]
@@ -885,7 +886,8 @@ def mew():
 		trainer[i] = sav[0x2598+i]
 	name = [140, 132, 150, 80, 80, 80, 80, 80, 80, 80, 80]
 
-	sid = sav[address + 1 + count] = 21
+	sav[address + 1 + count] = 21
+	sav[address + 1 + count + 1] = 0xFF
 	for i, j in enumerate(data):
 		sav[address + 0x16 + count * 0x21 + i] = j
 	for i, j in enumerate(trainer):
