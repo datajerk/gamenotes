@@ -8,7 +8,7 @@ import collections
 
 # globals
 outputfilename = 'newbag.sav'
-version = "0.17.0"
+version = "0.17.1"
 item_names = {}
 eng_letter = {}
 longest_item = 0
@@ -991,7 +991,7 @@ def party():
 
 		sel = menu('Select Pokémon to Rename:',party_list,0,1,[])
 		if sel == 0: return
-		text_edit(address + 0x152 + (sel-1) * 0xB, 0xB, 'Name')
+		text_edit(address + 0x152 + (sel-1) * 0xB, 0xA, 'Name')
 
 	return
 
