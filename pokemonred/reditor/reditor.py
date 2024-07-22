@@ -8,7 +8,7 @@ import collections
 
 # globals
 outputfilename = 'newbag.sav'
-version = "0.17.1"
+version = "1.0.0"
 item_names = {}
 eng_letter = {}
 longest_item = 0
@@ -1097,7 +1097,7 @@ except Exception as err:
 	print(f"Unexpected {err=}, {type(err)=}")
 	raise
 
-print("\nPokémon Red Offline Store v" + version)
+print("\nPokémon Red/Blue/Yellow Savefile Editor v" + version)
 print("\nUSE AT YOUR OWN PERIL!!!\n")
 print("Let's go shopping!\n\n")
 
