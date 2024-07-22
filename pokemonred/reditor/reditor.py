@@ -1099,8 +1099,6 @@ except Exception as err:
 
 print("\nPokémon Red/Blue/Yellow Savefile Editor v" + version)
 print("\nUSE AT YOUR OWN PERIL!!!\n")
-print("Let's go shopping!\n\n")
-
 print("Play time: {0:02d}:{1:02d}:{2:02d}\n".format(sav[0x2CED],sav[0x2CEF],sav[0x2CF0]))
 
 sel = -1
