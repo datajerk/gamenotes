@@ -8,7 +8,7 @@ import collections
 
 # globals
 outputfilename = 'newbag.sav'
-version = "1.0.0"
+version = "0.9.0"
 item_names = {}
 eng_letter = {}
 longest_item = 0
@@ -219,6 +219,7 @@ eng_index = {
 	0xB8: 'y',
 	0xB9: 'z',
 	0xBA: 'é',
+	0xE0: "'",
 	0xE1: '%', # PK
 	0xE2: '$', # MN
 	0xE3: '-',
@@ -651,11 +652,12 @@ def menu(title, menu_items, orientation, left, count):
 
 def array_menu(array, max_items, item_type_filter):
 	sub_sel = -1
-	count = [0]
-	item_count = {}
-	for key in dict(items): item_count[key] = 0
 	while (sub_sel != 0):
+		count = [0]
+		item_count = {}
+		for key in dict(items): item_count[key] = 0
 		sub_menu = ['Return']
+
 		for i in range(sav[array]):
 			item_index = sav[array + i*2 + 1]
 			item_count[item_index] = sav[array + i*2 + 2]
@@ -671,8 +673,8 @@ def array_menu(array, max_items, item_type_filter):
 
 		while True:
 			try:
-				q = int(input('Quantity (1-99): '))
-				if q > 99 or q < 1:
+				q = int(input('Quantity (0-99): '))
+				if q > 99 or q < 0:
 					print("\nOut of range. Try again...\n")
 					continue
 				break
@@ -690,13 +692,24 @@ def array_menu(array, max_items, item_type_filter):
 			item_index = sav[array + i*2 + 1]
 			if target_index == item_index: break
 
+		# append
 		if target_index != item_index:
+			if q == 0: continue
 			i += 1
 			sav[array + i*2 + 1] = target_index
 			sav[array + i*2 + 3] = 0xff
 			sav[array] += 1
 
-		sav[array + i*2 + 2] = q
+		# update
+		if q > 0:
+			sav[array + i*2 + 2] = q
+			continue
+
+		# delete
+		for i in range(i, sav[array]):
+			sav[array + i*2 + 1] = sav[array + i*2 + 3]
+			sav[array + i*2 + 2] = sav[array + i*2 + 4]
+		sav[array] -= 1
 
 	return
 
@@ -736,7 +749,7 @@ def text_edit(address, length, label):
 	letters = [l.replace('-', '\\-') for l in letters]
 
 	print('Allowed letters: \n\n' + allowed)
-	print('\nUse: + for gender femail, ^ for gender mail, % for PK, $ for MN, * for "times" symbol ("x")')
+	print('\nUse: + for ♀ (female), ^ for ♂ (male), % for PK, $ for MN, * for x (times symbol)')
 	print("\nMax length: " + str(length))
 	print('\nCurrent ' + label + ': ',end='')
 
@@ -824,9 +837,16 @@ def dump_boxes():
 
 		for i, j in enumerate(range(count)):
 			sid = sav[address + 1 + j]
-			level = sav[address + 0x16 + j * 0x21 + 0x03]
 			if sid == 0xFF: break
-			print("{0:02d}. {2:03d} L{4:03d} {3}".format(i+1,sid,sid_index[sid][0],sid_index[sid][1],level))
+			level = sav[address + 0x16 + j * 0x21 + 0x03]
+			name = ''
+			for k in range(10):
+				if sav[address + 0x386 + j * 0xB + k] == 0x50: break
+				name += eng_index[sav[address + 0x386 + j * 0xB + k]]
+			name = name.replace('+','♀')
+			name = name.replace('^','♂')
+			if sid_index[sid][1].casefold() == name.casefold(): name = ''
+			print("{0:02d}. {2:03d} L{4:03d} {3:12s}{5}".format(i+1,sid,sid_index[sid][0],sid_index[sid][1],level,name))
 		print()
 
 	print()
@@ -928,9 +948,16 @@ def box_by_name():
 
 		for i, j in enumerate(range(count)):
 			sid = sav[address + 1 + j]
-			level = sav[address + 0x16 + j * 0x21 + 0x03]
 			if sid == 0xFF: break
-			by_name.append("{5:02d} {6} {0:02d}. {2:03d} L{4:03d} {3}".format(i+1,sid,sid_index[sid][0],sid_index[sid][1],level,box+1,current))
+			level = sav[address + 0x16 + j * 0x21 + 0x03]
+			name = ''
+			for k in range(10):
+				if sav[address + 0x386 + j * 0xB + k] == 0x50: break
+				name += eng_index[sav[address + 0x386 + j * 0xB + k]]
+			name = name.replace('+','♀')
+			name = name.replace('^','♂')
+			if sid_index[sid][1].casefold() == name.casefold(): name = ''
+			by_name.append("{5:02d} {6} {0:02d}. {2:03d} L{4:03d} {3:12s}{7}".format(i+1,sid,sid_index[sid][0],sid_index[sid][1],level,box+1,current,name))
 
 	by_name.sort(key = lambda x: x[17:])
 	for i in by_name:
@@ -987,11 +1014,35 @@ def party():
 			for j in range(0xB):
 				if sav[address + 0x152 + i * 0xB + j] == 0x50: break
 				name += eng_index[sav[address + 0x152 + i * 0xB + j]]
+			name = name.replace('+','♀')
+			name = name.replace('^','♂')
 			party_list.append("{2:03d} L{4:03d} {3:11s} {5}".format(i+1,sid,sid_index[sid][0],sid_index[sid][1],level,name))
 
 		sel = menu('Select Pokémon to Rename:',party_list,0,1,[])
 		if sel == 0: return
 		text_edit(address + 0x152 + (sel-1) * 0xB, 0xA, 'Name')
+
+	return
+
+def hof():
+	address = 0x0598
+	count = sav[0x284E]
+
+	for i in range(count):
+		print("Hall of Fame " + str(i+1))
+		print()
+		for j in range(6):
+			sid   = sav[address + 0x10 * i + j * 0x10]
+			level = sav[address + 0x10 * i + j * 0x10 + 0x01]
+			n     =     address + 0x10 * i + j * 0x10 + 0x02
+			name = ''
+			for k in range(0xA):
+				if sav[n + k] == 0x50: break
+				name += eng_index[sav[n + k]]
+			name = name.replace('+','♀')
+			name = name.replace('^','♂')
+			print("{2:03d} L{4:03d} {3:11s} {5}".format(j+1,sid,sid_index[sid][0],sid_index[sid][1],level,name))
+		print()
 
 	return
 
@@ -1107,11 +1158,15 @@ while sel != 0:
 	for i in range(7):
 		if sav[0x25F6+i] == 0x50: break
 		rival += eng_index[sav[0x25F6+i]]
+	rival = rival.replace('+','♀')
+	rival = rival.replace('^','♂')
 
 	protagonist = ''
 	for i in range(7):
 		if sav[0x2598+i] == 0x50: break
 		protagonist += eng_index[sav[0x2598+i]]
+	protagonist = protagonist.replace('+','♀')
+	protagonist = protagonist.replace('^','♂')
 
 	menu_array = [
 		(
@@ -1147,12 +1202,12 @@ while sel != 0:
 		(
 			'Edit Protagonist Name: ' + protagonist,
 			text_edit,
-			[0x2598, 7, 'Protagonist']
+			[0x2598, 7, 'Protagonist Name']
 		),
 		(
 			'Edit Rival Name: ' + rival,
 			text_edit,
-			[0x25F6, 7, 'Rival']
+			[0x25F6, 7, 'Rival Name']
 		),
 		(
 			'Edit Money: ' + binascii.hexlify(sav[0x25F3:0x25F3+3]).decode(),
@@ -1163,6 +1218,11 @@ while sel != 0:
 			'Edit Coins: ' + binascii.hexlify(sav[0x2850:0x2850+2]).decode(),
 			num_edit,
 			[0x2850, 2, 'Coins', 'bcd']
+		),
+		(
+			'Edit Pikachu Friendship (Yellow): ' + str(sav[0x271C]),
+			num_edit,
+			[0x271C, 1, 'Friendship', 'lit']
 		),
 		(
 			'Edit Wild Pokémon Table',
@@ -1180,11 +1240,6 @@ while sel != 0:
 			[]
 		),
 		(
-			"Add Mew",
-			mew,
-			[]
-		),
-		(
 			"Bill's PC [by box] (read only)",
 			dump_boxes,
 			[]
@@ -1197,6 +1252,11 @@ while sel != 0:
 		(
 			'Pokédex (read only)',
 			pokedex,
+			[]
+		),
+		(
+			'Hall of Fame (read only)',
+			hof,
 			[]
 		),
 		(
