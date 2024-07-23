@@ -8,7 +8,7 @@ import collections
 
 # globals
 outputfilename = 'newbag.sav'
-version = "0.9.0"
+version = "0.10.0"
 item_names = {}
 eng_letter = {}
 longest_item = 0
@@ -752,13 +752,7 @@ def text_edit(address, length, label):
 	print('\nUse: + for ♀ (female), ^ for ♂ (male), % for PK, $ for MN, * for x (times symbol)')
 	print("\nMax length: " + str(length))
 	print('\nCurrent ' + label + ': ',end='')
-
-	text = ''
-	for i in range(length):
-		if sav[address+i] == 0x50: break
-		text += eng_index[sav[address+i]]
-
-	print(text)
+	print(poketoascii(address,length))
 	print()
 
 	while True:
@@ -839,12 +833,7 @@ def dump_boxes():
 			sid = sav[address + 1 + j]
 			if sid == 0xFF: break
 			level = sav[address + 0x16 + j * 0x21 + 0x03]
-			name = ''
-			for k in range(10):
-				if sav[address + 0x386 + j * 0xB + k] == 0x50: break
-				name += eng_index[sav[address + 0x386 + j * 0xB + k]]
-			name = name.replace('+','♀')
-			name = name.replace('^','♂')
+			name = poketoascii(address + 0x386 + j * 0xB,10)
 			if sid_index[sid][1].casefold() == name.casefold(): name = ''
 			print("{0:02d}. {2:03d} L{4:03d} {3:12s}{5}".format(i+1,sid,sid_index[sid][0],sid_index[sid][1],level,name))
 		print()
@@ -950,12 +939,7 @@ def box_by_name():
 			sid = sav[address + 1 + j]
 			if sid == 0xFF: break
 			level = sav[address + 0x16 + j * 0x21 + 0x03]
-			name = ''
-			for k in range(10):
-				if sav[address + 0x386 + j * 0xB + k] == 0x50: break
-				name += eng_index[sav[address + 0x386 + j * 0xB + k]]
-			name = name.replace('+','♀')
-			name = name.replace('^','♂')
+			name = poketoascii(address + 0x386 + j * 0xB, 10)
 			if sid_index[sid][1].casefold() == name.casefold(): name = ''
 			by_name.append("{5:02d} {6} {0:02d}. {2:03d} L{4:03d} {3:12s}{7}".format(i+1,sid,sid_index[sid][0],sid_index[sid][1],level,box+1,current,name))
 
@@ -968,12 +952,46 @@ def box_by_name():
 
 	return
 
+def box_party_nids():
+	a = [0] * 152
+
+	for box in range(0,12):
+		base = 0x4000
+		address = base + box * 0x462
+		if box > 5:
+			base = 0x6000
+			address = base + (box - 6) * 0x462
+
+		if box == (sav[0x284C] & 0x7F): address = 0x30C0
+
+		count = sav[address]
+		if count == 0: continue
+
+		current = " "
+		if box == (sav[0x284C] & 0x7F): current = "C"
+
+		for i, j in enumerate(range(count)):
+			sid = sav[address + 1 + j]
+			if sid == 0xFF: break
+			a[sid_index[sid][0]] = 1
+
+	address = 0x2F2C
+	count = sav[address]
+
+	for i in range(count):
+		sid = sav[address + 1 + i]
+		if sid == 0xFF: break
+		a[sid_index[sid][0]] = 1
+
+	return a
+
 def pokedex():
 	own  = int.from_bytes(sav[0x25A3:0x25A3+0x13], byteorder='little')
 	seen = int.from_bytes(sav[0x25B6:0x25B6+0x13], byteorder='little')
 	by_name = {}
 	nid_list = []
 	name_list = []
+	nids = box_party_nids()
 
 	print()
 	print("Seen: {0:d} Own: {1:d}\n".format(seen.bit_count(),own.bit_count()))
@@ -982,9 +1000,11 @@ def pokedex():
 		o = s = " "
 		if own & 1: o = pokeball
 		if seen & 1: s = "S"
+		n = '☐'
+		if nids[nid] == 1: n = '■'
 		own >>= 1
 		seen >>= 1
-		str="{0:03d}. {1} {2} {3}".format(nid,s,o,nid_index[nid][1])
+		str="{0:03d}. {1} {4} {2} {3}".format(nid,s,o,nid_index[nid][1],n)
 		by_name[nid_index[nid][1]] = str
 		nid_list.append(str)
 
@@ -1008,14 +1028,9 @@ def party():
 
 		for i in range(count):
 			sid = sav[address + 1 + i]
-			level = sav[address + 0x8 + i * 0x2C + 0x21]
 			if sid == 0xFF: break
-			name = ''
-			for j in range(0xB):
-				if sav[address + 0x152 + i * 0xB + j] == 0x50: break
-				name += eng_index[sav[address + 0x152 + i * 0xB + j]]
-			name = name.replace('+','♀')
-			name = name.replace('^','♂')
+			level = sav[address + 0x8 + i * 0x2C + 0x21]
+			name = poketoascii(address + 0x152 + i * 0xB,10)
 			party_list.append("{2:03d} L{4:03d} {3:11s} {5}".format(i+1,sid,sid_index[sid][0],sid_index[sid][1],level,name))
 
 		sel = menu('Select Pokémon to Rename:',party_list,0,1,[])
@@ -1035,12 +1050,7 @@ def hof():
 			sid   = sav[address + 0x10 * i + j * 0x10]
 			level = sav[address + 0x10 * i + j * 0x10 + 0x01]
 			n     =     address + 0x10 * i + j * 0x10 + 0x02
-			name = ''
-			for k in range(0xA):
-				if sav[n + k] == 0x50: break
-				name += eng_index[sav[n + k]]
-			name = name.replace('+','♀')
-			name = name.replace('^','♂')
+			name = poketoascii(n,10)
 			print("{2:03d} L{4:03d} {3:11s} {5}".format(j+1,sid,sid_index[sid][0],sid_index[sid][1],level,name))
 		print()
 
@@ -1110,6 +1120,16 @@ def edit_wild(address,wild_type):
 
 	return
 
+def poketoascii(address,length):
+	s = ''
+	for i in range(length):
+		if sav[address+i] == 0x50: break
+		s += eng_index[sav[address+i]]
+	s = s.replace('+','♀')
+	s = s.replace('^','♂')
+
+	return s
+
 def writeout():
 	chksum = 0
 	for i in range(0x2598,0x3522+1): chksum += sav[i]
@@ -1154,20 +1174,6 @@ print("Play time: {0:02d}:{1:02d}:{2:02d}\n".format(sav[0x2CED],sav[0x2CEF],sav[
 
 sel = -1
 while sel != 0:
-	rival = ''
-	for i in range(7):
-		if sav[0x25F6+i] == 0x50: break
-		rival += eng_index[sav[0x25F6+i]]
-	rival = rival.replace('+','♀')
-	rival = rival.replace('^','♂')
-
-	protagonist = ''
-	for i in range(7):
-		if sav[0x2598+i] == 0x50: break
-		protagonist += eng_index[sav[0x2598+i]]
-	protagonist = protagonist.replace('+','♀')
-	protagonist = protagonist.replace('^','♂')
-
 	menu_array = [
 		(
 			'Exit (and [over]write "' + outputfilename + '")',
@@ -1200,12 +1206,12 @@ while sel != 0:
 			[0x2605, 2, 'ID', 'big']
 		),
 		(
-			'Edit Protagonist Name: ' + protagonist,
+			'Edit Protagonist Name: ' + poketoascii(0x2598,7),
 			text_edit,
 			[0x2598, 7, 'Protagonist Name']
 		),
 		(
-			'Edit Rival Name: ' + rival,
+			'Edit Rival Name: ' + poketoascii(0x25F6,7),
 			text_edit,
 			[0x25F6, 7, 'Rival Name']
 		),
