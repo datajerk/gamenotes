@@ -8,7 +8,7 @@ import collections
 
 # globals
 outputfilename = 'newbag.sav'
-version = "0.10.0"
+version = "0.10.1"
 item_names = {}
 eng_letter = {}
 longest_item = 0
@@ -1266,7 +1266,7 @@ while sel != 0:
 			[]
 		),
 		(
-			'[Over]write "' + outputfilename + '" and continue shopping',
+			'[Over]write "' + outputfilename + '" and continue editing',
 			writeout,
 			[]
 		),
