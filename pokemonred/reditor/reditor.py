@@ -7,8 +7,8 @@ import binascii
 import collections
 
 # globals
-outputfilename = 'newbag.sav'
-version = "0.11.0"
+outputfilename = 'newpack.sav'
+version = "0.12.0"
 item_names = {}
 eng_letter = {}
 longest_item = 0
@@ -669,7 +669,7 @@ def array_menu(array, max_items, item_type_filter):
 			sub_menu.append(format_string.format(items[item_index] + ':', item_count[item_index]))
 			count.append(item_count[item_index])
 
-		sub_sel = menu(main_menu[sel] + ' Menu (Select ' + main_menu[sel] + ' to increase to 99), ' + str(sav[array]) + ' of ' + str(max_items) + ' array elements assigned',sub_menu,1,max_items - sav[array],count)
+		sub_sel = menu(main_menu[sel] + ' Menu (Select ' + main_menu[sel] + ' to Edit, ' + str(sav[array]) + ' of ' + str(max_items) + ' array elements assigned',sub_menu,1,max_items - sav[array],count)
 
 		if sub_sel == 0: break
 
@@ -955,7 +955,8 @@ def box_by_name():
 	return
 
 def box_party_nids():
-	a = [0] * 152
+	#a = [0] * 152
+	a = ['☐'] * 152
 
 	for box in range(0,12):
 		base = 0x4000
@@ -975,7 +976,8 @@ def box_party_nids():
 		for i, j in enumerate(range(count)):
 			sid = sav[address + 1 + j]
 			if sid == 0xFF: break
-			a[sid_index[sid][0]] = 1
+			#a[sid_index[sid][0]] = 1
+			a[sid_index[sid][0]] = '■'
 
 	address = 0x2F2C
 	count = sav[address]
@@ -983,7 +985,8 @@ def box_party_nids():
 	for i in range(count):
 		sid = sav[address + 1 + i]
 		if sid == 0xFF: break
-		a[sid_index[sid][0]] = 1
+		#a[sid_index[sid][0]] = 1
+		a[sid_index[sid][0]] = '●'
 
 	return a
 
@@ -996,14 +999,15 @@ def pokedex():
 	nids = box_party_nids()
 
 	print()
-	print("Seen: {0:d} Own: {1:d}\n".format(seen.bit_count(),own.bit_count()))
+	print("Seen: {0:d} Owned: {1:d}\n".format(seen.bit_count(),own.bit_count()))
 
 	for nid in dict(nid_index):
 		o = s = " "
 		if own & 1: o = pokeball
 		if seen & 1: s = "S"
-		n = '☐'
-		if nids[nid] == 1: n = '■'
+		#n = '☐'
+		#if nids[nid] == 1: n = '■'
+		n = nids[nid]
 		own >>= 1
 		seen >>= 1
 		str="{0:03d}. {1} {4} {2} {3}".format(nid,s,o,nid_index[nid][1],n)
@@ -1172,17 +1176,41 @@ def playtime():
 
 	return
 
-def dump_events():
-	event_bits = int.from_bytes(sav[0x29F3:0x29F3+0x140], byteorder='little')
+def toggle_events():
+	while True:
+		event_bits = bits = int.from_bytes(sav[0x29F3:0x29F3+0x140], byteorder='little')
 
-	for i in range(0x140 * 0x8):
-		event = "UNDEFINED"
-		if i in events.keys(): event = events[i]
-		o = '☐'
-		if event_bits & 1: o = '■'
-		event_bits >>= 1
-		if event == "UNDEFINED" and o == '☐': continue
-		print("{2:04d} {0} {1}".format(o,event,i+1))
+		print('Toggle Events\n')
+
+		for i in range(0x140 * 0x8):
+			event = "UNDEFINED"
+			if i in events.keys(): event = events[i]
+			o = '☐'
+			if bits & 1: o = '■'
+			bits >>= 1
+			if event == "UNDEFINED" and o == '☐': continue
+			print("{2:04d} {0} {1}".format(o,event,i+1))
+
+		print()
+
+		while True:
+			try:
+				e = int(input("Toggle Event (1-" + str(0x140 * 0x8) + ") ['0' to Exit]: "))
+				if e > 0x140 * 0x8 or e < 0:
+					print("\nOut of range. Try again...\n")
+					continue
+				if e == 0:
+					print()
+					return
+				break
+			except ValueError:
+				print("\nNot a number. Try again...\n")
+			except Exception as err:
+				print(f"Unexpected {err=}, {type(err)=}")
+				raise
+
+		event_bits ^= (1 << (e - 1))
+		for i, j in enumerate(event_bits.to_bytes(0x140, 'little')): sav[0x29F3+i] = j
 
 	print()
 
@@ -1308,6 +1336,11 @@ while sel != 0:
 			[]
 		),
 		(
+			'Toggle Events',
+			toggle_events,
+			[]
+		),
+		(
 			"Bill's PC [by box] (read only)",
 			dump_boxes,
 			[]
@@ -1325,11 +1358,6 @@ while sel != 0:
 		(
 			'Hall of Fame (read only)',
 			hof,
-			[]
-		),
-		(
-			'Events (read only)',
-			dump_events,
 			[]
 		),
 		(
