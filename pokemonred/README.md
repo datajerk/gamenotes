@@ -574,6 +574,12 @@ That all said, IMHO, the best looking Diplomas come from the Super Game Boy (als
   <img src="img/sgb-yellow-rom.png" />
 </p>
 
+The paper diploma you can print with a Game Boy Printer is pretty sweet too:
+
+<p align="center">
+  <img src="img/sameboy-yellow-printer-diploma.png" />
+</p>
+
 
 ### _Was it worth it?_
 
