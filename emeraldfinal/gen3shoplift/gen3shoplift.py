@@ -9,7 +9,7 @@ import binascii
 ### globals
 
 outputfilename = 'newbag.sav'
-version = "0.1.0"
+version = "0.1.1"
 
 max_q = {
 	'PC_ITEMS' : 50,
@@ -284,11 +284,11 @@ while sel != 0:
 			items,
 			['KEY_ITEMS']
 		),
-		(
-			'PC Items',
-			items,
-			['PC_ITEMS']
-		),
+#		(
+#			'PC Items',
+#			items,
+#			['PC_ITEMS']
+#		),
 		(
 			'[Over]write "' + outputfilename + '" and continue editing',
 			writeout,
