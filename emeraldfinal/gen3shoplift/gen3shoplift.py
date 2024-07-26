@@ -9,7 +9,7 @@ import binascii
 ### globals
 
 outputfilename = 'newbag.sav'
-version = "0.1.1"
+version = "0.2.0"
 
 max_q = {
 	'PC_ITEMS' : 50,
@@ -165,18 +165,19 @@ def items(pocket):
 		for i in range(0,max_q[pocket]*4,4):
 			item = int.from_bytes(sav[address+offset[pocket]+i:address+offset[pocket]+i+2], byteorder='little')
 			if item == 0: break # assume game compacts zeros
-			q = int.from_bytes(sav[address+offset[pocket]+i+2:address+offset[pocket]+i+4], byteorder='little') ^ key
+			q = int.from_bytes(sav[address+offset[pocket]+i+2:address+offset[pocket]+i+4], byteorder='little')
+			if pocket != 'PC_ITEMS': q ^= key
 			items_count[item] = q
 			slots += 1
 
 		long = 0
 		for item in items_name:
-			if items_pocket[item] != pocket: continue
+			if items_pocket[item] != pocket and pocket != 'PC_ITEMS': continue
 			if len(items_name[item]) > long: long = len(items_name[item])
 
 		i = 0
 		for item in items_name:
-			if items_pocket[item] != pocket: continue
+			if items_pocket[item] != pocket and pocket != 'PC_ITEMS': continue
 			if item == 0: continue
 			format_string = '{0:' + str(long) + 's}  {1:2d}'
 			s = format_string.format(items_name[item],items_count[item])
@@ -209,7 +210,6 @@ def items(pocket):
 		# linear search
 		for i in range(0,max_q[pocket]*4,4):
 			item = int.from_bytes(sav[address+offset[pocket]+i:address+offset[pocket]+i+2], byteorder='little')
-			qq = int.from_bytes(sav[address+offset[pocket]+i+2:address+offset[pocket]+i+4], byteorder='little') ^ key
 			if item == 0: break # assume game compacts zeros
 			if target_item == item: break
 
@@ -223,7 +223,7 @@ def items(pocket):
 			target_item = 0
 
 		# update/append/delete
-		q ^= key
+		if pocket != 'PC_ITEMS': q ^= key
 		for k, j in enumerate(target_item.to_bytes(2, 'little')): sav[address+offset[pocket]+i+k] = j
 		for k, j in enumerate(q.to_bytes(2, 'little')): sav[address+offset[pocket]+i+k+2] = j
 
@@ -284,11 +284,11 @@ while sel != 0:
 			items,
 			['KEY_ITEMS']
 		),
-#		(
-#			'PC Items',
-#			items,
-#			['PC_ITEMS']
-#		),
+		(
+			'PC Items',
+			items,
+			['PC_ITEMS']
+		),
 		(
 			'[Over]write "' + outputfilename + '" and continue editing',
 			writeout,
