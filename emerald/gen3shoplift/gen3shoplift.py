@@ -9,7 +9,15 @@ import binascii
 ### globals
 
 outputfilename = 'newbag.sav'
-version = "0.3.0"
+version = "0.4.0"
+money_offset = 0x0490
+coins_offset = 0x0494
+team_size_offset = 0x0234
+game_code = -1
+
+RUBY_SAPPHIRE = 0
+FIRERED_LEAFGREEN = 1
+EMERALD = 2
 
 max_q = {
 	'PC_ITEMS' : 50,
@@ -29,6 +37,88 @@ offset = {
 	'BERRIES' : 0x0790,
 }
 
+eng_letter = {}
+eng_index = {
+	0x80: ' ',
+	0xa1: '0',
+	0xa2: '1',
+	0xa3: '2',
+	0xa4: '3',
+	0xa5: '4',
+	0xa6: '5',
+	0xa7: '6',
+	0xa8: '7',
+	0xa9: '8',
+	0xaa: '9',
+	0xab: '!',
+	0xac: '?',
+	0xad: '.',
+	0xae: '-',
+	0xB0: '_', # ellipsis
+	0xB1: '"',
+	0xB2: '"',
+	0xB3: "'",
+	0xB4: "'",
+	0xB5: '^', # male symbol
+	0xB6: '+', # female symbol
+	0xB8: ',',
+	0xBA: '/',
+	0xbb: 'A',
+	0xbc: 'B',
+	0xbd: 'C',
+	0xbe: 'D',
+	0xbf: 'E',
+	0xc0: 'F',
+	0xc1: 'G',
+	0xc2: 'H',
+	0xc3: 'I',
+	0xc4: 'J',
+	0xc5: 'K',
+	0xc6: 'L',
+	0xc7: 'M',
+	0xc8: 'N',
+	0xc9: 'O',
+	0xca: 'P',
+	0xcb: 'Q',
+	0xcc: 'R',
+	0xcd: 'S',
+	0xce: 'T',
+	0xcf: 'U',
+	0xd0: 'V',
+	0xd1: 'W',
+	0xd2: 'X',
+	0xd3: 'Y',
+	0xd4: 'Z',
+	0xd5: 'a',
+	0xd6: 'b',
+	0xd7: 'c',
+	0xd8: 'd',
+	0xd9: 'e',
+	0xda: 'f',
+	0xdb: 'g',
+	0xdc: 'h',
+	0xdd: 'i',
+	0xde: 'j',
+	0xdf: 'k',
+	0xe0: 'l',
+	0xe1: 'm',
+	0xe2: 'n',
+	0xe3: 'o',
+	0xe4: 'p',
+	0xe5: 'q',
+	0xe6: 'r',
+	0xe7: 's',
+	0xe8: 't',
+	0xe9: 'u',
+	0xea: 'v',
+	0xeb: 'w',
+	0xec: 'x',
+	0xed: 'y',
+	0xee: 'z',
+}
+
+
+
 
 ### big dicts
 
@@ -41,6 +131,13 @@ items_name = {0: '????????', 1: 'MASTER BALL', 2: 'ULTRA BALL', 3: 'GREAT BALL',
 ### functions
 
 def init_dicts_arrays():
+
+	for i in range(256):
+		if not i in eng_index:
+			eng_index[i]='@'
+			continue
+		eng_letter[eng_index[i]] = i
+
 	return
 
 def menu(title, menu_items, orientation, left, count):
@@ -266,6 +363,105 @@ def sort_items(pocket):
 
 	return
 
+def read_number(address, length, key):
+	return(int.from_bytes(sav[address:address+length], byteorder='little') ^ key)
+
+def edit_number(label, address, length, key):
+	mx = (2 ** (8 * length)) - 1
+
+	print('Current ' + label + ': ',end='')
+	print(read_number(address, length, key))
+	print()
+
+	while True:
+		try:
+			new = int(input('New ' + label + ' range(0-' + str(mx) + '): '))
+			if new > mx or new < 0:
+				print("\nOut of range. Try again...\n")
+				continue
+			break
+		except ValueError:
+			print("\nNot a number. Try again...\n")
+		except Exception as err:
+			print(f"Unexpected {err=}, {type(err)=}")
+			raise
+
+	new ^= key
+	for i, j in enumerate(new.to_bytes(length, 'little')): sav[address+i] = j
+	print()
+
+	return
+
+def edit_party_names():
+	party_size = read_number(section_address(1) + team_size_offset,4,0)
+
+	while True:
+		party_list = ['Return']
+
+		for i in range(party_size):
+			address = section_address(1) + team_size_offset + 4 + i * 100
+			name = address + 0x08
+			party_list.append(poketoascii(name,10))
+
+		sel = menu('Select Pokémon to Rename:',party_list,0,1,[])
+		if sel == 0: return
+		text_edit(section_address(1) + team_size_offset + 4 + (sel - 1) * 100 + 0x08, 10, 'Name')
+
+	return
+
+def text_edit(address, length, label):
+	letters = list(eng_index.values())
+	letters = [l for l in letters if l != '@']
+	allowed = ''.join(letters)
+	letters = [l.replace('[', '\\[') for l in letters]
+	letters = [l.replace(']', '\\]') for l in letters]
+	letters = [l.replace('-', '\\-') for l in letters]
+
+	print('Allowed letters: \n\n' + allowed)
+	print('\nUse: + for ♀ (female), ^ for ♂ (male), _ for … (ellipsis)')
+	print("\nMax length: " + str(length))
+	print('\nCurrent ' + label + ': ',end='')
+	print(poketoascii(address,length))
+	print()
+
+	while True:
+		try:
+			new = input('New ' + label + ': ')
+			if len(new) == 0:
+				print("\nNo Change\n\n")
+				return
+			if len(new) > length:
+				print("\nToo long, max length: " + str(length) + "\n")
+				continue
+			if not re.match("^[" + "".join(letters) + "]{1," + str(length) + "}$", new):
+				print("\nInvalid character(s)\n")
+				continue
+			break
+		except Exception as err:
+			print(f"Unexpected {err=}, {type(err)=}")
+			raise
+
+	for i in range(len(new)): sav[address+i] = eng_letter[new[i]]
+	if i < length - 1:
+		sav[address+i+1] = 0xFF
+		for i in range(i+2,length): sav[address+i] = 0x0
+	
+	print()
+
+	return
+
+def poketoascii(address,length):
+	s = ''
+	for i in range(length):
+		if sav[address+i] == 0xFF: break
+		if sav[address+i] == 0x00: break
+		s += eng_index[sav[address+i]]
+	s = s.replace('+','♀')
+	s = s.replace('^','♂')
+	s = s.replace('_','…')
+
+	return s
+
 
 ### main
 
@@ -281,9 +477,20 @@ except Exception as err:
 	print(f"Unexpected {err=}, {type(err)=}")
 	raise
 
+game_code = read_number(section_address(1) + 0x00AC,4,0)
+if game_code == RUBY_SAPPHIRE or game_code == FIRERED_LEAFGREEN:
+	print("\nOnly Emerald Saves Supported.\n")
+	sys.exit(1)
+game_code = EMERALD
+
 print("\nPokémon Gen III (Emerald only for now) Offline Store v" + version)
-print("\n(Tested ROM (Pokemon - Emerald Final 7.41 (USA, Europe).gba) md5sum c9a195879eae869dff1a87ebe3735342)")
-print("\nUSE AT YOUR OWN PERIL!!!\n")
+print("""
+Tested Roms:
+
+c9a195879eae869dff1a87ebe3735342  Pokemon - Emerald Final 7.41 (USA, Europe).gba
+605b89b67018abcea91e693a4dd25be3  Pokemon - Emerald Version (USA, Europe).gba
+""")
+print("USE AT YOUR OWN PERIL!!!\n")
 print("Let's go shopping!\n")
 
 sel = -1
@@ -348,6 +555,21 @@ while sel != 0:
 			'Sort PC Items',
 			sort_items,
 			['PC_ITEMS']
+		),
+		(
+			'Money: ' + str(read_number(section_address(1) + money_offset,4,get_security_key())),
+			edit_number,
+			['Money',section_address(1) + money_offset,4,get_security_key()]
+		),
+		(
+			'Coins: ' + str(read_number(section_address(1) + coins_offset,2,get_security_key() & 0xFFFF)),
+			edit_number,
+			['Coins',section_address(1) + coins_offset,2,get_security_key() & 0xFFFF]
+		),
+		(
+			'Edit Party Names',
+			edit_party_names,
+			[]
 		),
 		(
 			'[Over]write "' + outputfilename + '" and continue editing',
