@@ -445,7 +445,7 @@ def text_edit(address, length, label):
 	if i < length - 1:
 		sav[address+i+1] = 0xFF
 		for i in range(i+2,length): sav[address+i] = 0x0
-	
+
 	print()
 
 	return

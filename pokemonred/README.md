@@ -547,25 +547,6 @@ What I get using the Analogue Pocket with the original ROM with a Game Boy Color
   <img src="img/red-rom-diploma.png" />
 </p>
 
-If I boot up the Blue ROM, I get:
-
-<p align="center">
-  <img src="img/blue-rom-diploma.png" />
-</p>
-
-With the original Red cart, I get the following on the Pocket's DMG Core based on what palette I pick:
-
-<p align="center">
-  <img src="img/og-red-cart-ap-grey.png" />
-  <img src="img/og-red-cart-ap-red.png" />
-  <img src="img/og-red-cart-ap-mint.png" />
-  <img src="img/og-red-cart-ap-purple.png" />
-  <img src="img/og-red-cart-ap-green.png" />
-</p>
-
-I guess until I land a real Game Boy Color, I'll never know what it should look like in meatspace.
-It's not important, just a curiosity.
-
 That all said, IMHO, the best looking Diplomas come from the Super Game Boy (also FPGA implemented on the Analog Pocket):
 
 <p align="center">
