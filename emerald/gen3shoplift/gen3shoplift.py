@@ -9,7 +9,7 @@ import binascii
 ### globals
 
 outputfilename = 'newbag.sav'
-version = "0.5.0"
+version = "0.6.0"
 money_offset = 0x0490
 coins_offset = 0x0494
 team_size_offset = 0x0234
