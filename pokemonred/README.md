@@ -1,6 +1,6 @@
 # Pokemon Red Postmortem (with cheat code)
 
-*<p style="text-align: center;"><br>[2024 is the first time I have played Game Boy or Pokémon games.<br>
+*<p align="center"><br>[2024 is the first time I have played Game Boy or Pokémon games.<br>
 FF and save file editing to reduce the toil is a must for me.<br>
 I'm not a 10-year-old kid with unlimited time on my hands, and who am I going to trade with?<br>
 -- datajerk<br><br>](https://www.reddit.com/r/AnaloguePocket/comments/1e9pc0g/comment/legxrj2/)</p>*
