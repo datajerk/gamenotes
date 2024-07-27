@@ -347,11 +347,11 @@ def sort_items(pocket):
 
 	format_string = '{0:' + str(long) + '}  {1:2d}'
 
-	print('Current Order:\n')
+	print('Current ' + pocket + ' Order:\n')
 	for name in items_unsorted_q:
 		print(format_string.format(name,items_unsorted_q[name]))
 
-	print('\nNew Order:\n')
+	print('\nNew ' + pocket + ' Order:\n')
 	for i, name in enumerate(dict(sorted(items_unsorted_q.items()))):
 		q = items_unsorted_q[name]
 		print(format_string.format(name,q))
@@ -462,6 +462,9 @@ def poketoascii(address,length):
 
 	return s
 
+def sort_all(item_types):
+	for i in item_types: sort_items(i)
+
 
 ### main
 
@@ -560,6 +563,11 @@ while sel != 0:
 			'Sort PC Items',
 			sort_items,
 			['PC_ITEMS']
+		),
+		(
+			'Sort All Items',
+			sort_all,
+			[['ITEMS','POKE_BALLS','TM_HM','PC_ITEMS','BERRIES','KEY_ITEMS','PC_ITEMS']]
 		),
 		(
 			'Money: ' + str(read_number(section_address(1) + money_offset,4,get_security_key())),
