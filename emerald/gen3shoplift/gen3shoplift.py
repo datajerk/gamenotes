@@ -522,8 +522,13 @@ while sel != 0:
 			['POKE_BALLS']
 		),
 		(
-			'THs & HMs',
+			'TMs & HMs',
 			items,
+			['TM_HM']
+		),
+		(
+			'Sort TMs & HMs',
+			sort_items,
 			['TM_HM']
 		),
 		(
