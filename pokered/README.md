@@ -232,7 +232,7 @@ If I had to guess, it's because I _owned_ or have in my inventory Hitmonlee--an 
 My plan was to play faithfully until I purchased a ball and captured my first Pokémon, after that I gave myself 99 Master Balls, Max Elixir, and Full Restore.
 
 I did not see the point in beating a Pokémon within an inch of its life just to capture it--if they faint, then just scoop them up in a ball and move on.
-I understand it's the game designers forcing function to form a party with strong and weak members, and that alone may force a different challenge with trainer battles ([HMs](https://bulbapedia.bulbagarden.net/wiki/HM) also force party skill diversity).
+I understand it's the game designer's forcing function to form a party with strong and weak members, and that alone may force a different challenge with trainer battles ([HMs](https://bulbapedia.bulbagarden.net/wiki/HM) also force party skill diversity).
 On my [Polished Crystal](https://github.com/Rangi42/polishedcrystal) run I had no desire to _catch 'em all_; just to complete the main story line, so I just captured the strong and defeated the weak.
 However, my intent with Red was to _catch 'em all_, and to save time I used Master Balls.
 
