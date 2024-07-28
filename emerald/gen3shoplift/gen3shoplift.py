@@ -9,7 +9,7 @@ import binascii
 ### globals
 
 outputfilename = 'newbag.sav'
-version = "0.6.0"
+version = "0.6.1"
 money_offset = 0x0490
 coins_offset = 0x0494
 team_size_offset = 0x0234
@@ -464,6 +464,7 @@ def poketoascii(address,length):
 
 def sort_all(item_types):
 	for i in item_types: sort_items(i)
+	return
 
 
 ### main
