@@ -32,7 +32,7 @@ For Red I wanted the _full_ experience, so _catching 'em all_ was necessary.
 This core provides fast-forward (FF) (about 3x)--required for grinding through the weeds and trainer battles.
 FF can be configured to disable audio as well which is very nice.
 This core, at this time, does not have save states.
-Fortunately, you can save just about anywhere at anytime, however, saves are not enumerated like save states which requires me USB-C connect the Pocket and run my backup script that will enumerate the save for me--usually an end-of-session or end-of-event activity.
+Fortunately, you can save just about anywhere at anytime, however, saves are not enumerated like save states which requires me to USB-C connect the Pocket and run my backup script that will enumerate the save for me--usually an end-of-session or end-of-event activity.
 * The [SameBoy](https://sameboy.github.io/) emulator for MacOS was used when I needed much faster fast-forward (Safari Zone save scumming).
 * An authentic Pokémon Red Game Boy Game Pak cartridge ripped with [GB Operator](https://www.epilogue.co/product/gb-operator); I wanted to test if my altered savefiles could be uploaded to a cart--they can!
 * [Pokémon Red (and Blue) Full Color Hack](https://www.romhacking.net/hacks/1385/), looks _soooo_ so good on the Analogue Pocket, and the savefile format is the same.
