@@ -472,7 +472,7 @@ I did managed to meatspace trade both for a missing and forced evolution.
 This required two Analogue Pockets and a link cable.
 This was quite the experience, both remarkable and unremarkable.
 Unremarkable in that linking two machines serially in the 90's was common.
-I did this with computers and scientific calculators as well as other scientific intraments.
+I did this with computers and scientific calculators as well as other scientific instruments.
 Remarkable in that data was _moving_ (not copying) from one machine to another at a time where it proabably felt very permanant.
 It is also interesting that the original Trainer ID, Name, and Pokémon nickname also move with the trade and persist.
 
