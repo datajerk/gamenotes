@@ -488,8 +488,8 @@ This was taking too long.
 So, I had Charizard field trip with five candidates and used EXP.ALL.
 This was also taking too long.
 After a few evolutions I gave in to cheating and pumped the remaining Pokémon full of growth hormones (Rare Candy).
-It was kinda sad to pull a Pokémon out of the box, force feed an evolution, then put back in the box.
-At least those that experience the Charizard field trip got to live a little.
+It was kinda sad to pull a Pokémon out of the box, force-feed an evolution, then put back in the box.
+At least those that experienced the Charizard field trip got to live a little.
 
 Evolution with stones was easy, you can just buy them in Celadon City, except for Moon stones, and since I was playing as a completionist I got all I needed.
 
