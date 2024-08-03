@@ -35,7 +35,7 @@ This core, at this time, does not have save states.
 Fortunately, you can save just about anywhere at anytime, however, saves are not enumerated like save states which requires me to USB-C connect the Pocket and run my backup script that will enumerate the save for me--usually an end-of-session or end-of-event activity.
 * The [SameBoy](https://sameboy.github.io/) emulator for MacOS was used when I needed much faster fast-forward (Safari Zone save scumming).
 * An authentic Pokémon Red Game Boy Game Pak cartridge ripped with [GB Operator](https://www.epilogue.co/product/gb-operator); I wanted to test if my altered savefiles could be uploaded to a cart--they can!
-* [Pokémon Red (and Blue) Full Color Hack](https://www.romhacking.net/hacks/1385/), looks _soooo_ so good on the Analogue Pocket, and the savefile format is the same.
+* [Pokémon Red (and Blue) Full Color Hack](https://www.romhacking.net/hacks/1385/), looks _soooo_ so good on the Analogue Pocket, and the savefile format is the same.  [Archive.org link](https://archive.org/download/romhacking.net-20240801/rhdn_20240801.zip/hacks%2Fgameboy%2Fpatches%2F%5B1385%5Dpokered_color.zip)
 I did have one beef with this hack I'll chronicle at the end.
 * https://github.com/pret/pokered, I mostly used this gather the list of the wild Pokémon in each area so I that did not miss any--I needed to know when to stop grinding.
 * https://bulbapedia.bulbagarden.net/wiki/Save_data_structure_(Generation_I), my guide for writing cheat code.
