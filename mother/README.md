@@ -42,27 +42,30 @@ I put in about an hour of play time.  No issues.
 
 ### Obtain Carts
 
-Got from eBay.
+Got from eBay:
 
-![alt text](m12.jpeg)
-
-![alt text](m3.jpeg)
+<p align="center">
+  <img src="m12.jpeg" style="width: 50%; height: 50%"/>
+  <img src="m3.jpeg" style="width: 50%; height: 50%"/>
+</p>
 
 ### Backup Carts
 
 I used [GB Operator](https://www.epilogue.co/product/gb-operator) to backup.  For each verify the md5sum is a match with this doc.
 
-![alt text](<m12_load.png>)
-
-![alt text](<m12_backup.png>)
+<p align="center">
+  <img src="m12_load.png" style="width: 75%; height: 75%"/>
+  <img src="m12_backup.png" style="width: 75%; height: 75%"/>
+</p>
 
 Checksum should be: `f41e36204356974c94fabf7d144dd32a`
 
 Filename should be: `Mother 1+2 (Japan).gba`
 
-![alt text](<m3_load.png>)
-
-![alt text](<m3_backup.png>)
+<p align="center">
+  <img src="m3_load.png" style="width: 75%; height: 75%"/>
+  <img src="m3_backup.png" style="width: 75%; height: 75%"/>
+</p>
 
 Checksum should be: `af8b0b175f7ec8914cb87b3161ba1aaa`
 
@@ -73,7 +76,9 @@ Filename should be: `Mother 3 (Japan).gba`
 
 Unzip `MOTHER 1+2 English v1.01.zip` then goto https://www.marcrobledo.com/RomPatcher.js/, fill out the form and then check your downloads for `Mother 1+2 (Japan) (patched).gba` and rename to `Mother 1 (En).gba`.  Verify the md5sum is `68806f7e40e1f082b21a8b920e8982db`.
 
-![alt text](image-1.png)
+<p align="center">
+  <img src="image-1.png" style="width: 50%; height: 50%"/>
+</p>
 
 
 ### Patch Mother 2
@@ -102,7 +107,9 @@ The md5sum will be different for each build, even if you build twice; it'll have
 
 Unzip `MOTHER3_EarthBound2_English_v1.3.zip` then goto https://www.marcrobledo.com/RomPatcher.js/, fill out the form and then check your downloads for `Mother 3 (Japan) (patched).gba` and rename to `Mother 3 (En).gba`.  Verify the md5sum is `78852690de6ef51af56883c3823ea0e1`.
 
-![alt text](image-3.png)
+<p align="center">
+  <img src="image-3.png" style="width: 50%; height: 50%"/>
+</p>
 
 
 ## Gameplay Notes on Mother 1, 2, and 3
