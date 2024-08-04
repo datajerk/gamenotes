@@ -169,7 +169,7 @@ I would strongly recommend playing this game on SNES or GBA.
 Google for walkthroughs, there are many if you need help.
 
 <p align="center">
-  <img src="theend.png" />
+  <img src="theend.lcd.png" />
 </p>
 
 ### Mother 3
