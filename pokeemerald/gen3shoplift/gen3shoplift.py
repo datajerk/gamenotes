@@ -12,6 +12,7 @@ outputfilename = 'newbag.sav'
 version = "0.7.0"
 money_offset = 0x0490
 coins_offset = 0x0494
+soot_sack_steps_offset = 0x04AC
 team_size_offset = 0x0234
 pokedex_owned_offset = 0x0028
 pokedex_seen_offset = 0x005C
@@ -509,6 +510,11 @@ def pokedex(compact):
 	print()
 	return
 
+def dump_section_data(s):
+	a = section_address(s)
+	with open('section.dump', 'wb') as f: f.write(sav[a:a+3968])
+	return
+
 
 ### main
 
@@ -622,6 +628,11 @@ while sel != 0:
 			'Coins: ' + str(read_number(section_address(1) + coins_offset,2,get_security_key() & 0xFFFF)),
 			edit_number,
 			['Coins',section_address(1) + coins_offset,2,get_security_key() & 0xFFFF]
+		),
+		(
+			'Soot Sack Steps: ' + str(read_number(section_address(2) + soot_sack_steps_offset,2,0x0)),
+			edit_number,
+			['Soot Sack Steps',section_address(2) + soot_sack_steps_offset,2,0x0]
 		),
 		(
 			'Edit Party Names',
