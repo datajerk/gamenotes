@@ -497,11 +497,13 @@ def pokedex(compact):
 		owned >>= 1
 		seen >>= 1
 		if compact and o == " " and s == " ": continue
-		format_string = '{0:03d}. {1} {2} {3}'
-		nid_list.append(format_string.format(nid,s,o,nid_index[nid]))
+		obtainable = ' '
+		if nid_obtainable[nid][0] == 'Y': obtainable = nid_obtainable[nid][0]
+		format_string = '{0:03d}. {4} {1} {2} {3}'
+		nid_list.append(format_string.format(nid,s,o,nid_index[nid],obtainable))
 
 	name_list = nid_list.copy()
-	name_list.sort(key = lambda x: x[9:])
+	name_list.sort(key = lambda x: x[11:])
 
 	maxlen = len(max(nid_list, key=len))
 	for i,j in zip(nid_list, name_list):
