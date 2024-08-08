@@ -9,7 +9,7 @@ import binascii
 ### globals
 
 outputfilename = 'newbag.sav'
-version = "0.8.0"
+version = "0.9.0"
 money_offset = 0x0490
 coins_offset = 0x0494
 soot_sack_steps_offset = 0x04AC
@@ -526,6 +526,7 @@ def toggle_flags(used,checked):
 	while True:
 		flag_bits = bits = int.from_bytes(sav[a+flags_offset:a+flags_offset+300], byteorder='little')
 		flag_index = []
+		flag_items = []
 
 		print('Toggle Flags\n')
 
@@ -540,7 +541,15 @@ def toggle_flags(used,checked):
 			if checked == 1 and o == '☐': continue
 			if flag == "UNDEFINED" and o == '☐': continue
 			flag_index.append(i+1)
-			print("{2:04d} {0} {1}".format(o,flag,i+1))
+			flag_items.append("{2:04d} {0} {1}".format(o,flag,i+1))
+
+		flag_items_byname = flag_items.copy()
+		flag_items_byname.sort(key = lambda x: x[7:])
+		flag_items.sort()
+
+		maxlen = len(max(flag_items, key=len))
+		for i,j in zip(flag_items, flag_items_byname):
+			print("%s\t%s" % (i.ljust(maxlen, " "), j))
 
 		print()
 
@@ -553,14 +562,15 @@ def toggle_flags(used,checked):
 				if e == 0:
 					print()
 					return
+				if e not in flag_index:
+					print("\nInvalid flag. Pick from flags above.\n")
+					continue
 				break
 			except ValueError:
 				print("\nNot a number. Try again...\n")
 			except Exception as err:
 				print(f"Unexpected {err=}, {type(err)=}")
 				raise
-
-		# check flag_index
 
 		flag_bits ^= (1 << (e - 1))
 		for i, j in enumerate(flag_bits.to_bytes(300, 'little')): sav[a+flags_offset+i] = j
