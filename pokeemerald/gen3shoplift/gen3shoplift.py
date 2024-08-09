@@ -9,7 +9,7 @@ import binascii
 ### globals
 
 outputfilename = 'newbag.sav'
-version = "0.10.0"
+version = "0.11.0"
 money_offset = 0x0490
 coins_offset = 0x0494
 soot_sack_steps_offset = 0x04AC
@@ -580,6 +580,51 @@ def toggle_flags(used,checked):
 
 	return
 
+def playtime():
+	print('Edit Play Time: {0:d}:{1:02d}:{2:02d}:{3:02d}'.format(
+		read_number(section_address(0) + 0x0E,2,0x0),
+		sav[section_address(0) + 0x10],
+		sav[section_address(0) + 0x11],
+		sav[section_address(0) + 0x12]
+	))
+
+	while True:
+		try:
+			t = input('New Play Time (hhh:mm:ss:ff): ')
+			if len(t) == 0:
+				print('\nNo change.\n')
+				return
+			try:
+				h, m, s, f = [abs(int(i)) for i in t.split(":")]
+			except ValueError:
+				print('\nFormat must be hhh:mm:ss:ff and hhh, mm, ss, ff must be integers.\n')
+				continue
+			if h > 255:
+				print('\nHours (hhh) ' + str(h) + ' > 255.\n')
+				continue
+			if m > 59:
+				print('\nMinutes (mm) ' + str(m) + ' > 59.\n')
+				continue
+			if s > 59:
+				print('\nSeconds (ss) ' + str(s) + ' > 59.\n')
+				continue
+			if f > 59:
+				print('\nFrames (ff) ' + str(f) + ' > 59.\n')
+				continue
+			break
+		except Exception as err:
+			print(f"Unexpected {err=}, {type(err)=}")
+			raise
+
+	for i, j in enumerate(h.to_bytes(2, 'little')): sav[section_address(0) + 0x0E + i] = j
+	sav[section_address(0) + 0x10] = m
+	sav[section_address(0) + 0x11] = s
+	sav[section_address(0) + 0x12] = f
+
+	print()
+
+	return
+
 
 ### main
 
@@ -707,6 +752,16 @@ while sel != 0:
 		(
 			'Edit Party Names',
 			edit_party_names,
+			[]
+		),
+		(
+			'Edit Play Time: {0:d}:{1:02d}:{2:02d}:{3:02d}'.format(
+				read_number(section_address(0) + 0x0E,2,0x0),
+				sav[section_address(0) + 0x10],
+				sav[section_address(0) + 0x11],
+				sav[section_address(0) + 0x12]
+			),
+			playtime,
 			[]
 		),
 		(
