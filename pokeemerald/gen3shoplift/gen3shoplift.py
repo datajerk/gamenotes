@@ -9,7 +9,7 @@ import binascii
 ### globals
 
 outputfilename = 'newbag.sav'
-version = "0.9.0"
+version = "0.10.0"
 money_offset = 0x0490
 coins_offset = 0x0494
 soot_sack_steps_offset = 0x04AC
@@ -17,6 +17,7 @@ team_size_offset = 0x0234
 pokedex_owned_offset = 0x0028
 pokedex_seen_offset = 0x005C
 flags_offset = 0x1270 - 3968
+dewford_rand_offset = 0xf68 + 2
 game_code = -1
 pokeball = '◓'
 
@@ -697,6 +698,11 @@ while sel != 0:
 			'Soot Sack Steps: ' + str(read_number(section_address(2) + soot_sack_steps_offset,2,0x0)),
 			edit_number,
 			['Soot Sack Steps',section_address(2) + soot_sack_steps_offset,2,0x0]
+		),
+		(
+			'Dewford Rand: ' + str(read_number(section_address(3) + dewford_rand_offset,2,0x0)),
+			edit_number,
+			['Rand',section_address(3) + dewford_rand_offset,2,0x0]
 		),
 		(
 			'Edit Party Names',
