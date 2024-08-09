@@ -9,7 +9,7 @@ import binascii
 ### globals
 
 outputfilename = 'newbag.sav'
-version = "0.11.0"
+version = "0.12.0"
 money_offset = 0x0490
 coins_offset = 0x0494
 soot_sack_steps_offset = 0x04AC
@@ -385,8 +385,8 @@ def sort_items(pocket):
 def read_number(address, length, key):
 	return(int.from_bytes(sav[address:address+length], byteorder='little') ^ key)
 
-def edit_number(label, address, length, key):
-	mx = (2 ** (8 * length)) - 1
+def edit_number(label, address, length, key, mx=None):
+	mx = (2 ** (8 * length)) - 1 if mx is None else mx
 
 	print('Current ' + label + ': ',end='')
 	print(read_number(address, length, key))
@@ -737,7 +737,7 @@ while sel != 0:
 		(
 			'Coins: ' + str(read_number(section_address(1) + coins_offset,2,get_security_key() & 0xFFFF)),
 			edit_number,
-			['Coins',section_address(1) + coins_offset,2,get_security_key() & 0xFFFF]
+			['Coins',section_address(1) + coins_offset,2,get_security_key() & 0xFFFF,9999]
 		),
 		(
 			'Soot Sack Steps: ' + str(read_number(section_address(2) + soot_sack_steps_offset,2,0x0)),
@@ -748,6 +748,26 @@ while sel != 0:
 			'Dewford Rand: ' + str(read_number(section_address(3) + dewford_rand_offset,2,0x0)),
 			edit_number,
 			['Rand',section_address(3) + dewford_rand_offset,2,0x0]
+		),
+		(
+			'Edit ID: ' + str(read_number(section_address(0) + 0xA,2,0x0)),
+			edit_number,
+			['ID',section_address(0) + 0xA,2,0x0]
+		),
+		(
+			'Edit Secret ID: ' + str(read_number(section_address(0) + 0xA + 2,2,0x0)),
+			edit_number,
+			['Secret ID',section_address(0) + 0xA + 2,2,0x0]
+		),
+		(
+			'Edit Protagonist Name: ' + poketoascii(section_address(0),7),
+			text_edit,
+			[section_address(0),7,'Name']
+		),
+		(
+			'Edit Gender (0 = boy, 1 = girl): ' + str(read_number(section_address(0) + 0x8,1,0x0)),
+			edit_number,
+			['Gender (0 = boy, 1 = girl)',section_address(0) + 0x8,1,0x0,1]
 		),
 		(
 			'Edit Party Names',
