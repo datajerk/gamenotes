@@ -761,12 +761,12 @@ while sel != 0:
 			['Secret ID',section_address(0) + 0xA + 2,2,0x0]
 		),
 		(
-			'Edit Protagonist Name: ' + poketoascii(section_address(0),7),
+			'Edit Player Name: ' + poketoascii(section_address(0),7),
 			text_edit,
 			[section_address(0),7,'Name']
 		),
 		(
-			'Edit Gender (0 = boy, 1 = girl): ' + str(read_number(section_address(0) + 0x8,1,0x0)),
+			'Edit Player Gender (0 = boy, 1 = girl): ' + str(read_number(section_address(0) + 0x8,1,0x0)),
 			edit_number,
 			['Gender (0 = boy, 1 = girl)',section_address(0) + 0x8,1,0x0,1]
 		),
