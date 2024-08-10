@@ -8,7 +8,7 @@ import collections
 
 # globals
 outputfilename = 'newpack.sav'
-version = "0.12.0"
+version = "0.12.1"
 item_names = {}
 eng_letter = {}
 longest_item = 0
@@ -1291,9 +1291,9 @@ while sel != 0:
 			[0x2605, 2, 'ID', 'big']
 		),
 		(
-			'Edit Protagonist Name: ' + poketoascii(0x2598,7),
+			'Edit Player Name: ' + poketoascii(0x2598,7),
 			text_edit,
-			[0x2598, 7, 'Protagonist Name']
+			[0x2598, 7, 'Player Name']
 		),
 		(
 			'Edit Rival Name: ' + poketoascii(0x25F6,7),

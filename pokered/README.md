@@ -81,7 +81,7 @@ Main Menu
 3.  Box Items
 4.  Sort Box Items
 5.  Edit ID: 52781
-6.  Edit Protagonist Name: DJ
+6.  Edit Player Name: DJ
 7.  Edit Rival Name: Gary
 8.  Edit Money: 247138
 9.  Edit Coins: 6299
