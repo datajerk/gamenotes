@@ -746,9 +746,9 @@ while sel != 0:
 			['Soot Sack Steps',section_address(2) + soot_sack_steps_offset,2,0x0]
 		),
 		(
-			'Dewford Rand: ' + str(read_number(section_address(3) + dewford_rand_offset,2,0x0)),
+			'Dewford Town Rand: ' + str(read_number(section_address(3) + dewford_rand_offset,2,0x0)),
 			edit_number,
-			['Rand',section_address(3) + dewford_rand_offset,2,0x0]
+			['Dewford Town Rand',section_address(3) + dewford_rand_offset,2,0x0]
 		),
 		(
 			'Edit ID: ' + str(read_number(section_address(0) + 0xA,2,0x0)),
