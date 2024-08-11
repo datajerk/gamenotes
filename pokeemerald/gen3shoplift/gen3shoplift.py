@@ -9,7 +9,7 @@ import binascii
 ### globals
 
 outputfilename = 'newbag.sav'
-version = "0.17.1"
+version = "0.17.2"
 money_offset = 0x0490
 coins_offset = 0x0494
 soot_sack_steps_offset = 0x04AC
@@ -310,7 +310,7 @@ def items(pocket):
 
 		o = 1
 		if pocket == 'POKE_BALLS': o = 0
-		sub_sel = menu(main_menu[sel] + ' Menu (Select ' + main_menu[sel] + ' to Edit, ' + str(slots) + ' of ' + str(max_q[pocket]) + ' array elements assigned',sub_menu,o,max_q[pocket] - slots,count)
+		sub_sel = menu(main_menu[sel] + ' Menu (Select ' + main_menu[sel] + ' to Edit, ' + str(slots) + ' of ' + str(max_q[pocket]) + ' array elements assigned)',sub_menu,o,max_q[pocket] - slots,count)
 
 		if sub_sel == 0: break
 

@@ -8,7 +8,7 @@ import collections
 
 # globals
 outputfilename = 'newpack.sav'
-version = "0.12.1"
+version = "0.12.2"
 item_names = {}
 eng_letter = {}
 longest_item = 0
@@ -669,7 +669,7 @@ def array_menu(array, max_items, item_type_filter):
 			sub_menu.append(format_string.format(items[item_index] + ':', item_count[item_index]))
 			count.append(item_count[item_index])
 
-		sub_sel = menu(main_menu[sel] + ' Menu (Select ' + main_menu[sel] + ' to Edit, ' + str(sav[array]) + ' of ' + str(max_items) + ' array elements assigned',sub_menu,1,max_items - sav[array],count)
+		sub_sel = menu(main_menu[sel] + ' Menu (Select ' + main_menu[sel] + ' to Edit, ' + str(sav[array]) + ' of ' + str(max_items) + ' array elements assigned)',sub_menu,1,max_items - sav[array],count)
 
 		if sub_sel == 0: break
 
