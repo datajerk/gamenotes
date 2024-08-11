@@ -9,7 +9,7 @@ import binascii
 ### globals
 
 outputfilename = 'newbag.sav'
-version = "0.16.0"
+version = "0.16.1"
 money_offset = 0x0490
 coins_offset = 0x0494
 soot_sack_steps_offset = 0x04AC
@@ -874,8 +874,8 @@ while sel != 0:
 		(
 			'Sort All Items',
 			sort_all,
-#			[['ITEMS','POKE_BALLS','TM_HM','PC_ITEMS','BERRIES','KEY_ITEMS','PC_ITEMS']]
-			[['ITEMS','POKE_BALLS','PC_ITEMS','KEY_ITEMS','PC_ITEMS']]
+#			[['ITEMS','POKE_BALLS','TM_HM','BERRIES','KEY_ITEMS','PC_ITEMS']]
+			[['ITEMS','POKE_BALLS','KEY_ITEMS','PC_ITEMS']]
 		),
 		(
 			'Money: ' + str(read_number(section_address(1) + money_offset,4,get_security_key())),
