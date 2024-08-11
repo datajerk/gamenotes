@@ -9,7 +9,7 @@ import binascii
 ### globals
 
 outputfilename = 'newbag.sav'
-version = "0.15.0"
+version = "0.16.0"
 money_offset = 0x0490
 coins_offset = 0x0494
 soot_sack_steps_offset = 0x04AC
@@ -988,11 +988,5 @@ while sel != 0:
 	sel = menu('Main Menu',main_menu,0,1,[])
 	menu_array[sel][1](*menu_array[sel][2])
 
-#dump_section_data(0)
-#dump_section_data(1)
-#dump_section_data(2)
-#dump_section_data(3)
-#dump_section_data(4)
-dump_section_data(5)
 sys.exit(0)
 
