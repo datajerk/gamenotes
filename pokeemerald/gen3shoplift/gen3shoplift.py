@@ -9,7 +9,7 @@ import binascii
 ### globals
 
 outputfilename = 'newbag.sav'
-version = "0.17.0"
+version = "0.17.1"
 money_offset = 0x0490
 coins_offset = 0x0494
 soot_sack_steps_offset = 0x04AC
@@ -906,6 +906,11 @@ while sel != 0:
 			['Dewford Town Rand',section_address(3) + dewford_rand_offset,2,0x0]
 		),
 		(
+			'Mirage Island Hack: ' + str(read_number(section_address(2) + mirage_island_offset,2,0x0)),
+			mirage_island,
+			[]
+		),
+		(
 			'Edit ID: ' + str(read_number(section_address(0) + 0xA,2,0x0)),
 			edit_number,
 			['ID',section_address(0) + 0xA,2,0x0]
@@ -941,27 +946,22 @@ while sel != 0:
 			[]
 		),
 		(
-			'Mirage Island Hack: ' + str(read_number(section_address(2) + mirage_island_offset,2,0x0)),
-			mirage_island,
-			[]
-		),
-		(
-			'Toggle All Flags',
+			'Toggle Flags',
 			toggle_flags,
 			[True,-1]
 		),
 		(
-			'Toggle All Used Flags (filter out _UNUSED)',
+			'Toggle Used Flags (filter out _UNUSED)',
 			toggle_flags,
 			[False,-1]
 		),
 		(
-			'Toggle Checked Flags (filter out _UNUSED/unchecked)',
+			'Toggle Checked Flag (filter out _UNUSED & unchecked)',
 			toggle_flags,
 			[False,1]
 		),
 		(
-			'Toggle Unchecked Flags (filter out _UNUSED/checked)',
+			'Toggle Unchecked Flags (filter out _UNUSED & checked)',
 			toggle_flags,
 			[False,0]
 		),
