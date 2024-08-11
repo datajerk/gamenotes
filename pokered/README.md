@@ -48,8 +48,8 @@ I did have one beef with this hack I'll chronicle at the end.
 
 Main Story Guidelines:
 
-1. No altering money (but coins ok, something I learned from my Polished Crystal post-game run).
-1. No Rare Candy to level up.
+1. No altering money (but coins OK, something I learned from my Polished Crystal post-game run).
+1. No [offline] Rare Candy to level up.
 1. Must "capture" each Pokémon the way the game intended (with a ball).
 1. No glitches (mostly concerned about savefile corruption).
 
