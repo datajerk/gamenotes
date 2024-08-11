@@ -9,7 +9,7 @@ import binascii
 ### globals
 
 outputfilename = 'newbag.sav'
-version = "0.16.2"
+version = "0.17.0"
 money_offset = 0x0490
 coins_offset = 0x0494
 soot_sack_steps_offset = 0x04AC
@@ -18,6 +18,7 @@ pokedex_owned_offset = 0x0028
 pokedex_seen_offset = 0x005C
 flags_offset = 0x1270 - 3968
 dewford_rand_offset = 0xf68 + 2
+mirage_island_offset = 0x464
 game_code = -1
 pokeball = '◓'
 
@@ -770,6 +771,15 @@ def dump_party():
 
 	return mons
 
+def mirage_island():
+	poke_address = section_address(1) + team_size_offset + 4
+	island_address = section_address(2) + mirage_island_offset
+
+	sav[island_address + 0] = sav[poke_address + 0]
+	sav[island_address + 1] = sav[poke_address + 1]
+
+	return
+
 
 ### main
 
@@ -928,6 +938,11 @@ while sel != 0:
 				sav[section_address(0) + 0x12]
 			),
 			playtime,
+			[]
+		),
+		(
+			'Mirage Island Hack: ' + str(read_number(section_address(2) + mirage_island_offset,2,0x0)),
+			mirage_island,
 			[]
 		),
 		(
