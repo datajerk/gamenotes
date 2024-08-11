@@ -469,7 +469,7 @@ I managed to get one or two that I did not have completing an _experience_ (_Got
 1. You need at least two friends if you want to trade for all the starter Pokémon.
 For someone with zero friends this is quite a challenge.
 
-I did managed to meatspace trade both for a missing and forced evolution.
+I did manage to meatspace trade both for a missing and forced evolution.
 This required two Analogue Pockets and a link cable.
 This was quite the experience, both remarkable and unremarkable.
 Unremarkable in that linking two machines serially in the 90's was common.
