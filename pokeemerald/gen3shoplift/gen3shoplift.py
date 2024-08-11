@@ -9,7 +9,7 @@ import binascii
 ### globals
 
 outputfilename = 'newbag.sav'
-version = "0.18.0"
+version = "0.19.0"
 money_offset = 0x0490
 coins_offset = 0x0494
 soot_sack_steps_offset = 0x04AC
@@ -490,7 +490,7 @@ def sort_all(item_types):
 	for i in item_types: sort_items(i)
 	return
 
-def pokedex(compact,obtainable_filter):
+def pokedex(seen_filter,obtainable_filter):
 	address = section_address(0)
 	owned  = int.from_bytes(sav[address+pokedex_owned_offset:address+pokedex_owned_offset+49], byteorder='little')
 	seen = int.from_bytes(sav[address+pokedex_seen_offset:address+pokedex_seen_offset+49], byteorder='little')
@@ -507,7 +507,7 @@ def pokedex(compact,obtainable_filter):
 		if seen & 1: s = "S"
 		owned >>= 1
 		seen >>= 1
-		if compact and o == " " and s == " ": continue
+		if seen_filter and s == " ": continue
 		obtainable = ' '
 		if nid_obtainable[nid][0] == 'Y': obtainable = nid_obtainable[nid][0]
 		if obtainable_filter and obtainable == ' ': continue
@@ -967,19 +967,19 @@ while sel != 0:
 			[False,0]
 		),
 		(
-			'Pokédex (read-only)',
+			'Pokédex [Full] (read-only)',
 			pokedex,
 			[False, False]
+		),
+		(
+			'Pokédex Seen (read-only)',
+			pokedex,
+			[True, False]
 		),
 		(
 			'Pokédex Obtainable (read-only)',
 			pokedex,
 			[False, True]
-		),
-		(
-			'Pokédex Compact (read-only)',
-			pokedex,
-			[True, False]
 		),
 		(
 			"Lanette's PC [by box] (read-only)",
