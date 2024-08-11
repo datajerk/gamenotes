@@ -9,7 +9,7 @@ import binascii
 ### globals
 
 outputfilename = 'newbag.sav'
-version = "0.16.1"
+version = "0.16.2"
 money_offset = 0x0490
 coins_offset = 0x0494
 soot_sack_steps_offset = 0x04AC
@@ -497,8 +497,6 @@ def pokedex(compact):
 	name_list = []
 	current_box, box_mons = dump_lanette_pc()
 	party_mons = dump_party()
-
-	print(party_mons)
 
 	print("Seen: {0:d} Owned: {1:d}\n".format(seen.bit_count(),owned.bit_count()))
 
