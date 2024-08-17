@@ -46,14 +46,14 @@ I did have one beef with this hack I'll chronicle at the end.
 
 ## Cheating
 
-Main Story Guidelines:
+Main Storyline Guidelines:
 
 1. No altering money (but coins OK, something I learned from my Polished Crystal post-game run).
 1. No [offline] Rare Candy to level up.
 1. Must "capture" each Pokémon the way the game intended (with a ball).
 1. No glitches (mostly concerned about savefile corruption).
 
-Post Game Guidelines:
+Post-Game Guidelines:
 
 1. Experience the proper way at least once.
    1. Grinding

@@ -887,14 +887,14 @@ while sel != 0:
 			[['ITEMS','POKE_BALLS','KEY_ITEMS','PC_ITEMS']]
 		),
 		(
-			'Money: ' + str(read_number(section_address(1) + money_offset,4,get_security_key())),
-			edit_number,
-			['Money',section_address(1) + money_offset,4,get_security_key()]
-		),
-		(
 			'Coins: ' + str(read_number(section_address(1) + coins_offset,2,get_security_key() & 0xFFFF)),
 			edit_number,
 			['Coins',section_address(1) + coins_offset,2,get_security_key() & 0xFFFF,9999]
+		),
+		(
+			'Money: ' + str(read_number(section_address(1) + money_offset,4,get_security_key())),
+			edit_number,
+			['Money',section_address(1) + money_offset,4,get_security_key()]
 		),
 		(
 			'Soot Sack Steps: ' + str(read_number(section_address(2) + soot_sack_steps_offset,2,0x0)),
