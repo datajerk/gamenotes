@@ -9,13 +9,15 @@ import binascii
 ### globals
 
 outputfilename = 'newbag.sav'
-version = "0.19.0"
+version = "0.20.0"
 money_offset = 0x0490
 coins_offset = 0x0494
 soot_sack_steps_offset = 0x04AC
 team_size_offset = 0x0234
 pokedex_owned_offset = 0x0028
-pokedex_seen_offset = 0x005C
+pokedex_seen_offset_a = 0x005C
+pokedex_seen_offset_b = 0x0988
+pokedex_seen_offset_c = 0x0CA4
 flags_offset = 0x1270 - 3968
 dewford_rand_offset = 0xf68 + 2
 mirage_island_offset = 0x464
@@ -493,7 +495,7 @@ def sort_all(item_types):
 def pokedex(seen_filter,obtainable_filter):
 	address = section_address(0)
 	owned  = int.from_bytes(sav[address+pokedex_owned_offset:address+pokedex_owned_offset+49], byteorder='little')
-	seen = int.from_bytes(sav[address+pokedex_seen_offset:address+pokedex_seen_offset+49], byteorder='little')
+	seen = int.from_bytes(sav[address+pokedex_seen_offset_a:address+pokedex_seen_offset_a+49], byteorder='little')
 	nid_list = []
 	name_list = []
 	current_box, box_mons = dump_lanette_pc()
@@ -781,6 +783,27 @@ def mirage_island():
 
 	return
 
+def latios_hack():
+	address = section_address(0)
+	seen_a = int.from_bytes(sav[address+pokedex_seen_offset_a:address+pokedex_seen_offset_a+49], byteorder='little')
+	seen_a ^= (1 << (380 - 1))
+	seen_a ^= (1 << (381 - 1))
+	for i, j in enumerate(seen_a.to_bytes(49, 'little')): sav[address+pokedex_seen_offset_a+i] = j
+
+	address = section_address(1)
+	seen_b = int.from_bytes(sav[address+pokedex_seen_offset_b:address+pokedex_seen_offset_b+49], byteorder='little')
+	seen_b ^= (1 << (380 - 1))
+	seen_b ^= (1 << (381 - 1))
+	for i, j in enumerate(seen_b.to_bytes(49, 'little')): sav[address+pokedex_seen_offset_b+i] = j
+
+	address = section_address(4)
+	seen_c = int.from_bytes(sav[address+pokedex_seen_offset_c:address+pokedex_seen_offset_c+49], byteorder='little')
+	seen_c ^= (1 << (380 - 1))
+	seen_c ^= (1 << (381 - 1))
+	for i, j in enumerate(seen_c.to_bytes(49, 'little')): sav[address+pokedex_seen_offset_c+i] = j
+
+	return
+
 
 ### main
 
@@ -980,6 +1003,11 @@ while sel != 0:
 			'Pokédex Obtainable (read-only)',
 			pokedex,
 			[False, True]
+		),
+		(
+			'Pokédex Latias/Latios Seen Hack',
+			latios_hack,
+			[]
 		),
 		(
 			"Lanette's PC [by box] (read-only)",
