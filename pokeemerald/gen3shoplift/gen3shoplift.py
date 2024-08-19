@@ -743,7 +743,7 @@ def lanette_pc_box():
 		format_string = '{0:02d}. {1:03d} {4:03d} {2:' + str(maxmonlen) + 's} {5:' + str(maxmonlen) + 's} {3:' + str(maxitemlen) + 's}'
 		item_name = items_index[item]
 		if item_name == 'NONE': item_name = ''
-		print(format_string.format(index+1,sid,sid_index[sid],item_name,nid,name))
+		print(format_string.format(index,sid,sid_index[sid],item_name,nid,name))
 
 	print()
 	return
@@ -865,7 +865,7 @@ def pokeblocks():
 
 		print()
 		print('Input block as comma delimited values:\n')
-		print('color[0-14], spicy[0-255], dry[0-255], sweet[0-255], bitter[0-255], sour[0-255], feel[0-255]')
+		print('color[0-14], spicy[0-255], dry[0-255], sweet[0-255], bitter[0-255], sour[0-255], feel[0-99]')
 		print()
 		print('Colors:\n')
 		for i in range(15):
@@ -892,8 +892,11 @@ def pokeblocks():
 				if color > 14:
 					print('\ncolor must be 0-14\n')
 					continue
-				if spicy > 255 or dry > 255 or sweet > 255 or bitter > 255 or sour > 255 or feel > 255:
-					print('\nspicy, dry, sweet, bitter, sour, feel must be 0-255\n')
+				if spicy > 255 or dry > 255 or sweet > 255 or bitter > 255 or sour > 255:
+					print('\nspicy, dry, sweet, bitter, sour must be 0-255\n')
+					continue
+				if feel > 99:
+					print('\nfeel must be 0-99\n')
 					continue
 				break
 			except Exception as err:
