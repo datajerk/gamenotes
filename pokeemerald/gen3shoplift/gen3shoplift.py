@@ -9,7 +9,7 @@ import binascii
 ### globals
 
 outputfilename = 'newbag.sav'
-version = "0.21.0"
+version = "0.22.0"
 money_offset = 0x0490
 coins_offset = 0x0494
 soot_sack_steps_offset = 0x04AC
@@ -21,6 +21,7 @@ pokedex_seen_offset_c = 0x0CA4
 flags_offset = 0x1270 - 3968
 dewford_rand_offset = 0xf68 + 2
 mirage_island_offset = 0x464
+pokeblocks_offset = 0x848
 game_code = -1
 pokeball = '◓'
 
@@ -156,6 +157,24 @@ sid_name = {'None': 0, 'Bulbasaur': 1, 'Ivysaur': 2, 'Venusaur': 3, 'Charmander'
 hton = {1: 252, 2: 253, 3: 254, 4: 255, 5: 256, 6: 257, 7: 258, 8: 259, 9: 260, 10: 261, 11: 262, 12: 263, 13: 264, 14: 265, 15: 266, 16: 267, 17: 268, 18: 269, 19: 270, 20: 271, 21: 272, 22: 273, 23: 274, 24: 275, 25: 276, 26: 277, 27: 278, 28: 279, 29: 280, 30: 281, 31: 282, 32: 283, 33: 284, 34: 285, 35: 286, 36: 287, 37: 288, 38: 289, 39: 63, 40: 64, 41: 65, 42: 290, 43: 291, 44: 292, 45: 293, 46: 294, 47: 295, 48: 296, 49: 297, 50: 118, 51: 119, 52: 129, 53: 130, 54: 298, 55: 183, 56: 184, 57: 74, 58: 75, 59: 76, 60: 299, 61: 300, 62: 301, 63: 41, 64: 42, 65: 169, 66: 72, 67: 73, 68: 302, 69: 303, 70: 304, 71: 305, 72: 306, 73: 66, 74: 67, 75: 68, 76: 307, 77: 308, 78: 309, 79: 310, 80: 311, 81: 312, 82: 81, 83: 82, 84: 100, 85: 101, 86: 313, 87: 314, 88: 43, 89: 44, 90: 45, 91: 182, 92: 84, 93: 85, 94: 315, 95: 316, 96: 317, 97: 318, 98: 319, 99: 320, 100: 321, 101: 322, 102: 323, 103: 218, 104: 219, 105: 324, 106: 88, 107: 89, 108: 109, 109: 110, 110: 325, 111: 326, 112: 27, 113: 28, 114: 327, 115: 227, 116: 328, 117: 329, 118: 330, 119: 331, 120: 332, 121: 333, 122: 334, 123: 335, 124: 336, 125: 337, 126: 338, 127: 339, 128: 340, 129: 341, 130: 342, 131: 343, 132: 344, 133: 345, 134: 346, 135: 347, 136: 348, 137: 174, 138: 39, 139: 40, 140: 349, 141: 350, 142: 351, 143: 120, 144: 121, 145: 352, 146: 353, 147: 354, 148: 355, 149: 356, 150: 357, 151: 358, 152: 359, 153: 37, 154: 38, 155: 172, 156: 25, 157: 26, 158: 54, 159: 55, 160: 360, 161: 202, 162: 177, 163: 178, 164: 203, 165: 231, 166: 232, 167: 127, 168: 214, 169: 111, 170: 112, 171: 361, 172: 362, 173: 363, 174: 364, 175: 365, 176: 366, 177: 367, 178: 368, 179: 369, 180: 222, 181: 170, 182: 171, 183: 370, 184: 116, 185: 117, 186: 230, 187: 371, 188: 372, 189: 373, 190: 374, 191: 375, 192: 376, 193: 377, 194: 378, 195: 379, 196: 380, 197: 381, 198: 382, 199: 383, 200: 384, 201: 385, 202: 386}
 
 ntoh = {252: 1, 253: 2, 254: 3, 255: 4, 256: 5, 257: 6, 258: 7, 259: 8, 260: 9, 261: 10, 262: 11, 263: 12, 264: 13, 265: 14, 266: 15, 267: 16, 268: 17, 269: 18, 270: 19, 271: 20, 272: 21, 273: 22, 274: 23, 275: 24, 276: 25, 277: 26, 278: 27, 279: 28, 280: 29, 281: 30, 282: 31, 283: 32, 284: 33, 285: 34, 286: 35, 287: 36, 288: 37, 289: 38, 63: 39, 64: 40, 65: 41, 290: 42, 291: 43, 292: 44, 293: 45, 294: 46, 295: 47, 296: 48, 297: 49, 118: 50, 119: 51, 129: 52, 130: 53, 298: 54, 183: 55, 184: 56, 74: 57, 75: 58, 76: 59, 299: 60, 300: 61, 301: 62, 41: 63, 42: 64, 169: 65, 72: 66, 73: 67, 302: 68, 303: 69, 304: 70, 305: 71, 306: 72, 66: 73, 67: 74, 68: 75, 307: 76, 308: 77, 309: 78, 310: 79, 311: 80, 312: 81, 81: 82, 82: 83, 100: 84, 101: 85, 313: 86, 314: 87, 43: 88, 44: 89, 45: 90, 182: 91, 84: 92, 85: 93, 315: 94, 316: 95, 317: 96, 318: 97, 319: 98, 320: 99, 321: 100, 322: 101, 323: 102, 218: 103, 219: 104, 324: 105, 88: 106, 89: 107, 109: 108, 110: 109, 325: 110, 326: 111, 27: 112, 28: 113, 327: 114, 227: 115, 328: 116, 329: 117, 330: 118, 331: 119, 332: 120, 333: 121, 334: 122, 335: 123, 336: 124, 337: 125, 338: 126, 339: 127, 340: 128, 341: 129, 342: 130, 343: 131, 344: 132, 345: 133, 346: 134, 347: 135, 348: 136, 174: 137, 39: 138, 40: 139, 349: 140, 350: 141, 351: 142, 120: 143, 121: 144, 352: 145, 353: 146, 354: 147, 355: 148, 356: 149, 357: 150, 358: 151, 359: 152, 37: 153, 38: 154, 172: 155, 25: 156, 26: 157, 54: 158, 55: 159, 360: 160, 202: 161, 177: 162, 178: 163, 203: 164, 231: 165, 232: 166, 127: 167, 214: 168, 111: 169, 112: 170, 361: 171, 362: 172, 363: 173, 364: 174, 365: 175, 366: 176, 367: 177, 368: 178, 369: 179, 222: 180, 170: 181, 171: 182, 370: 183, 116: 184, 117: 185, 230: 186, 371: 187, 372: 188, 373: 189, 374: 190, 375: 191, 376: 192, 377: 193, 378: 194, 379: 195, 380: 196, 381: 197, 382: 198, 383: 199, 384: 200, 385: 201, 386: 202}
+
+pokeblock_colors = {
+	0: 'None',
+	1: 'Red',
+	2: 'Blue',
+	3: 'Pink',
+	4: 'Green',
+	5: 'Yellow',
+	6: 'Purple',
+	7: 'Indigo',
+	8: 'Brown',
+	9: 'Lite Blue',
+	10: 'Olive',
+	11: 'Gray',
+	12: 'Black',
+	13: 'White',
+	14: 'Gold',
+}
 
 ### functions
 
@@ -812,6 +831,106 @@ def latios_hack():
 
 	return
 
+def pokeblocks():
+	address = section_address(1)
+	maxlen = len(max(pokeblock_colors.values(), key=len))
+
+	while True:
+		format_string = 'Idx {1:' + str(maxlen) + 's} {2:>6s} {3:>6s} {4:>6s} {5:>6s} {6:>6s} {7:>6s} {8:>6s}'
+		print(format_string.format(0,'Color','Spicy','Dry','Sweet','Bitter','Sour','Feel','Level'))
+		print()
+		for i in range(40):
+			b = address + pokeblocks_offset + i*8
+			#if sav[b] == 0: break
+			format_string = '{0:2d}. {1:' + str(maxlen) + 's} {2:6d} {3:6d} {4:6d} {5:6d} {6:6d} {7:6d} {8:6d}'
+			print(format_string.format(i+1,pokeblock_colors[sav[b]],sav[b+1],sav[b+2],sav[b+3],sav[b+4],sav[b+5],sav[b+6],max(sav[b+1],sav[b+2],sav[b+3],sav[b+4],sav[b+5])))
+
+		print()
+
+		while True:
+			try:
+				e = int(input("Edit block (1-40) ['0' to Exit]: "))
+				if e > 40 or e < 0:
+					print("\nOut of range. Try again...\n")
+					continue
+				if e == 0:
+					print()
+					return
+				break
+			except ValueError:
+				print("\nNot a number. Try again...\n")
+			except Exception as err:
+				print(f"Unexpected {err=}, {type(err)=}")
+				raise
+
+		print()
+		print('Input block as comma delimited values:\n')
+		print('color[0-14], spicy[0-255], dry[0-255], sweet[0-255], bitter[0-255], sour[0-255], feel[0-255]')
+		print()
+		print('Colors:\n')
+		for i in range(15):
+			print('{0}={1} '.format(i,pokeblock_colors[i]),end='')
+			if i % 5 == 4: print()
+		print()
+		print('Set color or entire input to 0 to delete block\n')
+		print('[Return] to abort\n')
+
+		b = address + pokeblocks_offset + (int(e)-1)*8
+
+		while True:
+			try:
+				f = input("Block " + str(e) + ": ")
+				if len(f) == 0: break
+				if f == '0':
+					color = 0
+					break
+				try:
+					color, spicy, dry, sweet, bitter, sour, feel = [abs(int(i)) for i in f.replace(' ','').split(",")]
+				except ValueError:
+					print('\nFormat must be color,spicy,dry,sweet,bitter,sour,feel and all fields integers.\n')
+					continue
+				if color > 14:
+					print('\ncolor must be 0-14\n')
+					continue
+				if spicy > 255 or dry > 255 or sweet > 255 or bitter > 255 or sour > 255 or feel > 255:
+					print('\nspicy, dry, sweet, bitter, sour, feel must be 0-255\n')
+					continue
+				break
+			except Exception as err:
+				print(f"Unexpected {err=}, {type(err)=}")
+				raise
+
+		print()
+
+		if color == 0: spicy = dry = sweet = bitter = sour = feel = 0
+
+		sav[b+0] = color
+		sav[b+1] = spicy
+		sav[b+2] = dry
+		sav[b+3] = sweet
+		sav[b+4] = bitter
+		sav[b+5] = sour
+		sav[b+6] = feel
+		#sav[b+7] = 0x3
+
+		# compress
+		i = 0
+		while i < 39:
+			b = address + pokeblocks_offset + i*8
+			if sav[b] == 0:
+				ss = 0
+				for j in range(i+1,40):
+					c = address + pokeblocks_offset + j*8
+					ss += sav[c]
+					if ss > 0: break
+				if ss == 0: break
+				sav[b:b+(39-i)*8] = sav[b+8:b+(39-i)*8+8]
+				sav[b+8*(39-i):b+8*(39-i)+8] = bytearray([0,0,0,0,0,0,0,0])
+				continue
+			i += 1
+
+	return
+
 
 ### main
 
@@ -837,8 +956,9 @@ print("\nPokémon Gen III (Emerald only for now) Offline Store v" + version)
 print("""
 Tested Roms:
 
-c9a195879eae869dff1a87ebe3735342  Pokemon - Emerald Final 7.41 (USA, Europe).gba
 605b89b67018abcea91e693a4dd25be3  Pokemon - Emerald Version (USA, Europe).gba
+698a239d05afc59a818483ee01bab4b7  Pokemon - Emerald 386 (USA, Europe).gba
+c9a195879eae869dff1a87ebe3735342  Pokemon - Emerald Final 7.41 (USA, Europe).gba
 """)
 print("USE AT YOUR OWN PERIL!!!\n")
 print("Let's go shopping!\n")
@@ -916,6 +1036,11 @@ while sel != 0:
 			sort_all,
 #			[['ITEMS','POKE_BALLS','TM_HM','BERRIES','KEY_ITEMS','PC_ITEMS']]
 			[['ITEMS','POKE_BALLS','KEY_ITEMS','PC_ITEMS']]
+		),
+		(
+			'Pokéblocks',
+			pokeblocks,
+			[]
 		),
 		(
 			'Coins: ' + str(read_number(section_address(1) + coins_offset,2,get_security_key() & 0xFFFF)),
