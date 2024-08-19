@@ -4,12 +4,13 @@ import sys
 import os
 import re
 import binascii
+from ctypes import *
 
 
 ### globals
 
 outputfilename = 'newbag.sav'
-version = "0.22.1"
+version = "0.23.0"
 money_offset = 0x0490
 coins_offset = 0x0494
 soot_sack_steps_offset = 0x04AC
@@ -176,6 +177,9 @@ pokeblock_colors = {
 	14: 'Gold',
 }
 
+decor = {0: 'None', 1: 'Small Desk', 2: 'Pokemon Desk', 3: 'Heavy Desk', 4: 'Ragged Desk', 5: 'Comfort Desk', 6: 'Pretty Desk', 7: 'Brick Desk', 8: 'Camp Desk', 9: 'Hard Desk', 10: 'Small Chair', 11: 'Pokemon Chair', 12: 'Heavy Chair', 13: 'Pretty Chair', 14: 'Comfort Chair', 15: 'Ragged Chair', 16: 'Brick Chair', 17: 'Camp Chair', 18: 'Hard Chair', 19: 'Red Plant', 20: 'Tropical Plant', 21: 'Pretty Flowers', 22: 'Colorful Plant', 23: 'Big Plant', 24: 'Gorgeous Plant', 25: 'Red Brick', 26: 'Yellow Brick', 27: 'Blue Brick', 28: 'Red Balloon', 29: 'Blue Balloon', 30: 'Yellow Balloon', 31: 'Red Tent', 32: 'Blue Tent', 33: 'Solid Board', 34: 'Slide', 35: 'Fence Length', 36: 'Fence Width', 37: 'Tire', 38: 'Stand', 39: 'Mud Ball', 40: 'Breakable Door', 41: 'Sand Ornament', 42: 'Silver Shield', 43: 'Gold Shield', 44: 'Glass Ornament', 45: 'TV', 46: 'Round TV', 47: 'Cute TV', 48: 'Glitter Mat', 49: 'Jump Mat', 50: 'Spin Mat', 51: 'C Low Note Mat', 52: 'D Note Mat', 53: 'E Note Mat', 54: 'F Note Mat', 55: 'G Note Mat', 56: 'A Note Mat', 57: 'B Note Mat', 58: 'C High Note Mat', 59: 'Surf Mat', 60: 'Thunder Mat', 61: 'Fire Blast Mat', 62: 'Powder Snow Mat', 63: 'Attract Mat', 64: 'Fissure Mat', 65: 'Spikes Mat', 66: 'Ball Poster', 67: 'Green Poster', 68: 'Red Poster', 69: 'Blue Poster', 70: 'Cute Poster', 71: 'Pika Poster', 72: 'Long Poster', 73: 'Sea Poster', 74: 'Sky Poster', 75: 'Kiss Poster', 76: 'Pichu Doll', 77: 'Pikachu Doll', 78: 'Marill Doll', 79: 'Togepi Doll', 80: 'Cyndaquil Doll', 81: 'Chikorita Doll', 82: 'Totodile Doll', 83: 'Jigglypuff Doll', 84: 'Meowth Doll', 85: 'Clefairy Doll', 86: 'Ditto Doll', 87: 'Smoochum Doll', 88: 'Treecko Doll', 89: 'Torchic Doll', 90: 'Mudkip Doll', 91: 'Duskull Doll', 92: 'Wynaut Doll', 93: 'Baltoy Doll', 94: 'Kecleon Doll', 95: 'Azurill Doll', 96: 'Skitty Doll', 97: 'Swablu Doll', 98: 'Gulpin Doll', 99: 'Lotad Doll', 100: 'Seedot Doll', 101: 'Pika Cushion', 102: 'Round Cushion', 103: 'Kiss Cushion', 104: 'Zigzag Cushion', 105: 'Spin Cushion', 106: 'Diamond Cushion', 107: 'Ball Cushion', 108: 'Grass Cushion', 109: 'Fire Cushion', 110: 'Water Cushion', 111: 'Snorlax Doll', 112: 'Rhydon Doll', 113: 'Lapras Doll', 114: 'Venusaur Doll', 115: 'Charizard Doll', 116: 'Blastoise Doll', 117: 'Wailmer Doll', 118: 'Regirock Doll', 119: 'Regice Doll', 120: 'Registeel Doll'}
+
+
 ### functions
 
 def init_dicts_arrays():
@@ -222,7 +226,7 @@ def menu(title, menu_items, orientation, left, count):
 				continue
 			break
 		except ValueError:
-			print("\nNot a number. Try again...\n")
+			print("\nNot an integer. Try again...\n")
 		except Exception as err:
 			print(f"Unexpected {err=}, {type(err)=}")
 			raise
@@ -346,7 +350,7 @@ def items(pocket):
 					continue
 				break
 			except ValueError:
-				print("\nNot a number. Try again...\n")
+				print("\nNot an integer. Try again...\n")
 			except Exception as err:
 				print(f"Unexpected {err=}, {type(err)=}")
 				raise
@@ -429,7 +433,7 @@ def edit_number(label, address, length, key, mx=None):
 				continue
 			break
 		except ValueError:
-			print("\nNot a number. Try again...\n")
+			print("\nNot an integer. Try again...\n")
 		except Exception as err:
 			print(f"Unexpected {err=}, {type(err)=}")
 			raise
@@ -619,7 +623,7 @@ def toggle_flags(used,checked):
 					continue
 				break
 			except ValueError:
-				print("\nNot a number. Try again...\n")
+				print("\nNot an integer. Try again...\n")
 			except Exception as err:
 				print(f"Unexpected {err=}, {type(err)=}")
 				raise
@@ -813,37 +817,73 @@ def mirage_island():
 def latios_hack():
 	address = section_address(0)
 	seen_a = int.from_bytes(sav[address+pokedex_seen_offset_a:address+pokedex_seen_offset_a+49], byteorder='little')
-	seen_a ^= (1 << (380 - 1))
-	seen_a ^= (1 << (381 - 1))
+	seen_a |= (1 << (380 - 1))
+	seen_a |= (1 << (381 - 1))
 	for i, j in enumerate(seen_a.to_bytes(49, 'little')): sav[address+pokedex_seen_offset_a+i] = j
 
 	address = section_address(1)
 	seen_b = int.from_bytes(sav[address+pokedex_seen_offset_b:address+pokedex_seen_offset_b+49], byteorder='little')
-	seen_b ^= (1 << (380 - 1))
-	seen_b ^= (1 << (381 - 1))
+	seen_b |= (1 << (380 - 1))
+	seen_b |= (1 << (381 - 1))
 	for i, j in enumerate(seen_b.to_bytes(49, 'little')): sav[address+pokedex_seen_offset_b+i] = j
 
 	address = section_address(4)
 	seen_c = int.from_bytes(sav[address+pokedex_seen_offset_c:address+pokedex_seen_offset_c+49], byteorder='little')
-	seen_c ^= (1 << (380 - 1))
-	seen_c ^= (1 << (381 - 1))
+	seen_c |= (1 << (380 - 1))
+	seen_c |= (1 << (381 - 1))
 	for i, j in enumerate(seen_c.to_bytes(49, 'little')): sav[address+pokedex_seen_offset_c+i] = j
+
+	print('Latias and Latios have been "Seen"!\n')
 
 	return
 
 def pokeblocks():
+	class block(Structure):
+		_fields_ = [
+			('color', c_uint8),
+			('spicy', c_uint8),
+			('dry', c_uint8),
+			('sweet', c_uint8),
+			('bitter', c_uint8),
+			('sour', c_uint8),
+			('feel', c_uint8),
+			('padding', c_uint8),
+		]
+
+	class blocks(Structure):
+		_fields_ = [
+			('block', block * 40)
+		]
+
 	address = section_address(1)
 	maxlen = len(max(pokeblock_colors.values(), key=len))
+	myblocks = blocks.from_buffer(sav, address + pokeblocks_offset)
+	emptyblock = block()
 
 	while True:
 		format_string = 'Idx {1:' + str(maxlen) + 's} {2:>6s} {3:>6s} {4:>6s} {5:>6s} {6:>6s} {7:>6s} {8:>6s}'
 		print(format_string.format(0,'Color','Spicy','Dry','Sweet','Bitter','Sour','Feel','Level'))
 		print()
 		for i in range(40):
-			b = address + pokeblocks_offset + i*8
-			#if sav[b] == 0: break
 			format_string = '{0:2d}. {1:' + str(maxlen) + 's} {2:6d} {3:6d} {4:6d} {5:6d} {6:6d} {7:6d} {8:6d}'
-			print(format_string.format(i+1,pokeblock_colors[sav[b]],sav[b+1],sav[b+2],sav[b+3],sav[b+4],sav[b+5],sav[b+6],max(sav[b+1],sav[b+2],sav[b+3],sav[b+4],sav[b+5])))
+			print(format_string.format(
+				i+1,
+				pokeblock_colors[myblocks.block[i].color],
+				myblocks.block[i].spicy,
+				myblocks.block[i].dry,
+				myblocks.block[i].sweet,
+				myblocks.block[i].bitter,
+				myblocks.block[i].sour,
+				myblocks.block[i].feel,
+				max(
+					myblocks.block[i].spicy,
+					myblocks.block[i].dry,
+					myblocks.block[i].sweet,
+					myblocks.block[i].bitter,
+					myblocks.block[i].sour,
+				)
+			)
+			)
 
 		print()
 
@@ -858,7 +898,7 @@ def pokeblocks():
 					return
 				break
 			except ValueError:
-				print("\nNot a number. Try again...\n")
+				print("\nNot an integer. Try again...\n")
 			except Exception as err:
 				print(f"Unexpected {err=}, {type(err)=}")
 				raise
@@ -875,7 +915,7 @@ def pokeblocks():
 		print('Set color or entire input to 0 to delete block\n')
 		print('[Return] to abort\n')
 
-		b = address + pokeblocks_offset + (int(e)-1)*8
+		b = e - 1
 
 		while True:
 			try:
@@ -907,33 +947,73 @@ def pokeblocks():
 
 		if color == 0: spicy = dry = sweet = bitter = sour = feel = 0
 
-		sav[b+0] = color
-		sav[b+1] = spicy
-		sav[b+2] = dry
-		sav[b+3] = sweet
-		sav[b+4] = bitter
-		sav[b+5] = sour
-		sav[b+6] = feel
-		#sav[b+7] = 0x3
+		myblocks.block[b].color = color
+		myblocks.block[b].spicy = spicy
+		myblocks.block[b].dry = dry
+		myblocks.block[b].sweet = sweet
+		myblocks.block[b].bitter = bitter
+		myblocks.block[b].sour = sour
+		myblocks.block[b].feel = feel
+		myblocks.block[b].padding = 0x0
 
 		# compress
-		i = 0
-		while i < 39:
-			b = address + pokeblocks_offset + i*8
-			if sav[b] == 0:
-				ss = 0
-				for j in range(i+1,40):
-					c = address + pokeblocks_offset + j*8
-					ss += sav[c]
-					if ss > 0: break
-				if ss == 0: break
-				sav[b:b+(39-i)*8] = sav[b+8:b+(39-i)*8+8]
-				sav[b+8*(39-i):b+8*(39-i)+8] = bytearray([0,0,0,0,0,0,0,0])
-				continue
-			i += 1
+		for i in range(40):
+			if myblocks.block[i].color != 0: continue
+			for j in range(i+1,40):
+				if myblocks.block[j].color != 0:
+					myblocks.block[i] = myblocks.block[j]
+					myblocks.block[j] = emptyblock
+					break
+			else:
+				break
 
 	return
 
+def dump_decorations():
+	def read_sections():
+		saveblock1 = bytearray()
+		for i in range(1,14,1):
+			a = section_address(i)
+			saveblock1 += bytearray(sav[a:a+3968])
+		return saveblock1
+
+	decor_a = {
+		'Desks' : 0x2734,
+		'Chairs' : 0x273E,
+		'Plants' : 0x2748,
+		'Ornaments' : 0x2752,
+		'Mats' : 0x2770,
+		'Posters' : 0x278E,
+		'Dalls' : 0x2798,
+		'Cushions' : 0x27C0,
+	}
+
+	decor_s = {
+		'Desks' : 10,
+		'Chairs' : 10,
+		'Plants' : 10,
+		'Ornaments' : 30,
+		'Mats' : 30,
+		'Posters' : 10,
+		'Dalls' : 40,
+		'Cushions' : 10,
+	}
+
+	saveblock1 = read_sections()
+
+	for key in decor_a:
+		print(key, end=':\n')
+		print()
+		j = 0
+		for i in range(decor_s[key]):
+			if saveblock1[decor_a[key] + i] != 0:
+				j += 1
+				print('{0:d}. {1:s}'.format(j,decor[saveblock1[decor_a[key] + i]]))
+		if j > 0: print()
+
+
+
+	return
 
 ### main
 
@@ -1155,6 +1235,12 @@ while sel != 0:
 			lanette_pc_name,
 			[]
 		),
+		(
+			'Decorations (read-only)',
+			dump_decorations,
+			[]
+		),
+
 		(
 			'[Over]write "' + outputfilename + '" and continue editing',
 			writeout,
