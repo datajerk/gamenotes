@@ -10,7 +10,7 @@ from ctypes import *
 ### globals
 
 outputfilename = 'newbag.sav'
-version = "0.23.0"
+version = "0.24.0"
 money_offset = 0x0490
 coins_offset = 0x0494
 soot_sack_steps_offset = 0x04AC
@@ -518,16 +518,27 @@ def sort_all(item_types):
 	for i in item_types: sort_items(i)
 	return
 
-def pokedex(seen_filter,obtainable_filter):
+def pokedex(seen_filter,obtainable_filter,regional_filter):
 	address = section_address(0)
-	owned  = int.from_bytes(sav[address+pokedex_owned_offset:address+pokedex_owned_offset+49], byteorder='little')
+	owned = int.from_bytes(sav[address+pokedex_owned_offset:address+pokedex_owned_offset+49], byteorder='little')
 	seen = int.from_bytes(sav[address+pokedex_seen_offset_a:address+pokedex_seen_offset_a+49], byteorder='little')
+	regional_mask = 0
 	nid_list = []
 	name_list = []
 	current_box, box_mons = dump_lanette_pc()
 	party_mons = dump_party()
 
-	print("Seen: {0:d} Owned: {1:d}\n".format(seen.bit_count(),owned.bit_count()))
+	for i in list(ntoh.keys()): regional_mask |= (1 << (i - 1))
+	regional_owned = owned & regional_mask
+	regional_seen = seen & regional_mask
+
+	print("Seen: {0:d}  Owned: {1:d}  Regional Seen: {2:d}  Regional Owned: {3:d}\n".format(
+		seen.bit_count(),
+		owned.bit_count(),
+		regional_seen.bit_count(),
+		regional_owned.bit_count(),
+		)
+	)
 
 	for nid in dict(nid_index):
 		o = s = " "
@@ -539,6 +550,7 @@ def pokedex(seen_filter,obtainable_filter):
 		obtainable = ' '
 		if nid_obtainable[nid][0] == 'Y': obtainable = nid_obtainable[nid][0]
 		if obtainable_filter and obtainable == ' ': continue
+		if regional_filter and not nid in ntoh.keys(): continue
 
 		# fugly
 		box = '☐'
@@ -563,6 +575,8 @@ def pokedex(seen_filter,obtainable_filter):
 
 	name_list = nid_list.copy()
 	name_list.sort(key = lambda x: x[18:])
+
+	if regional_filter: nid_list.sort(key = lambda x: x[5:])
 
 	maxlen = len(max(nid_list, key=len))
 	for i,j in zip(nid_list, name_list):
@@ -881,8 +895,8 @@ def pokeblocks():
 					myblocks.block[i].sweet,
 					myblocks.block[i].bitter,
 					myblocks.block[i].sour,
+					)
 				)
-			)
 			)
 
 		print()
@@ -1206,22 +1220,27 @@ while sel != 0:
 			[False,0]
 		),
 		(
-			'Pokédex [Full] (read-only)',
+			'Pokédex [Regional] (read-only)',
 			pokedex,
-			[False, False]
+			[False, False, True]
 		),
 		(
-			'Pokédex Seen (read-only)',
+			'Pokédex [National] (read-only)',
 			pokedex,
-			[True, False]
+			[False, False, False]
 		),
 		(
-			'Pokédex Obtainable (read-only)',
+			'Pokédex [National] Seen (read-only)',
 			pokedex,
-			[False, True]
+			[True, False, False]
 		),
 		(
-			'Pokédex Latias/Latios Seen Hack',
+			'Pokédex [National] Obtainable (read-only)',
+			pokedex,
+			[False, True, False]
+		),
+		(
+			'Pokédex Latias/Latios Seen Hack (cannot unsee!)',
 			latios_hack,
 			[]
 		),
