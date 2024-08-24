@@ -10,7 +10,7 @@ from ctypes import *
 ### globals
 
 outputfilename = 'newbag.sav'
-version = "0.24.0"
+version = "0.25.0"
 money_offset = 0x0490
 coins_offset = 0x0494
 soot_sack_steps_offset = 0x04AC
@@ -178,6 +178,10 @@ pokeblock_colors = {
 }
 
 decor = {0: 'None', 1: 'Small Desk', 2: 'Pokemon Desk', 3: 'Heavy Desk', 4: 'Ragged Desk', 5: 'Comfort Desk', 6: 'Pretty Desk', 7: 'Brick Desk', 8: 'Camp Desk', 9: 'Hard Desk', 10: 'Small Chair', 11: 'Pokemon Chair', 12: 'Heavy Chair', 13: 'Pretty Chair', 14: 'Comfort Chair', 15: 'Ragged Chair', 16: 'Brick Chair', 17: 'Camp Chair', 18: 'Hard Chair', 19: 'Red Plant', 20: 'Tropical Plant', 21: 'Pretty Flowers', 22: 'Colorful Plant', 23: 'Big Plant', 24: 'Gorgeous Plant', 25: 'Red Brick', 26: 'Yellow Brick', 27: 'Blue Brick', 28: 'Red Balloon', 29: 'Blue Balloon', 30: 'Yellow Balloon', 31: 'Red Tent', 32: 'Blue Tent', 33: 'Solid Board', 34: 'Slide', 35: 'Fence Length', 36: 'Fence Width', 37: 'Tire', 38: 'Stand', 39: 'Mud Ball', 40: 'Breakable Door', 41: 'Sand Ornament', 42: 'Silver Shield', 43: 'Gold Shield', 44: 'Glass Ornament', 45: 'TV', 46: 'Round TV', 47: 'Cute TV', 48: 'Glitter Mat', 49: 'Jump Mat', 50: 'Spin Mat', 51: 'C Low Note Mat', 52: 'D Note Mat', 53: 'E Note Mat', 54: 'F Note Mat', 55: 'G Note Mat', 56: 'A Note Mat', 57: 'B Note Mat', 58: 'C High Note Mat', 59: 'Surf Mat', 60: 'Thunder Mat', 61: 'Fire Blast Mat', 62: 'Powder Snow Mat', 63: 'Attract Mat', 64: 'Fissure Mat', 65: 'Spikes Mat', 66: 'Ball Poster', 67: 'Green Poster', 68: 'Red Poster', 69: 'Blue Poster', 70: 'Cute Poster', 71: 'Pika Poster', 72: 'Long Poster', 73: 'Sea Poster', 74: 'Sky Poster', 75: 'Kiss Poster', 76: 'Pichu Doll', 77: 'Pikachu Doll', 78: 'Marill Doll', 79: 'Togepi Doll', 80: 'Cyndaquil Doll', 81: 'Chikorita Doll', 82: 'Totodile Doll', 83: 'Jigglypuff Doll', 84: 'Meowth Doll', 85: 'Clefairy Doll', 86: 'Ditto Doll', 87: 'Smoochum Doll', 88: 'Treecko Doll', 89: 'Torchic Doll', 90: 'Mudkip Doll', 91: 'Duskull Doll', 92: 'Wynaut Doll', 93: 'Baltoy Doll', 94: 'Kecleon Doll', 95: 'Azurill Doll', 96: 'Skitty Doll', 97: 'Swablu Doll', 98: 'Gulpin Doll', 99: 'Lotad Doll', 100: 'Seedot Doll', 101: 'Pika Cushion', 102: 'Round Cushion', 103: 'Kiss Cushion', 104: 'Zigzag Cushion', 105: 'Spin Cushion', 106: 'Diamond Cushion', 107: 'Ball Cushion', 108: 'Grass Cushion', 109: 'Fire Cushion', 110: 'Water Cushion', 111: 'Snorlax Doll', 112: 'Rhydon Doll', 113: 'Lapras Doll', 114: 'Venusaur Doll', 115: 'Charizard Doll', 116: 'Blastoise Doll', 117: 'Wailmer Doll', 118: 'Regirock Doll', 119: 'Regice Doll', 120: 'Registeel Doll'}
+
+evo_from = {2: 1, 3: 2, 5: 4, 6: 5, 8: 7, 9: 8, 11: 10, 12: 11, 14: 13, 15: 14, 17: 16, 18: 17, 20: 19, 22: 21, 24: 23, 26: 25, 28: 27, 30: 29, 31: 30, 33: 32, 34: 33, 36: 35, 38: 37, 40: 39, 42: 41, 169: 42, 44: 43, 45: 44, 182: 44, 47: 46, 49: 48, 51: 50, 53: 52, 55: 54, 57: 56, 59: 58, 61: 60, 62: 61, 186: 61, 64: 63, 65: 64, 67: 66, 68: 67, 70: 69, 71: 70, 73: 72, 75: 74, 76: 75, 78: 77, 80: 79, 199: 79, 82: 81, 85: 84, 87: 86, 89: 88, 91: 90, 93: 92, 94: 93, 208: 95, 97: 96, 99: 98, 101: 100, 103: 102, 105: 104, 110: 109, 112: 111, 242: 113, 117: 116, 230: 117, 119: 118, 121: 120, 212: 123, 130: 129, 134: 133, 135: 133, 136: 133, 196: 133, 197: 133, 233: 137, 139: 138, 141: 140, 148: 147, 149: 148, 153: 152, 154: 153, 156: 155, 157: 156, 159: 158, 160: 159, 162: 161, 164: 163, 166: 165, 168: 167, 171: 170, 25: 172, 35: 173, 39: 174, 176: 175, 178: 177, 180: 179, 181: 180, 184: 183, 188: 187, 189: 188, 192: 191, 195: 194, 205: 204, 210: 209, 217: 216, 219: 218, 221: 220, 224: 223, 229: 228, 232: 231, 106: 236, 107: 236, 237: 236, 124: 238, 125: 239, 126: 240, 247: 246, 248: 247, 253: 252, 254: 253, 256: 255, 257: 256, 259: 258, 260: 259, 262: 261, 264: 263, 266: 265, 268: 265, 267: 266, 269: 268, 271: 270, 272: 271, 274: 273, 275: 274, 277: 276, 279: 278, 281: 280, 282: 281, 284: 283, 286: 285, 288: 287, 289: 288, 291: 290, 292: 290, 294: 293, 295: 294, 297: 296, 183: 298, 301: 300, 305: 304, 306: 305, 308: 307, 310: 309, 317: 316, 319: 318, 321: 320, 323: 322, 326: 325, 329: 328, 330: 329, 332: 331, 334: 333, 340: 339, 342: 341, 344: 343, 346: 345, 348: 347, 350: 349, 354: 353, 356: 355, 202: 360, 362: 361, 364: 363, 365: 364, 367: 366, 368: 366, 372: 371, 373: 372, 375: 374, 376: 375}
+
+evo_method = {2: 'Level 16', 3: 'Level 32', 5: 'Level 16', 6: 'Level 36', 8: 'Level 16', 9: 'Level 36', 11: 'Level 7', 12: 'Level 10', 14: 'Level 7', 15: 'Level 10', 17: 'Level 18', 18: 'Level 36', 20: 'Level 20', 22: 'Level 20', 24: 'Level 22', 26: 'Item THUNDERSTONE', 28: 'Level 22', 30: 'Level 16', 31: 'Item MOONSTONE', 33: 'Level 16', 34: 'Item MOONSTONE', 36: 'Item MOONSTONE', 38: 'Item FIRESTONE', 40: 'Item MOONSTONE', 42: 'Level 22', 169: 'Happiness ', 44: 'Level 21', 45: 'Item LEAFSTONE', 182: 'Item SUNSTONE', 47: 'Level 24', 49: 'Level 31', 51: 'Level 26', 53: 'Level 28', 55: 'Level 33', 57: 'Level 28', 59: 'Item FIRESTONE', 61: 'Level 25', 62: 'Item WATERSTONE', 186: 'TradeItem KINGSROCK', 64: 'Level 16', 65: 'Trade ', 67: 'Level 28', 68: 'Trade ', 70: 'Level 21', 71: 'Item LEAFSTONE', 73: 'Level 30', 75: 'Level 25', 76: 'Trade ', 78: 'Level 40', 80: 'Level 37', 199: 'TradeItem KINGSROCK', 82: 'Level 30', 85: 'Level 31', 87: 'Level 34', 89: 'Level 38', 91: 'Item WATERSTONE', 93: 'Level 25', 94: 'Trade ', 208: 'TradeItem METALCOAT', 97: 'Level 26', 99: 'Level 28', 101: 'Level 30', 103: 'Item LEAFSTONE', 105: 'Level 28', 110: 'Level 35', 112: 'Level 42', 242: 'Happiness ', 117: 'Level 32', 230: 'TradeItem DRAGONSCALE', 119: 'Level 33', 121: 'Item WATERSTONE', 212: 'TradeItem METALCOAT', 130: 'Level 20', 134: 'Item WATERSTONE', 135: 'Item THUNDERSTONE', 136: 'Item FIRESTONE', 196: 'HappinessDay ', 197: 'HappinessNight ', 233: 'TradeItem UPGRADE', 139: 'Level 40', 141: 'Level 40', 148: 'Level 30', 149: 'Level 55', 153: 'Level 16', 154: 'Level 32', 156: 'Level 14', 157: 'Level 36', 159: 'Level 18', 160: 'Level 30', 162: 'Level 15', 164: 'Level 20', 166: 'Level 18', 168: 'Level 22', 171: 'Level 27', 25: 'Happiness ', 35: 'Happiness ', 39: 'Happiness ', 176: 'Happiness ', 178: 'Level 25', 180: 'Level 15', 181: 'Level 30', 184: 'Level 18', 188: 'Level 18', 189: 'Level 27', 192: 'Item SUNSTONE', 195: 'Level 20', 205: 'Level 31', 210: 'Level 23', 217: 'Level 30', 219: 'Level 38', 221: 'Level 33', 224: 'Level 25', 229: 'Level 24', 232: 'Level 25', 106: 'AttackGreater 20', 107: 'DefenseGreater 20', 237: 'AtkDefEqual 20', 124: 'Level 30', 125: 'Level 30', 126: 'Level 30', 247: 'Level 30', 248: 'Level 55', 253: 'Level 16', 254: 'Level 36', 256: 'Level 16', 257: 'Level 36', 259: 'Level 16', 260: 'Level 36', 262: 'Level 18', 264: 'Level 20', 266: 'Silcoon 7', 268: 'Cascoon 7', 267: 'Level 10', 269: 'Level 10', 271: 'Level 14', 272: 'Item WATERSTONE', 274: 'Level 14', 275: 'Item LEAFSTONE', 277: 'Level 22', 279: 'Level 25', 281: 'Level 20', 282: 'Level 30', 284: 'Level 22', 286: 'Level 23', 288: 'Level 18', 289: 'Level 36', 291: 'Ninjask 20', 292: 'Shedinja 20', 294: 'Level 20', 295: 'Level 40', 297: 'Level 24', 183: 'Happiness ', 301: 'Item MOONSTONE', 305: 'Level 32', 306: 'Level 42', 308: 'Level 37', 310: 'Level 26', 317: 'Level 26', 319: 'Level 30', 321: 'Level 40', 323: 'Level 33', 326: 'Level 32', 329: 'Level 35', 330: 'Level 45', 332: 'Level 32', 334: 'Level 35', 340: 'Level 30', 342: 'Level 30', 344: 'Level 36', 346: 'Level 40', 348: 'Level 40', 350: 'Beauty 170', 354: 'Level 37', 356: 'Level 37', 202: 'Level 15', 362: 'Level 42', 364: 'Level 32', 365: 'Level 44', 367: 'TradeItem DEEPSEATOOTH', 368: 'TradeItem DEEPSEASCALE', 372: 'Level 30', 373: 'Level 50', 375: 'Level 20', 376: 'Level 45'}
 
 
 ### functions
@@ -518,7 +522,7 @@ def sort_all(item_types):
 	for i in item_types: sort_items(i)
 	return
 
-def pokedex(seen_filter,obtainable_filter,regional_filter):
+def pokedex(seen_filter,obtainable_filter,regional_filter,picklist):
 	address = section_address(0)
 	owned = int.from_bytes(sav[address+pokedex_owned_offset:address+pokedex_owned_offset+49], byteorder='little')
 	seen = int.from_bytes(sav[address+pokedex_seen_offset_a:address+pokedex_seen_offset_a+49], byteorder='little')
@@ -551,6 +555,7 @@ def pokedex(seen_filter,obtainable_filter,regional_filter):
 		if nid_obtainable[nid][0] == 'Y': obtainable = nid_obtainable[nid][0]
 		if obtainable_filter and obtainable == ' ': continue
 		if regional_filter and not nid in ntoh.keys(): continue
+		if picklist and o == pokeball: continue
 
 		# fugly
 		box = '☐'
@@ -570,13 +575,32 @@ def pokedex(seen_filter,obtainable_filter,regional_filter):
 			format_string = 'H{0:03d}'
 			hdex = format_string.format(ntoh[nid])
 
-		format_string = '{0:03d}. {6} {4} {1} {5} {2} {3}'
-		nid_list.append(format_string.format(nid,s,o,nid_index[nid],obtainable,box,hdex))
+		if picklist:
+			maxlen = len(max(list(nid_index.values()), key=len))
+			format_string = '{0:03d}. {6} {4} {1} {5} {2} {3:' + str(maxlen) + 's}  {7}{8}'
+			evo = ''
+			if 'Evo' in nid_method[nid]:
+				hdexe = '    '
+				if evo_from[nid] in ntoh.keys():
+					format_string2 = 'H{0:03d}'
+					hdexe = format_string2.format(ntoh[evo_from[nid]])
+				format_string3 = ' from {0:03d}. {1} {2}'
+				evo = format_string3.format(evo_from[nid],hdexe,nid_index[evo_from[nid]])
+				if nid in evo_method.keys(): evo += ' ' + evo_method[nid]
+			nid_list.append(format_string.format(nid,s,o,nid_index[nid],obtainable,box,hdex,nid_method[nid],evo))
+		else:
+			format_string = '{0:03d}. {6} {4} {1} {5} {2} {3}'
+			nid_list.append(format_string.format(nid,s,o,nid_index[nid],obtainable,box,hdex))
 
 	name_list = nid_list.copy()
 	name_list.sort(key = lambda x: x[18:])
 
 	if regional_filter: nid_list.sort(key = lambda x: x[5:])
+
+	if picklist:
+		for i in nid_list: print(i)
+		print()
+		return
 
 	maxlen = len(max(nid_list, key=len))
 	for i,j in zip(nid_list, name_list):
@@ -787,7 +811,7 @@ def lanette_pc_name():
 		item_name = items_index[item]
 		if item_name == 'NONE': item_name = ''
 		format_string = '{0:02d} {1} {2:02d}. {3:03d} {6:03d} {4:' + str(maxmonlen) + 's} {7:' + str(maxmonlen) + 's} {5:' + str(maxitemlen) + 's}'
-		lines.append(format_string.format(box+1,c,index+1,sid,sid_index[sid],item_name,nid,name))
+		lines.append(format_string.format(box+1,c,index,sid,sid_index[sid],item_name,nid,name))
 
 	lines.sort(key = lambda x: x[17:])
 
@@ -1222,22 +1246,32 @@ while sel != 0:
 		(
 			'Pokédex [Regional] (read-only)',
 			pokedex,
-			[False, False, True]
+			[False, False, True, False]
+		),
+		(
+			'Pokédex [Regional] Picklist',
+			pokedex,
+			[False, False, True, True]
 		),
 		(
 			'Pokédex [National] (read-only)',
 			pokedex,
-			[False, False, False]
+			[False, False, False, False]
+		),
+		(
+			'Pokédex [National] Picklist',
+			pokedex,
+			[False, False, False, True]
 		),
 		(
 			'Pokédex [National] Seen (read-only)',
 			pokedex,
-			[True, False, False]
+			[True, False, False, False]
 		),
 		(
 			'Pokédex [National] Obtainable (read-only)',
 			pokedex,
-			[False, True, False]
+			[False, True, False, False]
 		),
 		(
 			'Pokédex Latias/Latios Seen Hack (cannot unsee!)',
