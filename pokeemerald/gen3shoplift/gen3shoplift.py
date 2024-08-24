@@ -10,7 +10,7 @@ from ctypes import *
 ### globals
 
 outputfilename = 'newbag.sav'
-version = "0.25.0"
+version = "0.26.0"
 money_offset = 0x0490
 coins_offset = 0x0494
 soot_sack_steps_offset = 0x04AC
@@ -839,9 +839,95 @@ def dump_party():
 		g = data_g[personality % 24] * 12
 		sid = int.from_bytes(data[g:g+2], byteorder='little')
 		item = int.from_bytes(data[g+2:g+4], byteorder='little')
-		mons.append([mon+1,sid,item,nid_name[sid_index[sid]],name_address])
+		friendship = int.from_bytes(data[g+9:g+10], byteorder='little')
+		mons.append([mon+1,sid,item,nid_name[sid_index[sid]],name_address,friendship])
 
 	return mons
+
+# super hacky POC
+def edit_party_friendship():
+	party_size = read_number(section_address(1) + team_size_offset,4,0)
+	data_g = [0, 0, 0, 0, 0, 0, 1, 1, 2, 3, 2, 3, 1, 1, 2, 3, 2, 3, 1, 1, 2, 3, 2, 3]
+
+	while True:
+		party_list = ['Return']
+
+		for mon in range(party_size):
+			address = section_address(1) + team_size_offset + 4 + mon * 100
+			personality = int.from_bytes(sav[address:address+4], byteorder='little')
+			if personality == 0: continue
+			name_address = address + 0x08
+			otid = int.from_bytes(sav[address+4:address+8], byteorder='little')
+			key = personality ^ otid
+			e_data = bytearray(sav[address+0x20:address+0x20+48])
+			data = bytearray()
+			for i in range(0,48,4):
+				pt = key ^ int.from_bytes(e_data[i:i+4], byteorder='little')
+				data += pt.to_bytes(4, 'little')
+			g = data_g[personality % 24] * 12
+			sid = int.from_bytes(data[g:g+2], byteorder='little')
+			item = int.from_bytes(data[g+2:g+4], byteorder='little')
+			friendship = int.from_bytes(data[g+9:g+10], byteorder='little')
+
+			chksum = int.from_bytes(sav[address+0x1C:address+0x1C+2], byteorder='little')
+			c = 0
+			for i in range(0,48,2): c += (data[i] + (data[i+1] << 8))
+			c &= 0xFFFF
+			if chksum != c: print('\nBAD EGG!!!\n')
+	
+			maxlen = len(max(nid_index.values(), key=len))
+			format_string = '{1:' + str(maxlen) + 's} {2:10s}  {3:3d}'
+			party_list.append(format_string.format(mon+1,sid_index[sid],poketoascii(sav,name_address,10),friendship))
+
+		sel = menu('Select Pokémon to Change Friendship:',party_list,0,1,[])
+		if sel == 0: return
+		mon = sel - 1
+
+		address = section_address(1) + team_size_offset + 4 + mon * 100
+		personality = int.from_bytes(sav[address:address+4], byteorder='little')
+		otid = int.from_bytes(sav[address+4:address+8], byteorder='little')
+		key = personality ^ otid
+		e_data = bytearray(sav[address+0x20:address+0x20+48])
+		data = bytearray()
+		for i in range(0,48,4):
+			pt = key ^ int.from_bytes(e_data[i:i+4], byteorder='little')
+			data += pt.to_bytes(4, 'little')
+		g = data_g[personality % 24] * 12
+
+		while True:
+			try:
+				e = int(input("Friendship (1-255) ['0' to Exit]: "))
+				if e > 255 or e < 0:
+					print("\nOut of range. Try again...\n")
+					continue
+				if e == 0:
+					print()
+					return
+				break
+			except ValueError:
+				print("\nNot an integer. Try again...\n")
+			except Exception as err:
+				print(f"Unexpected {err=}, {type(err)=}")
+				raise
+
+		data[g+9] = e
+
+		e_data = bytearray()
+		for i in range(0,48,4):
+			pt = key ^ int.from_bytes(data[i:i+4], byteorder='little')
+			e_data += pt.to_bytes(4, 'little')
+
+		for i in range(48): sav[address+0x20+i] = e_data[i]
+
+		chksum = 0
+		for i in range(0,48,2): chksum += (data[i] + (data[i+1] << 8))
+		chksum &= 0xFFFF
+
+		for i, j in enumerate(chksum.to_bytes(2, 'little')): sav[address+0x1C+i] = j
+
+		print()
+
+	return
 
 def mirage_island():
 	poke_address = section_address(1) + team_size_offset + 4
@@ -1211,6 +1297,11 @@ while sel != 0:
 		(
 			'Edit Party Names',
 			edit_party_names,
+			[]
+		),
+		(
+			'Edit Party Friendship',
+			edit_party_friendship,
 			[]
 		),
 		(
