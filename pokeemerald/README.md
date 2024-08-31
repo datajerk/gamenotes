@@ -1,7 +1,3 @@
-<style>
-pre[class*=language-]
-{font-size: 0.8em;} 
-</style>
 # Pokémon Emerald Postmortem (with cheat code)
 
 *<p align="center"><br>[2024 is the first time I have played Game Boy or Pokémon games.<br>
