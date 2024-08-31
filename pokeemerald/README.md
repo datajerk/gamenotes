@@ -160,6 +160,7 @@ Seen: 161  Owned: 107  Regional Seen: 161  Regional Owned: 107
 254. H003 Y S ● ◓ Sceptile  	306. H072 Y   ☐   Aggron
 255. H004   S ☐   Torchic   	065. H041     ☐   Alakazam
 256. H005   S ☐   Combusken 	334. H122 Y S ■ ◓ Altaria
+...
 ```
 
 The first number is the National ID,
@@ -185,7 +186,6 @@ Box: 4 (Current)
 01. 359 334 Altaria
 02. 359 334 Altaria
 03. 378 354 Banette                 SPELL_TAG
-
 ...
 
 Box: 14
@@ -193,17 +193,19 @@ Box: 14
 01. 290 265 Wurmple
 02. 063 063 Abra
 03. 401 377 Regirock    Rocky
+...
 ```
 
 Above is a partial box listing.
 The current box will be noted.
 The first column is the position within the box.
-The second and third ard the National and Regional IDs, followed by the species name.
-If there is a user defined name, that will be emitted next followed by any item held by that Pokémon.
+The second and third are the National and Regional IDs, followed by the species name.
+If there is a user defined name, that will be emitted next, followed by any item held by that Pokémon.
 
 The _by name_ listing sorts by name and does not group by box:
 
 ```
+...
 04 C 12. 355 303 Mawile
 01   26. 287 262 Mightyena
 01   22. 354 312 Minun
@@ -216,6 +218,7 @@ The _by name_ listing sorts by name and does not group by box:
 01   09. 286 261 Poochyena
 01   02. 392 280 Ralts
 14   04. 402 378 Regice      Ice-T
+...
 ```
 
 The first column in the box number followed by a `C` if it is the current box.
@@ -228,7 +231,7 @@ The rest of the QoL features such as renaming and sorting should be obvious.
 
 #### Master Balls, Max Elixir, Full Restore
 
-Just like [Red](../pokered/README.md) I played as intended until out of the tutorial phase, then I upped my Master Balls, Max Elixir, and Full Restore to 99, and for the same reasons:
+Just like [Red](../pokered/README.md) I played as intended until out of the tutorial phase, then I upped my Master Balls, Max Elixir, and Full Restore to 99; and for the same reasons:
 
 * Master Balls,
 because I do not see the need for excessive toil capturing wilds with the right mix of balls,
@@ -266,7 +269,7 @@ The money hack was never used, it's there for others.
 
 There's a binary decision just like in Pokémon Crystal to get one fossil or the other.
 The Root Fossil becomes the Rock/Grass Lileep, while the Claw Fossil turns into the Rock/Bug Anorith.
-Clearly I wanted both to complete my Hoenn Pokédex, so just added to Key Items, however this was not necessary, the other fossil can be had in the post-game.
+Clearly I wanted both to complete my Hoenn Pokédex, so just added the other to Key Items, however this was not necessary, the other fossil can be had in the post-game.
 
 
 #### DeepSeaScale ~~or~~ and DeepSeaTooth
@@ -279,20 +282,20 @@ Both are required to max out your Hoenn Pokédex, so gave myself the other, AFAI
 ### Soot Sack Steps
 
 Added this to avoid walking around for hours to get all the things.
-Sure, I could have just used the Item edit above for all the flutes, but decided to buy them with "steps".
+Sure, I could have just used the item edit above for all the flutes, but decided to buy them with "steps".
 
 The secret base items, I do not have a hack for, so the only way was to get with _Soot Sack Steps_.
 That said, I have no idea what the purpose _is_ for having a secret base.
 I guess I was just curious.
 
-I did in fairness to the game developer walk enough for one flute (the Blue Flute was the cheapest).
+I did in fairness to the game developers walk enough for one flute (the Blue Flute was the cheapest).
 
 
 ### Feebas
 
 [_If done in Emerald, you will get about 3-4 wild encounters per minute thanks to the Gulpin and **most likely be done in about an hour**._](https://www.reddit.com/r/pokemon/comments/lettfp/generation_3_feebas_guide_also_applies_to_gen_4/?utm_source=share&utm_medium=ios_app&utm_name=iossmf)
 
-Yeah..., no.
+Yeah..., _no_.
 
 I'll describe how to get Feebas in less than 60 seconds for those that could careless about the details.
 For the rest of you read on for the technical details of this cheat.
@@ -326,7 +329,7 @@ Go ahead and cast a few times, see what you get:
 </p>
 
 Next, save and quit (many emulators do not write out the savefile unless you quit).
-Now edit the savefile:
+Now edit the savefile and set `Dewford Town Rand` to `0`:
 
 ```
 ...
@@ -364,7 +367,7 @@ It's there with a 50/50 chance, just cast a few more times.
 
 #### Feebas Hack, How Does this Work?
 
-There are 6 locations (of 447 candidate tiles) assigned by a deterministic pseudo random number generator (PRNG) that uses Dewford Trend as a way to generate the random seed.
+There are 6 locations (of 447 candidate tiles) assigned by a deterministic pseudo random number generator (PRNG) that uses Dewford Trend as the way to generate the random seed.
 
 This code from `src/wild_encounter.c` enables the exploit:
 
@@ -449,12 +452,15 @@ The top three did most of the battles, while the bottom provided HM support.
 My daughter was amazed Zigzagoon made it to the end (but did not indicate _why_).
 
 Groov'n was my main for almost the entire game until I picked up Puff.
-Most of Lights Out level gain came from Exp. Share, however she provided excellent backup when Groov'n was down as well in 2x2 battles.
+Most of Lights Out level gain came from Exp. Share, however she provided excellent backup when Groov'n was down as well as in 2x2 battles.
 
 Game time was reported as 62:13 hours, however leveraging the Retroarch logs:
 
-```
-$ grep -l "Pokemon - Emerald Version" retroarch*.log | xargs grep "Content ran for a total of" | awk -F: '{print $NF}' | awk '{h += $1; m += $3; s += $5} END {print h + m/60 + s/3600 }'
+```bash
+$ grep -l "Pokemon - Emerald Version" retroarch*.log | \
+xargs grep "Content ran for a total of" | \
+awk -F: '{print $NF}' | \
+awk '{h += $1; m += $3; s += $5} END {print h + m/60 + s/3600 }'
 26.2978
 ```
 
@@ -467,7 +473,7 @@ Some of this time was spent testing ideas, redoing sections for screenshots, and
 </p>
 
 The ending credits were fantastic, I should have recorded a video vs. the random screen shots above.
-Post the credits you get dumped back into your room where it all started.
+Post the credits you get dumped back into your room where it all started:
 
 <p align="center">
   <img src="img/endroom.png" style="width: 50%; height: 50%"/>
@@ -510,15 +516,15 @@ newbag.sav' written out, enjoy!
 ```
 
 Restart, restore save, and then watch the TV again.
-After all that, check your Pokédex if Latias is roaming, it should be, then use same method to catch.
+After all that, check your Pokédex if Latias is roaming, and it should be, then use same method to catch.
 I got both with FF 4x in about 15 minutes.
 
 
 ### Safari Zone
 
-I _tried_ to make effective Pokéblocks.
+> I _tried_ to make effective Pokéblocks.
 
-This is complex and requires reaction times I do not have, so I created an editor:
+Making Pokéblocks is complex and requires reaction times I do not have, so I created an editor:
 
 ```
 ...
@@ -711,7 +717,7 @@ I did learn much about different Pokémon and their moves through this process, 
 
 #### Moon Stones
 
-This [link](https://gaming.stackexchange.com/questions/331102/how-many-pokemon-can-be-obtained-only-in-emerald) there's only one, and I found it, so gave myself another for:
+This [link](https://gaming.stackexchange.com/questions/331102/how-many-pokemon-can-be-obtained-only-in-emerald) states there's only one, and I found it, so gave myself another for:
 
 ```
 301. H062   S ☐   Delcatty    Evolve - Only 1 Moon Stone (Delcatty or Wigglytuff) from 300. H061 Skitty Item MOONSTONE
@@ -786,10 +792,9 @@ Select Pokémon to Change Friendship:
 Selection: 0
 ```
 
-> I was initially tempted to just grind this out the proper way, but I needed an excuse to see if I could actually edit the encrypted Pokémon data structure encrypted block.
+> I was initially tempted to just grind this out the proper way, but I needed an excuse to see if I could actually edit the Pokémon data structure encrypted block.
 
-> If you're wondering why Puff is not that happy I speculate it's because he's was stuff in a box while I was at Battle Frontier.
-Puff was not allowed to compete.
+> If you're wondering why Puff is not that happy I speculate it's because he's was stuffed in a box while I was at Battle Frontier--Puff was not allowed to compete.
 
 #### Ninjask and Shedinja
 
@@ -888,9 +893,9 @@ The second error just "happened" on the _Leader_ device after a long session of 
 230. H186   S ☐   Kingdra     Trade Evo from 117. H185 Seadra TradeItem DRAGONSCALE
 ```
 
-No different that any other trade-scum, just need to have each Pokémon be holding a specific item.
+No different than any other trade-scum, just need to have each Pokémon holding a specific item.
 
-> Tale of the Dragon Scale
+> The Tale of the Dragon Scale
 >
 >I know I found this, I knew I had it, but I could not remember what I did with it, it's not in my items or PC.
 Did I give it to an NPC for something?
@@ -910,7 +915,7 @@ Events get conflated, especially since the games are so similar.
 172. H155 Y   ☐   Pichu       Breed
 ```
 
-> Lesson learned, breed first before doing evolutions, now I need to find more Pokémons.
+> Lesson learned: Breed first before doing evolutions, now I need to find more Pokémons.
 
 No cheating here other than FF 4x on the Mach bike back and forth from route 117 to 118 through Mauville City.
 
@@ -972,8 +977,7 @@ My diploma for _catching 'em all:_
   <img src="img/diploma.png" style="width: 50%; height: 50%"/>
 </p>
 
-I talked to just about every NPC, I do not recall missing any, nor do I recall any NPC stating that post-game the Game Freak development team would be vacationing in Lilycove City.
-Information required if you want to get your diploma.
+I talked to just about every NPC, I do not recall missing any, nor do I recall any NPC stating that post-game the Game Freak development team would be vacationing in Lilycove City--information required if you want to get your diploma.
 
 There's a National Pokédex diploma as well.
 That is just too much trading, so I'll have to take the loss on that one.
@@ -984,7 +988,7 @@ That is just too much trading, so I'll have to take the loss on that one.
 I did not see the point at all.
 I guess it's just a fun side element of the game.
 They would have been more useful in the field if I had access to all PCs.
-Clearly I have a mobile phone because other trainers keep calling me and the worst possible times,
+Clearly I have a mobile phone because other trainers keep calling me at the worst possible times,
 dunno why I cannot have a laptop as well.
 
 
@@ -1001,15 +1005,15 @@ This [ROM hack](https://www.romhacking.net/hacks/8787/) ([alternative location](
 
 If I ever play Emerald again I'll be using this version since it enables the catching of all Pokémon.
 
-I did confirm my save editor for Emerald works with this ROM hack, however flags may be incorrectly labeled and extensive testing has not be done. And, the "obtainable" indicator in the Pokédex dumps is clearly in correct since all are obtainable.  When/if I play this version I'll update my code.
+I did confirm my save editor for Emerald works with this ROM hack, however flags may be incorrectly labeled and extensive testing has not be done. And, the "obtainable" indicator in the Pokédex dumps is clearly incorrect since all are obtainable.  When/if I play this version I'll update my code.
 
 
 ### Final Thoughts
 
 Great game.
 I highly recommend it and I enjoyed it.
-I still think [Polished Crystal](https://github.com/Rangi42/polishedcrystal) is peak Pokémon, however having just stared researching my final _mon_ ([Pokémon Unbound](https://www.pokecommunity.com/threads/pok%C3%A9mon-unbound-completed.382178/), honor mode), [Polished Crystal](https://github.com/Rangi42/polishedcrystal) could fall in second place, however I will not make that call until the [9-bit version of Polished Crystal](https://github.com/Rangi42/polishedcrystal/tree/9bit) is released and I do an honor playthrough.
+I still think [Polished Crystal](https://github.com/Rangi42/polishedcrystal) is peak Pokémon, however having just stared researching my final _mon_ ([Pokémon Unbound](https://www.pokecommunity.com/threads/pok%C3%A9mon-unbound-completed.382178/), honor mode), [Polished Crystal](https://github.com/Rangi42/polishedcrystal) could fall to second place, however I will not make that call until the [9-bit version of Polished Crystal](https://github.com/Rangi42/polishedcrystal/tree/9bit) is released and I do an honor-mode playthrough.
 
-Both [Polished Crystal](https://github.com/Rangi42/polishedcrystal) and [Unbound](ttps://www.pokecommunity.com/threads/pok%C3%A9mon-unbound-completed.382178/) correct numerous issues that enhance game play and reduces toil.
+Both [Polished Crystal](https://github.com/Rangi42/polishedcrystal) and [Unbound](https://www.pokecommunity.com/threads/pok%C3%A9mon-unbound-completed.382178/) correct numerous issues that enhance game play and reduces toil.
 
 
