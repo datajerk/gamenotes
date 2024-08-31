@@ -10,7 +10,7 @@ from ctypes import *
 ### globals
 
 outputfilename = 'newbag.sav'
-version = "0.26.0"
+version = "0.26.1"
 money_offset = 0x0490
 coins_offset = 0x0494
 soot_sack_steps_offset = 0x04AC
@@ -1159,7 +1159,7 @@ if game_code == RUBY_SAPPHIRE or game_code == FIRERED_LEAFGREEN:
 	sys.exit(1)
 game_code = EMERALD
 
-print("\nPokémon Gen III (Emerald only for now) Offline Store v" + version)
+print("\nPokémon Gen III (Emerald only for now) Editor v" + version)
 print("""
 Tested Roms:
 
