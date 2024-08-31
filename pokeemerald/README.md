@@ -1016,4 +1016,6 @@ I still think [Polished Crystal](https://github.com/Rangi42/polishedcrystal) is 
 
 Both [Polished Crystal](https://github.com/Rangi42/polishedcrystal) and [Unbound](https://www.pokecommunity.com/threads/pok%C3%A9mon-unbound-completed.382178/) correct numerous issues that enhance game play and reduces toil.
 
-
+<p align="center">
+  <img src="img/end.png" style="width: 50%; height: 50%"/>
+</p>
