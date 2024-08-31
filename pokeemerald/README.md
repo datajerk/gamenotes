@@ -47,12 +47,12 @@ It is also lacking a real-time-clock (RTC), which I'm unsure is absolutely neces
 e.g. high/low tide is at 3pm/9pm and [Mirage Island](https://bulbapedia.bulbagarden.net/wiki/Mirage_Island_(Generation_III)) will reset its random number at midnight,
 however if the clock gets out of sync because of the lack of RTC, I do not think I'd be much of an issue, unlike [Pokémon Crystal](https://en.wikipedia.org/wiki/Pok%C3%A9mon_Crystal) where it could drastically impact game play.
 
->IMHO [Pokémon Crystal](https://en.wikipedia.org/wiki/Pok%C3%A9mon_Crystal) is peak Pokémon with the way it drives engagement using the clock,
+>IMHO, [Pokémon Crystal](https://en.wikipedia.org/wiki/Pok%C3%A9mon_Crystal) is peak Pokémon with the way it drives engagement using the clock,
 e.g. day/night modes (different Pokémon and probabilities at day vs. night),
 day-of-week/time-of-day events (sales, contests, etc...),
 regularly timed radio broadcasts, etc...--a masterpiece.
 
-BTW, the [EZ-FLASH OMEGA Definitive Edition](https://www.ezflash.cn/product/ez-flash-omega-definitive-edition/) solves the RTC problem, but I was still left without FF and slowmo. 
+BTW, the [EZ-FLASH OMEGA Definitive Edition](https://www.ezflash.cn/product/ez-flash-omega-definitive-edition/) solves the Analogue Pocket RTC problem, but I was still left without FF and slowmo. 
 And, getting savefiles to/from the OMEGA DE was kind of a pain.
 
 No regrets using the [Anbernic RG35XXSP](https://anbernic.com/products/rg35xxsp) with [muOS 2405.2 BAKED BEANS](https://muos.dev/release/current/baked).  IMHO, this setup is fantastic.
