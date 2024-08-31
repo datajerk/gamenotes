@@ -36,7 +36,8 @@ This setup checked all the boxes:
   * [gpSP](https://docs.libretro.com/library/gpsp/) core with [Retroarch](https://www.retroarch.com/) (the GBA overlay looks fantastic)
 * The [mGBA](https://mgba.io/) emulator for MacOS was used when I needed to test some ideas and my cheat code.
 * The [Pokémon Emerald (Prima 2005) Guide](https://archive.org/details/Prima2005PokemonEmerald) was my initial guide, but decided in the interest of time to switch to the [Bulbapedia Guide](https://bulbapedia.bulbagarden.net/wiki/Appendix:Emerald_walkthrough) as my primary guide to make sure I did not miss anything (I did miss things).
-* This decompilation of [Pokémon Emerald](https://github.com/pret/pokeemerald) ("the source").  Big BIG thank you.
+* This decompilation of [Pokémon Emerald](https://github.com/pret/pokeemerald) ("the source").
+A big BIG thank you.
 * The [Save data structure (Generation III)](https://bulbapedia.bulbagarden.net/wiki/Save_data_structure_(Generation_III)) docs
 (incomplete so I used the source quite a bit, however, as an initial overview it is indispensable).  Huge thanks.
 
