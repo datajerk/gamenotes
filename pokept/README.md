@@ -42,9 +42,9 @@ as game research vs. game play
 without hours of repeated toil.
 
 I should note that I did not have time to explore all of Platinum,
-there is a lot of non-direct-quest elements like beauty contests,
+there are a lot of non-direct-quest elements like beauty contests,
 building an underground lair, and 
-making snacks for your _mon_ that I think increase some of your stats for getting non-direct-game items.
+making snacks for your _mon_ that I think increase some of your stats for getting non-direct-quest items.
 The underground seems optimized for multiplayer use.
 And, there are many network play options--this I fully intended to explore, and it is still possible, but I ran out of time for this project. (At the end for details.)
 
@@ -53,16 +53,15 @@ A retro YouTuber I follow stated that as a kid he got one game a year, so the af
 
 ## Tools and Resources
 
-* [Magicx Zero 40](https://shop.magicx.team/products/magicx-zero-40)
-This setup checked the following boxes:
+* [Magicx Zero 40](https://shop.magicx.team/products/magicx-zero-40), this setup checked the following boxes:
   * Real-Time-Clock (RTC)
   * Save states
   * Fast-forward (FF)
   * FTP server for backup/restore of save files (I used `lftp` to automate pulling down savefiles, save states, and screenshots)
   * Touch screen display for DS features (not required)
-  * The DraStic DS emulator was the only real option; no WiFi, or Slow-mo
+  * The DraStic DS emulator was the only real option; no WiFi or slow-mo
 * [melonDS 1.0](https://melonds.kuribo64.net/) with [8BitDo SN30 Pro Bluetooth Gamepad](https://www.8bitdo.com/sn30-pro-g-classic-or-sn30-pro-sn/)
-  * Slow-motion (slowmo)--required for some bike moves
+  * Slow-motion (slow-mo)--required for some bike moves
     * I think I ranted about this before; IMHO, RPGs should not require _meatspace_ dexterity
     * The screen and controller latency can make bike moves extra difficult (on any emulator, however RetroArch has run-ahead that I've not had time to explore)
   * WiFi support and it works! Get online with the handful of others also playing Platinum (see below for details)
@@ -80,13 +79,13 @@ This setup checked the following boxes:
 
 ## Cheating
 
-Main Storyline and Post-Game Guidelines:
+Main Storyline Guidelines:
 
 1. No altering money (but coins OK, something I learned from my Polished Crystal post-game run).
 1. No [offline] Rare Candy to level up.
 1. Must "see" each Pokémon the way the game intended.
 
-Post Post-Game Guidelines:
+Post-Game Guidelines:
 
 Post-Game postponed, probably indefinitely.
 
@@ -95,9 +94,9 @@ Post-Game postponed, probably indefinitely.
 
 I use the following emulator cheats:
 
-* FF 3x for grinding through trainer battles and fighting/capturing wild Pokémons.
-* Slowmo 10 FPS for bike tricks (fast cornering).
-* Save states, while there as a backup, I did not use, other than QoL for suspend and resume.
+* FF 3x for grinding through trainer battles and fighting/capturing wild Pokémons
+* Slowmo 10 FPS for bike tricks (fast cornering)
+* Save states, while there as a backup, I did not use, other than QoL for suspend and resume
 
 
 ### Cheat Code
@@ -293,7 +292,7 @@ Commands:
 b[1-18],[1-18] to choose boxes
 b[1-18],       to choose first box only
 b,[1-18]       to choose second box only
-p[1-30],[1-30] to swap box1,p1 with box2,p2k
+p[1-30],[1-30] to swap box1,p1 with box2,p2
 x or 0         to exit
 ```
 
@@ -423,10 +422,10 @@ My final crew post champion status.
 Gigabyte and Changa did most of the battles, while the rest provided HM support (Rock Snake and Soul Arch did get some combat in from time to time); Sparky was just along for the ride.
 
 Changa was my main until I picked up Gigabyte.
-Exp. Share was used to up Changa, Rock Snake, and Soul Arch.
+Exp. Share was used to level up Changa, Rock Snake, and Soul Arch.
 While testing _mon_ experience editing I bumped both Gigabyte and Change from the 100,000s up to 200,000 to see what would happen and just left it there. This gave me ~10-20 level advantage throughout the game and rarely did I need any other than Gigabyte with the exception of the existing champ Cynthia--I had to work a bit for that win.
 
-Game time was reported as ~44 hours; I have no idea if that is wall-clock time or playtime, in past games the playtime was computing without using the RTC wall clock time.
+Game time was reported as ~44 hours; I have no idea if that is wall-clock time or playtime, in past games the playtime was computed without using the RTC wall clock time.
 
 
 ### _Gotta see them all!_
@@ -476,7 +475,7 @@ I did chat with someone; chat is limited to canned phrases, so not really too ex
 ### Final Thoughts
 
 Easier than [Emerald](../pokeemerald/README.md) and probably all other gen I-III versions.
-The honey tree toil is terrible, if I ever did replay this in honor mode, I'd still cheat on that, same with the slowmo hacks for the bike.
+The honey tree toil is terrible, if I ever did replay this in honor mode, I'd still cheat on that, same with the slow-mo hacks for the bike.
 The non-direct-quest gimmicks are not for me, however the WiFi social aspect certainly is.
 
 I still think [Polished Crystal](https://github.com/Rangi42/polishedcrystal) and [Pokémon Unbound](https://www.pokecommunity.com/threads/pok%C3%A9mon-unbound-completed.382178/) are peak Pokémon.  Both [Polished Crystal](https://github.com/Rangi42/polishedcrystal) and [Unbound](https://www.pokecommunity.com/threads/pok%C3%A9mon-unbound-completed.382178/) correct numerous issues that enhance game play and reduces toil.

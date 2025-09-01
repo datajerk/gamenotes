@@ -669,7 +669,7 @@ Commands:
 b[1-18],[1-18] to choose boxes
 b[1-18],       to choose first box only
 b,[1-18]       to choose second box only
-p[1-30],[1-30] to swap box1,p1 with box2,p2k
+p[1-30],[1-30] to swap box1,p1 with box2,p2
 x or 0         to exit
 '''
 		)
