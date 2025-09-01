@@ -472,7 +472,7 @@ I intended to go back and test other things and better document, but again, no t
 I did chat with someone; chat is limited to canned phrases, so not really too exciting, but safe for kids.
 
 
-### Final Thoughts
+## Final Thoughts
 
 Easier than [Emerald](../pokeemerald/README.md) and probably all other gen I-III versions.
 The honey tree toil is terrible, if I ever did replay this in honor mode, I'd still cheat on that, same with the slow-mo hacks for the bike.
