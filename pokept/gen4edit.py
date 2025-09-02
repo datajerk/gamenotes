@@ -987,14 +987,14 @@ while sel != 0:
 	print(
 		"[Initial] Save Timestamp:",
 		datetime.fromtimestamp(
-			g.contents.data.save_timestamp+946684800+0,
+			g.contents.data.save_timestamp+946684800,
 			tz=timezone.utc
 		).strftime("%A, %B %d, %Y %H:%M:%S")
 	)
 	print(
 		"HoF Timestamp:",
 		datetime.fromtimestamp(
-			g.contents.data.hof_timestamp+946684800+0,
+			g.contents.data.hof_timestamp+946684800,
 			tz=timezone.utc
 		).strftime("%A, %B %d, %Y %H:%M:%S"))
 	print()
