@@ -161,7 +161,7 @@ Main Menu
 
 ### Non-cheating QoL Features
 
-Sorting items, listing the Pokédex, Listing Boxes (and organizing _mon_), and renaming _mon_ are the principal QoL features of this tool I used.  Other non-cheating QoL features: trainer and rival name changing, gender change, and signature read/write.
+Sorting items, listing the Pokédex, listing Boxes (and organizing _mon_), and renaming _mon_ are the principal QoL features of this tool I used.  Other non-cheating QoL features: trainer and rival name changing, gender change, and trainer card signature read/write.
 
 **Pokédex**
 
@@ -245,6 +245,7 @@ From this menu you can open a box and edit the box name or any Pokémon, e.g.:
 28. CHANSEY      Chansey      OT ID: 57434  Exp:    3930  Friendship: 140
 29. Egbert       Togepi       OT ID: 57434  Exp:       0  Friendship: 144
 30. BUNEARY      Buneary      OT ID: 57434  Exp:    1331  Friendship:  45
+31. Edit Box Name: BOX 1
 ```
 
 Also from the main box menu you can move _mon_ around:
@@ -474,8 +475,16 @@ I did chat with someone; chat is limited to canned phrases, so not really too ex
 
 ## Final Thoughts
 
-Easier than [Emerald](../pokeemerald/README.md) and probably all other gen I-III versions.
-The honey tree toil is terrible, if I ever did replay this in honor mode, I'd still cheat on that, same with the slow-mo hacks for the bike.
+Easier than [Emerald](../pokeemerald/README.md) and probably all other gen I-III versions (seen vs. catch; in-game tools to track down the single wandering _mon_).
+The honey tree toil is terrible, if I ever did replay this in "honor" mode, I'd still cheat on that, same with the slow-mo hacks for the bike.
 The non-direct-quest gimmicks are not for me, however the WiFi social aspect certainly is.
+
+This entire experience felt like a grind, probably because of self-imposed time limit--writing the cheat code was more fun, it usually is.
+I am struggling to think of any aspect of this game that provided any positive emotions; it's the same pattern over and over from gen I to gen IV.
+
+I _think_ the graphics were better than [Emerald](../pokeemerald/README.md), but then on the tiny screen of the [Magicx Zero 40](https://shop.magicx.team/products/magicx-zero-40), it was hard to tell.
+It felt like a lot of asset reuse.
+
+B&W 2 looks like it maximized the capabilities of the DS, so I picked up a DSi XL to play that next, perhaps as an Xmas holiday project.
 
 I still think [Polished Crystal](https://github.com/Rangi42/polishedcrystal) and [Pokémon Unbound](https://www.pokecommunity.com/threads/pok%C3%A9mon-unbound-completed.382178/) are peak Pokémon.  Both [Polished Crystal](https://github.com/Rangi42/polishedcrystal) and [Unbound](https://www.pokecommunity.com/threads/pok%C3%A9mon-unbound-completed.382178/) correct numerous issues that enhance game play and reduces toil.
