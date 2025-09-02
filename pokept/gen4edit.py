@@ -5,6 +5,8 @@ import os
 import re
 import math
 import itertools
+from datetime import datetime, timezone
+import time
 
 #from ctypes import *
 from dicts import *
@@ -982,8 +984,19 @@ while sel != 0:
 		g.contents.data.rtc_second,
 	))
 	from datetime import datetime
-	print("[Initial] Save Timestamp:",datetime.fromtimestamp(g.contents.data.save_timestamp+946684800).strftime("%A, %B %d, %Y %I:%M:%S"))
-	print("HoF Timestamp:",datetime.fromtimestamp(g.contents.data.hof_timestamp+946684800).strftime("%A, %B %d, %Y %I:%M:%S"))
+	print(
+		"[Initial] Save Timestamp:",
+		datetime.fromtimestamp(
+			g.contents.data.save_timestamp+946684800+0,
+			tz=timezone.utc
+		).strftime("%A, %B %d, %Y %H:%M:%S")
+	)
+	print(
+		"HoF Timestamp:",
+		datetime.fromtimestamp(
+			g.contents.data.hof_timestamp+946684800+0,
+			tz=timezone.utc
+		).strftime("%A, %B %d, %Y %H:%M:%S"))
 	print()
 	menu_array = [
 		(
