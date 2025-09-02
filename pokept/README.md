@@ -412,6 +412,22 @@ Selection: 7
 All Honey Trees loaded with Munchlax; you have 18 game hours to encounter.
 ```
 
+### Cheat: Seen/Caught Them All
+
+```
+24. Pokédex: Sinnoh All Seen (WARNING: Cannot be unseen!)
+29. Pokédex: National All Caught (WARNING: Cannot be undone!)
+```
+
+I created for testing, but did not use (outside of testing).
+
+`Pokédex: Sinnoh All Seen` will flip all Sinnoh Dex bits to _seen_.
+`Pokédex: National All Caught` will flip all National Dex bits to _seen_ and _caught_.
+
+To _undo_, abort (last menu item).
+
+> Always a good idea to keep your savefiles backed up.
+
 
 ## Main Storyline Epilogue
 
