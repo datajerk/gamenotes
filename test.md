@@ -10,3 +10,11 @@ $OtherStat = \Huge \lfloor ( \lfloor \Large \frac{\Large ( \normalsize 2 * Base 
 $HP =  \lfloor  \frac{ (  2 * Base + IV +  \lfloor \frac{EV}{4} \rfloor )  * Level}{100}  \rfloor  + Level + 10$
 
 $OtherStat =  \lfloor ( \lfloor  \frac{ (  2 * Base + IV +  \lfloor \frac{EV}{4} \rfloor )  * Level}{100}  \rfloor  + 5  )  * Nature  \rfloor$
+
+$\Large HP =  \lfloor  \frac{ (  2 * Base + IV +  \lfloor \frac{EV}{4} \rfloor )  * Level}{100}  \rfloor  + Level + 10$
+
+$\Large OtherStat =  \lfloor ( \lfloor  \frac{ (  2 * Base + IV +  \lfloor \frac{EV}{4} \rfloor )  * Level}{100}  \rfloor  + 5  )  * Nature  \rfloor$
+
+$\large HP =  \lfloor  \frac{ (  2 * Base + IV +  \lfloor \frac{EV}{4} \rfloor )  * Level}{100}  \rfloor  + Level + 10$
+
+$\large OtherStat =  \lfloor ( \lfloor  \frac{ (  2 * Base + IV +  \lfloor \frac{EV}{4} \rfloor )  * Level}{100}  \rfloor  + 5  )  * Nature  \rfloor$
